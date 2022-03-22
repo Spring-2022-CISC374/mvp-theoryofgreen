@@ -75,6 +75,24 @@ class Scene1 extends Phaser.Scene {
             frameHeight: 41
           }
         });
+
+        //Objects and animals
+        this.load.spritesheet({
+          key: "pig-frontfacing",
+          url: "assets/sprites/pig/pig-frontfacing.png",
+          frameConfig: {
+            frameWidth:32,
+            frameHeight:36
+          }
+        });
+        this.load.spritesheet({
+          key: "pig-backfacing",
+          url: "assets/sprites/pig/pig-backfacing.png",
+          frameConfig: {
+            frameWidth:31,
+            frameHeight:36
+          }
+        });
       }
 
     create() {
@@ -133,6 +151,20 @@ class Scene1 extends Phaser.Scene {
       this.anims.create({
         key: "walk_right",
         frames: this.anims.generateFrameNumbers("rightwalk"),
+        frameRate: 13,
+        repeat: -1
+      });
+
+      //Objects and animals
+      this.anims.create({
+        key: "pig-idle-front",
+        frames: this.anims.generateFrameNumbers("pig-frontfacing"),
+        frameRate: 13,
+        repeat: -1
+      });
+      this.anims.create({
+        key: "pig-idle-back",
+        frames: this.anims.generateFrameNumbers("pig-backfacing"),
         frameRate: 13,
         repeat: -1
       });
