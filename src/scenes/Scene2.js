@@ -18,6 +18,9 @@ export default class Scene2 extends Phaser.Scene {
             duration: 0
         });
 
+        const display = this.add.text(400, 250, "In the future this can be wired up to user inputs, breaking blocks, etc.");
+        display.setOrigin(0.5, 0.5);
+
         /** @type {Phaser.Types.Input.Keyboard.CursorKeys} */
         this.cursors = this.input.keyboard.createCursorKeys();
     }
