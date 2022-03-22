@@ -4,14 +4,35 @@ class Scene2 extends Phaser.Scene {
     }
 
     create() {
+        //score label - cameron
+        this.score = 0;
+        this.scoreLabelText = this.add.text(400, 250, `Score : ${this.score}`);
+        this.scoreLabelText.setOrigin(0.5, 14);
+        this.scoreLabelText.depth = 100;
+        this.scoreLabelText.setColor('black');
 
+        const score_label = this.add.rectangle(400, 50, 30, 200, 0xffffff, 1);
+        this.physics.add.existing(score_label, true);
+        this.tweens.add({
+            targets: score_label,
+            angle: 90,
+            duration: 0
+        });
+
+        const display = this.add.text(400, 250, "In the future this can be wired up to user inputs, breaking blocks, etc.");
+        display.setOrigin(0.5, 0.5);
+
+        /** @type {Phaser.Types.Input.Keyboard.CursorKeys} */
+        this.cursors = this.input.keyboard.createCursorKeys();
+
+        //player - allison
         this.player = this.physics.add.sprite(300, 300, "player");
         this.player.setScale(2);
         this.player.play("idle");
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.player.setCollideWorldBounds(true);
 
-        //Objects and animals
+        //Objects and animals - zoe
         var rand_val = Phaser.Math.Between(5, 10);
         for (let i = 0; i < rand_val; i++) {
             this.randomPigPositioning();
@@ -21,6 +42,7 @@ class Scene2 extends Phaser.Scene {
     update() {
         this.movePlayerManager();
         this.pigCollisions();
+        this.scoreLabel();
     }
 
     movePlayerManager() {
@@ -48,6 +70,23 @@ class Scene2 extends Phaser.Scene {
             this.player.play("idle", true);
             this.player.setVelocityX(0);
             this.player.setVelocityY(0);
+        }
+    }
+
+    //score label
+    scoreLabel() {
+        if (this.cursors.up.isDown) {
+            this.score++;
+            this.scoreLabelText.text = `Score : ${this.score}`;
+        } else if (this.cursors.down.isDown) {
+            this.score--;
+            this.scoreLabelText.text = `Score : ${this.score}`;
+        } else if (this.cursors.left.isDown) {
+            this.score *= 2;
+            this.scoreLabelText.text = `Score : ${this.score}`;
+        } else if (this.cursors.right.isDown) {
+            this.score = Math.round(this.score / 2);
+            this.scoreLabelText.text = `Score : ${this.score}`;
         }
     }
 
