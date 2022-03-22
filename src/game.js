@@ -24,4 +24,4 @@ var game = new Phaser.Game(config);
 game.scene.add('titleScreen', Scene1);
 game.scene.add('scene2', Scene2);
 
-game.scene.start('titleScreen');
+game.scene.start('scene2');
