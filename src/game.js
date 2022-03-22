@@ -11,17 +11,17 @@ var config = {
 	height: 700,
     type: Phaser.AUTO,
 	backgroundColor: 0x000000,
-	scene: [Scene1, Scene2],
 	physics: {
 		default: "arcade",
 		arcade:{
 			debug: false
 		}
-	},
+	}
 }
 
 var game = new Phaser.Game(config);
 
 game.scene.add('titleScreen', Scene1);
 game.scene.add('scene2', Scene2);
+
 game.scene.start('titleScreen');
