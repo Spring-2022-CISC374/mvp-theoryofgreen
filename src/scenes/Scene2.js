@@ -23,15 +23,19 @@ export default class Scene2 extends Phaser.Scene {
     }
 
     update() {
-
         if (this.cursors.up.isDown) {
             this.score++;
             this.scoreLabelText.text = `Score : ${this.score}`;
         } else if (this.cursors.down.isDown) {
             this.score--;
             this.scoreLabelText.text = `Score : ${this.score}`;
+        } else if (this.cursors.left.isDown) {
+            this.score *= 2;
+            this.scoreLabelText.text = `Score : ${this.score}`;
+        } else if (this.cursors.right.isDown) {
+            this.score = Math.round(this.score / 2);
+            this.scoreLabelText.text = `Score : ${this.score}`;
         }
-
     }
 
 }
