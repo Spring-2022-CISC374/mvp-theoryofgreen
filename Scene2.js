@@ -65,5 +65,11 @@ class Scene2 extends Phaser.Scene {
         this.pig.setScale(1.5);
         this.pig.play("pig-idle-front");
         //this.pig.play("pig-idle-back");
+        let pig = this.add.sprite("pig-frontfacing");
+        this.pig.setInteractive();
+        this.pig.on('pointerdown', function(pointer){
+            console.log("click"+pig);
+        });
+
     }
 }
