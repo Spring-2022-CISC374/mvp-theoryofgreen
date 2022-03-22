@@ -1,6 +1,6 @@
 # Theory of Green MVP
 Contributions:
 - Allison: Basic framework of scenes, character movement with arrow keys, idle animation, walking animation
-- Zoe: 
+- Zoe: Sprites, pig animation, pig random placement and number, collision code started
 - Cameron: 
 - Trea: 
