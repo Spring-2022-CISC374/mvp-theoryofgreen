@@ -4,6 +4,9 @@ class Scene1 extends Phaser.Scene {
 	}
 
     preload() {
+      //background texture
+        this.load.image("background", "/assets/backgound/green-background.png");
+
         this.load.spritesheet({
           key: "player", 
           url: "assets/sprites/player/frontidle.png", 
@@ -98,6 +101,7 @@ class Scene1 extends Phaser.Scene {
     create() {
 		  this.add.text(20, 20, "Loading game...");
 		  this.scene.start("playGame");
+      this.add.image(400, 300, "background");
 
       this.anims.create({
         key: "idle",
