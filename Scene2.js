@@ -37,11 +37,11 @@ class Scene2 extends Phaser.Scene {
         for (let i = 0; i < rand_val; i++) {
             this.randomPigPositioning();
         }
+        this.pigCollisions();
     }
 
     update() {
         this.movePlayerManager();
-        this.pigCollisions();
         this.scoreLabel();
     }
 
@@ -94,7 +94,14 @@ class Scene2 extends Phaser.Scene {
 
     //pigs
     pigCollisions() {
-        this.physics.add.collider(this.player, this.pig, function(pig){pig.destroy();});
+        //let pig = this.add.sprite("pig-frontfacing");
+        this.pig.setInteractive();
+        this.input.on('gameobjectdown', this.pig.destroy, this);
+        // this.pig.on('pointerdown', function(pointer){
+        //     this.pig.destroy();
+        //     console.log("click"+pig);
+        // });
+        //this.physics.add.collider(this.player, this.pig, function(pig){pig.destroy();});
     }
 
     randomPigPositioning() {
@@ -104,11 +111,5 @@ class Scene2 extends Phaser.Scene {
         this.pig.setScale(1.5);
         this.pig.play("pig-idle-front");
         //this.pig.play("pig-idle-back");
-        let pig = this.add.sprite("pig-frontfacing");
-        this.pig.setInteractive();
-        this.pig.on('pointerdown', function(pointer){
-            console.log("click"+pig);
-        });
-
     }
 }
