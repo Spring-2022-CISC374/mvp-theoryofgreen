@@ -5,7 +5,7 @@ class Scene1 extends Phaser.Scene {
 
     preload() {
       //background texture
-        this.load.image("background", "/assets/backgound/green-background.png");
+        this.load.image("background", "assets/background/green-background.png");
 
         this.load.spritesheet({
           key: "player", 
