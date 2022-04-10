@@ -4,6 +4,21 @@ class Scene2 extends Phaser.Scene {
     }
 
     create() {
+        this.wood = 0;
+        this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
+        this.woodText.depth = 100;
+        this.woodText.setColor('white');
+
+        this.stone = 0;
+        this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
+        this.stoneText.depth = 100;
+        this.stoneText.setColor('white');
+
+        this.weeds = 0;
+        this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
+        this.weedsText.depth = 100;
+        this.weedsText.setColor('white');
+
         //score label - cameron
         this.score = 0;
         this.scoreLabelText = this.add.text(400, 250, `Score : ${this.score}`);
