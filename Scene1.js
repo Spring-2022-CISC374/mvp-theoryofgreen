@@ -93,6 +93,12 @@ class Scene1 extends Phaser.Scene {
             frameHeight:36
           }
         });
+
+        this.load.image("wood", "assets/sprites/wood.png");
+
+        this.load.image("stone", "assets/sprites/rock.png");
+
+        this.load.image("weeds", "assets/sprites/weeds.png");
       }
 
     create() {
