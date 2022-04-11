@@ -7,6 +7,7 @@ import downWalk from "../../assets/sprites/player/downwalk.png";
 import leftWalk from "../../assets/sprites/player/leftwalk.png";
 import rightWalk from "../../assets/sprites/player/rightwalk.png";
 import attackRight from "../../assets/sprites/player/attack.png";
+import attackLeft from "../../assets/sprites/player/attack_left.png";
 // Animal imports
 import pigFront from "../../assets/sprites/pig/pig-frontfacing.png";
 import pigBack from "../../assets/sprites/pig/pig-backfacing.png";
@@ -65,6 +66,11 @@ class Scene1 extends Phaser.Scene {
     this.load.spritesheet("attack-right", attackRight, {
       frameWidth: 51,
       frameHeight: 35,
+    });
+
+    this.load.spritesheet("attack-left", attackLeft, {
+        frameWidth: 50,
+        frameHeight: 35
     });
 
     //Objects and animals
@@ -155,6 +161,13 @@ class Scene1 extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers("attack-right"),
       frameRate: 13,
       repeat: -1,
+    });
+
+    this.anims.create({
+        key: "attack_left",
+        frames: this.anims.generateFrameNumbers("attack-left"),
+        frameRate: 13,
+        repeat: -1
     });
 
     //Objects and animals

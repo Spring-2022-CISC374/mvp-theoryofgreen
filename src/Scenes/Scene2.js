@@ -80,7 +80,7 @@ class Scene2 extends Phaser.Scene {
         //player - allison
         this.player = this.physics.add.sprite(300, 300, "player");
         this.player.setScale(2);
-        this.player.play("idle");
+        this.player.play("idle_down");
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.player.setCollideWorldBounds(true);
 
@@ -182,7 +182,11 @@ class Scene2 extends Phaser.Scene {
             this.last_dir = "d";
         }
         else if (this.cursorKeys.space.isDown) {
-            this.player.play("attack_right", true);
+            if (this.last_dir == "r") {
+                this.player.play("attack_right", true);
+            } else if (this.last_dir == "l") {
+                this.player.play("attack_left", true);
+            }
             this.player.setVelocityX(0);
             this.player.setVelocityY(0);
         }
