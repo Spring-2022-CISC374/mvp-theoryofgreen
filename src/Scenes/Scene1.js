@@ -22,6 +22,9 @@ import pigBack from "../../assets/sprites/pig/pig-backfacing.png";
 import wood from "../../assets/sprites/wood.png";
 import stone from "../../assets/sprites/rock.png";
 import weeds from "../../assets/sprites/weeds.png";
+import campfire from "../../assets/sprites/campfire.png";
+import bandage from "../../assets/sprites/bandage.png";
+import shelter from "../../assets/sprites/shelter.png";
 import meat from "../../assets/sprites/food/meat.png";
 
 class Scene1 extends Phaser.Scene {
@@ -140,15 +143,35 @@ class Scene1 extends Phaser.Scene {
     this.load.image("stone", stone);
 
     this.load.image("weeds", weeds);
-
-    // #endregion
-    // drop items
     this.load.image("meat", meat);
+    // #endregion
+
+    this.load.image("campfire", campfire);
+    this.load.image("bandage", bandage);
+    this.load.image("shelter", shelter);
   }
 
   create() {
+    this.wood = 0;
+    this.stone = 0;
+    this.weeds = 0;
+    this.bandages = 0;
+    this.isShelter = false;
+    this.isFire = false;
+    this.fireCheck = 0;
+    this.shelterCheck = 0;
+
     this.add.text(20, 20, "Loading game...");
-    this.scene.start("playGame");
+    this.scene.start("playGame", {
+      "wood": this.wood,
+      "stone": this.stone,
+      "weeds": this.weeds,
+      "bandages": this.bandages,
+      "isShelter": this.isShelter,
+      "isFire": this.isFire,
+      "fireCheck": this.fireCheck,
+      "shelterCheck": this.shelterCheck
+    });
 
     // #region ANIMS
 
