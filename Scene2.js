@@ -111,4 +111,16 @@ class Scene2 extends Phaser.Scene {
         });
 
     }
+
+    attack(){
+        if(!this.Attacking){
+            this.animations.play('attack');
+            this.Attacking = true;
+
+            this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
+                this.animations.play('idle');//Returns the animation to "idle"
+                this.Attacking = false;//Returns the boolean var to "false"
+            }, this);
+        }
+    }
 }
