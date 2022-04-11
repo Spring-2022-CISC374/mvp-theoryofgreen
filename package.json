@@ -24,6 +24,7 @@
     "assets": "^3.0.1",
     "parcel-bundler": "^1.12.5",
     "phaser": "^3.55.2",
+    "prettier": "^2.6.2",
     "rimraf": "^3.0.2"
   }
 }

@@ -11,6 +11,7 @@ export const config = {
     type: Phaser.AUTO,
 	backgroundColor: 0x4AA04A,
 	scene: [Scene1, Scene2],
+    title: "Theory of Green",
 	physics: {
 		default: "arcade",
 		arcade:{
