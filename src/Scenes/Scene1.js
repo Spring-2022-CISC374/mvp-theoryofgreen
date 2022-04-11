@@ -22,6 +22,7 @@ import pigBack from "../../assets/sprites/pig/pig-backfacing.png";
 import wood from "../../assets/sprites/wood.png";
 import stone from "../../assets/sprites/rock.png";
 import weeds from "../../assets/sprites/weeds.png";
+import meat from "../../assets/sprites/food/meat.png";
 
 class Scene1 extends Phaser.Scene {
   constructor() {
@@ -139,7 +140,10 @@ class Scene1 extends Phaser.Scene {
     this.load.image("stone", stone);
 
     this.load.image("weeds", weeds);
+
     // #endregion
+    // drop items
+    this.load.image("meat", meat);
   }
 
   create() {
