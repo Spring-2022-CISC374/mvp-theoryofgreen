@@ -66,6 +66,13 @@ class Scene2 extends Phaser.Scene {
 
     create() {
 
+        this.last_dir = "d";
+        this.idle_dirs = {
+            "d": "idle_down",
+            "l": "idle_left",
+            "r": "idle_right",
+            "u": "idle_up"
+        };
         /** @type {Array<Phaser.GameObjects.Sprite>} */
         this.pigs = []
         this.add_materials();
@@ -148,26 +155,31 @@ class Scene2 extends Phaser.Scene {
     }
 
     movePlayerManager() {
+        this.player.setVelocityX(0);
+        this.player.setVelocityY(0);
         if(this.cursorKeys.left.isDown) {
             this.player.play("walk_left", true);
             this.player.setVelocityX(-gameSettings.playerSpeed);
             this.player.setVelocityY(0);
-            this.player = this.physics.add.sprite(this.player.x, this.player.y, "player_left");
+            this.last_dir = "l";
         }
         else if(this.cursorKeys.right.isDown) {
             this.player.play("walk_right", true);
             this.player.setVelocityX(gameSettings.playerSpeed);
             this.player.setVelocityY(0);
+            this.last_dir = "r";
         }
         else if(this.cursorKeys.up.isDown) {
             this.player.play("walk_up", true);
             this.player.setVelocityX(0);
             this.player.setVelocityY(-gameSettings.playerSpeed);
+            this.last_dir = "u";
         }
         else if(this.cursorKeys.down.isDown) {
             this.player.play("walk_down", true);
             this.player.setVelocityX(0);
             this.player.setVelocityY(gameSettings.playerSpeed);
+            this.last_dir = "d";
         }
         else if (this.cursorKeys.space.isDown) {
             this.player.play("attack_right", true);
@@ -175,7 +187,7 @@ class Scene2 extends Phaser.Scene {
             this.player.setVelocityY(0);
         }
         else {
-            this.player.play("idle", true);
+            this.player.play(this.idle_dirs[this.last_dir], true);
             this.player.setVelocityX(0);
             this.player.setVelocityY(0);
         }

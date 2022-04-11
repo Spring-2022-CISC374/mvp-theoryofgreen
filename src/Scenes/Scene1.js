@@ -95,7 +95,7 @@ class Scene1 extends Phaser.Scene {
     // #region ANIMS
 
     this.anims.create({
-      key: "idle",
+      key: "idle_down",
       frames: this.anims.generateFrameNumbers("player"),
       frameRate: 13,
       repeat: -1,
