@@ -164,7 +164,7 @@ class Scene2 extends Phaser.Scene {
 		this.player.setVelocityX(0);
 		this.player.setVelocityY(0);
 		this.physics.world.remove(this.weaponHitbox.body);
-        this.weaponHitbox.body.enable = false;
+		this.weaponHitbox.body.enable = false;
 		if (this.cursorKeys.up.isDown) {
 			if (!this.cursorKeys.left.isDown && !this.cursorKeys.right.isDown) {
 				this.player.play("walk_up", true);
@@ -233,12 +233,12 @@ class Scene2 extends Phaser.Scene {
 			this.last_dir = "r";
 		} else if (this.cursorKeys.space.isDown) {
 			if (this.last_dir == "r") {
-                this.physics.world.add(this.weaponHitbox.body);
+				this.physics.world.add(this.weaponHitbox.body);
 				this.player.play("attack_right", true);
 				this.weaponHitbox.x = this.player.x + this.player.width * 0.5;
 				this.weaponHitbox.y = this.player.y;
 			} else if (this.last_dir == "l") {
-                this.physics.world.add(this.weaponHitbox.body);
+				this.physics.world.add(this.weaponHitbox.body);
 				this.player.play("attack_left", true);
 				this.weaponHitbox.x = this.player.x - this.player.width * 0.5;
 				this.weaponHitbox.y = this.player.y;
@@ -255,17 +255,22 @@ class Scene2 extends Phaser.Scene {
 	pigCollisions() {
 		this.pigs.forEach((eachPig) => {
 			this.physics.add.collider(this.player, eachPig, () => {
-				const oinkText = this.add.text(eachPig.x, eachPig.y, "Oink!", 0xfffff);
-                setTimeout(() => {
-                    oinkText.destroy();
-                }, 100);
+				const oinkText = this.add.text(
+					eachPig.x,
+					eachPig.y,
+					"Oink!",
+					0xfffff,
+				);
+				setTimeout(() => {
+					oinkText.destroy();
+				}, 100);
 			});
 			this.physics.add.overlap(
 				this.weaponHitbox,
 				eachPig,
-                this.handleHitboxCollide,
-                undefined,
-                this
+				this.handleHitboxCollide,
+				undefined,
+				this,
 			);
 		});
 		this.pigs = this.pigs.map((eachPig) => {
@@ -281,23 +286,23 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	handleHitboxCollide(obj1, obj2) {
-        /** @type {Phaser.GameObjects.Rectangle} */
-        const healthBar = this.health_bars[obj2.id];
-        if (obj2.hp > 0) {
-            healthBar.displayWidth -= 1;
-            healthBar.x -= .5;   
-            obj2.hp -= 1;
-        } else {
-            console.log('in else');
-            healthBar.destroy();
-            /** @type {Phaser.GameObjects.Rectangle} */
-            const healthbarBackground = this.health_bar_backgrounds[obj2.id];
-            healthbarBackground.destroy();
-            /** @type {Phaser.GameObjects.Sprite} */
-            obj2.destroy();
-        }
-        this.physics.world.remove(this.weaponHitbox);
-    }
+		/** @type {Phaser.GameObjects.Rectangle} */
+		const healthBar = this.health_bars[obj2.id];
+		if (obj2.hp > 0) {
+			healthBar.displayWidth -= 1;
+			healthBar.x -= 0.5;
+			obj2.hp -= 1;
+		} else {
+			console.log("in else");
+			healthBar.destroy();
+			/** @type {Phaser.GameObjects.Rectangle} */
+			const healthbarBackground = this.health_bar_backgrounds[obj2.id];
+			healthbarBackground.destroy();
+			/** @type {Phaser.GameObjects.Sprite} */
+			obj2.destroy();
+		}
+		this.physics.world.remove(this.weaponHitbox);
+	}
 
 	randomPigPositioning(pig_num) {
 		var x_val = Phaser.Math.Between(15, config.width - 4);
@@ -308,18 +313,23 @@ class Scene2 extends Phaser.Scene {
 		);
 		this.pig.hp = 100;
 		this.pig.id = pig_num;
-		const healthbarBackground = this.add
-			.rectangle(this.pig.x, this.pig.y - 30, 100, 20, 0x787475, 0.4);
+		const healthbarBackground = this.add.rectangle(
+			this.pig.x,
+			this.pig.y - 30,
+			100,
+			20,
+			0x787475,
+			0.4,
+		);
 
-		const healthbar = this.add
-			.rectangle(
-				this.pig.x,
-				this.pig.y - 30,
-				this.pig.hp,
-				20,
-				0xff0000,
-				0.55,
-			);
+		const healthbar = this.add.rectangle(
+			this.pig.x,
+			this.pig.y - 30,
+			this.pig.hp,
+			20,
+			0xff0000,
+			0.55,
+		);
 		this.health_bars = [...this.health_bars, healthbar];
 		this.health_bar_backgrounds = [
 			...this.health_bar_backgrounds,
