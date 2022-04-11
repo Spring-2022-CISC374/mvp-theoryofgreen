@@ -143,8 +143,16 @@ class Scene1 extends Phaser.Scene {
   }
 
   create() {
+    this.wood = 0;
+    this.stone = 0;
+    this.weeds = 0;
+
     this.add.text(20, 20, "Loading game...");
-    this.scene.start("playGame");
+    this.scene.start("playGame", {
+      "wood": this.wood,
+      "stone": this.stone,
+      "weeds": this.weeds
+    });
 
     // #region ANIMS
 

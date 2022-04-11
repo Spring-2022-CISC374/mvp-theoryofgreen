@@ -5,8 +5,14 @@ class Scene2 extends Phaser.Scene {
 		super("playGame");
 	}
 
+	init(data) {
+		this.wood = data.wood;
+		this.stone = data.stone;
+		this.weeds = data.weeds;
+	}
+
 	add_materials() {
-		this.wood = 0;
+		//this.wood = 0;
 		this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
 		this.woodText.depth = 100;
 		this.woodText.setColor("white");
@@ -25,7 +31,7 @@ class Scene2 extends Phaser.Scene {
 			this.woodCount++;
 		}
 
-		this.stone = 0;
+		//this.stone = 0;
 		this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
 		this.stoneText.depth = 100;
 		this.stoneText.setColor("white");
@@ -43,7 +49,7 @@ class Scene2 extends Phaser.Scene {
 			this.stoneCount++;
 		}
 
-		this.weeds = 0;
+		//this.weeds = 0;
 		this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
 		this.weedsText.depth = 100;
 		this.weedsText.setColor("white");
@@ -63,6 +69,11 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	create() {
+		this.craft = this.add.text(25, 25, "Click to craft!");
+		this.craft.group = "craftButton";
+		this.craft.setColor("white");
+		this.craft.setInteractive();
+
 		this.health_bars = [];
 		this.health_bar_backgrounds = [];
 		this.last_dir = "d";
@@ -153,6 +164,12 @@ class Scene2 extends Phaser.Scene {
 					this.weedsCount++;
 				}
 			}
+		} else if (gameObject.group == "craftButton") {
+			this.scene.start("craftScreen", {
+				"wood": this.wood,
+				"stone": this.stone,
+				"weeds": this.weeds
+			});
 		}
 	}
 
