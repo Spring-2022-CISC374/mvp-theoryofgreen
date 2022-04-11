@@ -8,6 +8,14 @@ import leftWalk from "../../assets/sprites/player/leftwalk.png";
 import rightWalk from "../../assets/sprites/player/rightwalk.png";
 import attackRight from "../../assets/sprites/player/attack.png";
 import attackLeft from "../../assets/sprites/player/attack_left.png";
+import diagUpLeft from "../../assets/sprites/player/diag_up_left.png";
+import diagUpLeftIdle from "../../assets/sprites/player/diag_up_left_idle.png";
+import diagUpRight from "../../assets/sprites/player/diag_up_right.png";
+import diagUpRightIdle from "../../assets/sprites/player/diag_up_right_idle.png";
+import diagDownLeft from "../../assets/sprites/player/diag_down_left.png";
+import diagDownLeftIdle from "../../assets/sprites/player/diag_down_left_idle.png";
+import diagDownRight from "../../assets/sprites/player/diag_down_right.png";
+import diagDownRightIdle from "../../assets/sprites/player/diag_down_right_idle.png";
 // Animal imports
 import pigFront from "../../assets/sprites/pig/pig-frontfacing.png";
 import pigBack from "../../assets/sprites/pig/pig-backfacing.png";
@@ -26,6 +34,46 @@ class Scene1 extends Phaser.Scene {
     this.load.spritesheet("player", frontIdle, {
       frameWidth: 41,
       frameHeight: 41,
+    });
+
+    this.load.spritesheet("player_up_left", diagUpLeft, {
+      frameWidth: 33,
+      frameHeight: 33,
+    });
+
+    this.load.spritesheet("player_up_right", diagUpRight, {
+      frameWidth: 33,
+      frameHeight: 33,
+    });
+
+    this.load.spritesheet("player_down_left", diagDownLeft, {
+      frameWidth: 33,
+      frameHeight: 33,
+    });
+
+    this.load.spritesheet("player_down_right", diagDownRight, {
+      frameWidth: 33,
+      frameHeight: 33,
+    });
+
+    this.load.spritesheet("player_up_left_idle", diagUpLeftIdle, {
+      frameWidth: 33,
+      frameHeight: 38,
+    });
+
+    this.load.spritesheet("player_up_right_idle", diagUpRightIdle, {
+      frameWidth: 33,
+      frameHeight: 38,
+    });
+
+    this.load.spritesheet("player_down_right_idle", diagDownRightIdle, {
+      frameWidth: 33,
+      frameHeight: 35,
+    });
+
+    this.load.spritesheet("player_down_left_idle", diagDownLeftIdle, {
+      frameWidth: 33,
+      frameHeight: 35,
     });
 
     this.load.spritesheet("player_back", backIdle, {
@@ -69,8 +117,8 @@ class Scene1 extends Phaser.Scene {
     });
 
     this.load.spritesheet("attack-left", attackLeft, {
-        frameWidth: 50,
-        frameHeight: 35
+      frameWidth: 50,
+      frameHeight: 35,
     });
 
     //Objects and animals
@@ -129,6 +177,62 @@ class Scene1 extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: "idle_down_right",
+      frames: this.anims.generateFrameNumbers("player_down_right_idle"),
+      frameRate: 13,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "idle_up_right",
+      frames: this.anims.generateFrameNumbers("player_up_right_idle"),
+      frameRate: 13,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "idle_up_left",
+      frames: this.anims.generateFrameNumbers("player_up_left_idle"),
+      frameRate: 13,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "idle_down_left",
+      frames: this.anims.generateFrameNumbers("player_down_left_idle"),
+      frameRate: 13,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "down_right",
+      frames: this.anims.generateFrameNumbers("player_down_right"),
+      frameRate: 13,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "up_right",
+      frames: this.anims.generateFrameNumbers("player_up_right"),
+      frameRate: 13,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "down_left",
+      frames: this.anims.generateFrameNumbers("player_down_left"),
+      frameRate: 13,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "up_left",
+      frames: this.anims.generateFrameNumbers("player_up_left"),
+      frameRate: 13,
+      repeat: -1,
+    });
+
+    this.anims.create({
       key: "walk_up",
       frames: this.anims.generateFrameNumbers("upwalk"),
       frameRate: 13,
@@ -164,10 +268,10 @@ class Scene1 extends Phaser.Scene {
     });
 
     this.anims.create({
-        key: "attack_left",
-        frames: this.anims.generateFrameNumbers("attack-left"),
-        frameRate: 13,
-        repeat: -1
+      key: "attack_left",
+      frames: this.anims.generateFrameNumbers("attack-left"),
+      frameRate: 13,
+      repeat: -1,
     });
 
     //Objects and animals
