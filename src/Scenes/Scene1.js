@@ -37,42 +37,42 @@ class Scene1 extends Phaser.Scene {
     });
 
     this.load.spritesheet("player_up_left", diagUpLeft, {
-      frameWidth: 33,
+      frameWidth: 26.1,
       frameHeight: 33,
     });
 
     this.load.spritesheet("player_up_right", diagUpRight, {
-      frameWidth: 33,
+      frameWidth: 26.1,
       frameHeight: 33,
     });
 
     this.load.spritesheet("player_down_left", diagDownLeft, {
-      frameWidth: 33,
+      frameWidth: 26.1,
       frameHeight: 33,
     });
 
     this.load.spritesheet("player_down_right", diagDownRight, {
-      frameWidth: 33,
+      frameWidth: 26.1,
       frameHeight: 33,
     });
 
     this.load.spritesheet("player_up_left_idle", diagUpLeftIdle, {
-      frameWidth: 33,
+      frameWidth: 30.9,
       frameHeight: 38,
     });
 
     this.load.spritesheet("player_up_right_idle", diagUpRightIdle, {
-      frameWidth: 33,
+      frameWidth: 30.1,
       frameHeight: 38,
     });
 
     this.load.spritesheet("player_down_right_idle", diagDownRightIdle, {
-      frameWidth: 33,
+      frameWidth: 28.2,
       frameHeight: 35,
     });
 
     this.load.spritesheet("player_down_left_idle", diagDownLeftIdle, {
-      frameWidth: 33,
+      frameWidth: 28.2,
       frameHeight: 35,
     });
 
@@ -205,28 +205,28 @@ class Scene1 extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "down_right",
+      key: "walk_down_right",
       frames: this.anims.generateFrameNumbers("player_down_right"),
       frameRate: 13,
       repeat: -1,
     });
 
     this.anims.create({
-      key: "up_right",
+      key: "walk_up_right",
       frames: this.anims.generateFrameNumbers("player_up_right"),
       frameRate: 13,
       repeat: -1,
     });
 
     this.anims.create({
-      key: "down_left",
+      key: "walk_down_left",
       frames: this.anims.generateFrameNumbers("player_down_left"),
       frameRate: 13,
       repeat: -1,
     });
 
     this.anims.create({
-      key: "up_left",
+      key: "walk_up_left",
       frames: this.anims.generateFrameNumbers("player_up_left"),
       frameRate: 13,
       repeat: -1,

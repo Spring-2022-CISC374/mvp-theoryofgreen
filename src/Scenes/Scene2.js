@@ -71,7 +71,11 @@ class Scene2 extends Phaser.Scene {
             "d": "idle_down",
             "l": "idle_left",
             "r": "idle_right",
-            "u": "idle_back"
+            "u": "idle_back",
+            "dl": "idle_down_left",
+            "dr": "idle_down_right",
+            "ul": "idle_up_left",
+            "ur": "idle_up_right"
         };
         /** @type {Array<Phaser.GameObjects.Sprite>} */
         this.pigs = []
@@ -157,7 +161,54 @@ class Scene2 extends Phaser.Scene {
     movePlayerManager() {
         this.player.setVelocityX(0);
         this.player.setVelocityY(0);
-        if(this.cursorKeys.left.isDown) {
+        if(this.cursorKeys.up.isDown) {
+            if (!this.cursorKeys.left.isDown && !this.cursorKeys.right.isDown) {
+                this.player.play("walk_up", true);
+                this.player.setVelocityX(0);
+                this.player.setVelocityY(-gameSettings.playerSpeed);
+                this.last_dir = "u";
+            } else if (this.cursorKeys.left.isDown && !this.cursorKeys.right.isDown) {
+                this.player.play("walk_up_left", true);
+                this.player.setVelocityX(-gameSettings.playerSpeed);
+                this.player.setVelocityY(-gameSettings.playerSpeed);
+                this.last_dir = "ul";
+            } else if (!this.cursorKeys.left.isDown && this.cursorKeys.right.isDown) {
+                console.log("in if");
+                this.player.play("walk_up_right", true);
+                this.player.setVelocityX(gameSettings.playerSpeed);
+                this.player.setVelocityY(-gameSettings.playerSpeed);
+                this.last_dir = "ur";
+            } else {
+                this.player.play("walk_up", true);
+                this.player.setVelocityX(0);
+                this.player.setVelocityY(-gameSettings.playerSpeed);
+                this.last_dir = "u";
+            }
+        }
+        else if(this.cursorKeys.down.isDown) {
+            if (!this.cursorKeys.left.isDown && !this.cursorKeys.right.isDown) {
+                this.player.play("walk_down", true);
+                this.player.setVelocityX(0);
+                this.player.setVelocityY(gameSettings.playerSpeed);
+                this.last_dir = "d";
+            } else if (this.cursorKeys.left.isDown && !this.cursorKeys.right.isDown) {
+                this.player.play("walk_down_left", true);
+                this.player.setVelocityX(-gameSettings.playerSpeed);
+                this.player.setVelocityY(gameSettings.playerSpeed);
+                this.last_dir = "dl";
+            } else if (!this.cursorKeys.left.isDown && this.cursorKeys.right.isDown) {
+                this.player.play("walk_down_right", true);
+                this.player.setVelocityX(gameSettings.playerSpeed);
+                this.player.setVelocityY(gameSettings.playerSpeed);
+                this.last_dir = "dr";
+            } else {
+                this.player.play("walk_down", true);
+                this.player.setVelocityX(0);
+                this.player.setVelocityY(gameSettings.playerSpeed);
+                this.last_dir = "d";
+            }
+        }
+        else if(this.cursorKeys.left.isDown) {
             this.player.play("walk_left", true);
             this.player.setVelocityX(-gameSettings.playerSpeed);
             this.player.setVelocityY(0);
@@ -168,18 +219,6 @@ class Scene2 extends Phaser.Scene {
             this.player.setVelocityX(gameSettings.playerSpeed);
             this.player.setVelocityY(0);
             this.last_dir = "r";
-        }
-        else if(this.cursorKeys.up.isDown) {
-            this.player.play("walk_up", true);
-            this.player.setVelocityX(0);
-            this.player.setVelocityY(-gameSettings.playerSpeed);
-            this.last_dir = "u";
-        }
-        else if(this.cursorKeys.down.isDown) {
-            this.player.play("walk_down", true);
-            this.player.setVelocityX(0);
-            this.player.setVelocityY(gameSettings.playerSpeed);
-            this.last_dir = "d";
         }
         else if (this.cursorKeys.space.isDown) {
             if (this.last_dir == "r") {
