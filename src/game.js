@@ -1,16 +1,16 @@
-import Scene1 from "./scenes/Scene1";
-import Scene2 from "./scenes/Scene2";
-import Phaser from "phaser";
+import  Scene1 from './Scenes/Scene1';
+import  Scene2 from './Scenes/Scene2';
 
-var gameSettings = {
+export const gameSettings = {
 	playerSpeed: 200
 }	
 
-var config = {
+export const config = {
 	width: 800,
 	height: 700,
     type: Phaser.AUTO,
-	backgroundColor: 0x000000,
+	backgroundColor: 0x4AA04A,
+	scene: [Scene1, Scene2],
 	physics: {
 		default: "arcade",
 		arcade:{
@@ -20,8 +20,3 @@ var config = {
 }
 
 var game = new Phaser.Game(config);
-
-game.scene.add('titleScreen', Scene1);
-game.scene.add('scene2', Scene2);
-
-game.scene.start('scene2');
