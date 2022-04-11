@@ -71,7 +71,11 @@ class Scene2 extends Phaser.Scene {
             "d": "idle_down",
             "l": "idle_left",
             "r": "idle_right",
-            "u": "idle_up"
+            "u": "idle_back",
+            "dl": "idle_down_left",
+            "dr": "idle_down_right",
+            "ul": "idle_up_left",
+            "ur": "idle_up_right"
         };
         /** @type {Array<Phaser.GameObjects.Sprite>} */
         this.pigs = []
@@ -79,8 +83,9 @@ class Scene2 extends Phaser.Scene {
 
         //player - allison
         this.player = this.physics.add.sprite(300, 300, "player");
+        this.player.setSize(25, 20);
         this.player.setScale(2);
-        this.player.play("idle");
+        this.player.play("idle_down");
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.player.setCollideWorldBounds(true);
 
@@ -93,7 +98,6 @@ class Scene2 extends Phaser.Scene {
     }
 
     collect(pointer, gameObject) {
-        console.log('gameObject = ', JSON.stringify(gameObject));
         if(gameObject.group == "wood"){
             this.wood += 1;
             this.woodText.destroy();
@@ -157,7 +161,54 @@ class Scene2 extends Phaser.Scene {
     movePlayerManager() {
         this.player.setVelocityX(0);
         this.player.setVelocityY(0);
-        if(this.cursorKeys.left.isDown) {
+        if(this.cursorKeys.up.isDown) {
+            if (!this.cursorKeys.left.isDown && !this.cursorKeys.right.isDown) {
+                this.player.play("walk_up", true);
+                this.player.setVelocityX(0);
+                this.player.setVelocityY(-gameSettings.playerSpeed);
+                this.last_dir = "u";
+            } else if (this.cursorKeys.left.isDown && !this.cursorKeys.right.isDown) {
+                this.player.play("walk_up_left", true);
+                this.player.setVelocityX(-gameSettings.playerSpeed);
+                this.player.setVelocityY(-gameSettings.playerSpeed);
+                this.last_dir = "ul";
+            } else if (!this.cursorKeys.left.isDown && this.cursorKeys.right.isDown) {
+                console.log("in if");
+                this.player.play("walk_up_right", true);
+                this.player.setVelocityX(gameSettings.playerSpeed);
+                this.player.setVelocityY(-gameSettings.playerSpeed);
+                this.last_dir = "ur";
+            } else {
+                this.player.play("walk_up", true);
+                this.player.setVelocityX(0);
+                this.player.setVelocityY(-gameSettings.playerSpeed);
+                this.last_dir = "u";
+            }
+        }
+        else if(this.cursorKeys.down.isDown) {
+            if (!this.cursorKeys.left.isDown && !this.cursorKeys.right.isDown) {
+                this.player.play("walk_down", true);
+                this.player.setVelocityX(0);
+                this.player.setVelocityY(gameSettings.playerSpeed);
+                this.last_dir = "d";
+            } else if (this.cursorKeys.left.isDown && !this.cursorKeys.right.isDown) {
+                this.player.play("walk_down_left", true);
+                this.player.setVelocityX(-gameSettings.playerSpeed);
+                this.player.setVelocityY(gameSettings.playerSpeed);
+                this.last_dir = "dl";
+            } else if (!this.cursorKeys.left.isDown && this.cursorKeys.right.isDown) {
+                this.player.play("walk_down_right", true);
+                this.player.setVelocityX(gameSettings.playerSpeed);
+                this.player.setVelocityY(gameSettings.playerSpeed);
+                this.last_dir = "dr";
+            } else {
+                this.player.play("walk_down", true);
+                this.player.setVelocityX(0);
+                this.player.setVelocityY(gameSettings.playerSpeed);
+                this.last_dir = "d";
+            }
+        }
+        else if(this.cursorKeys.left.isDown) {
             this.player.play("walk_left", true);
             this.player.setVelocityX(-gameSettings.playerSpeed);
             this.player.setVelocityY(0);
@@ -169,20 +220,12 @@ class Scene2 extends Phaser.Scene {
             this.player.setVelocityY(0);
             this.last_dir = "r";
         }
-        else if(this.cursorKeys.up.isDown) {
-            this.player.play("walk_up", true);
-            this.player.setVelocityX(0);
-            this.player.setVelocityY(-gameSettings.playerSpeed);
-            this.last_dir = "u";
-        }
-        else if(this.cursorKeys.down.isDown) {
-            this.player.play("walk_down", true);
-            this.player.setVelocityX(0);
-            this.player.setVelocityY(gameSettings.playerSpeed);
-            this.last_dir = "d";
-        }
         else if (this.cursorKeys.space.isDown) {
-            this.player.play("attack_right", true);
+            if (this.last_dir == "r") {
+                this.player.play("attack_right", true);
+            } else if (this.last_dir == "l") {
+                this.player.play("attack_left", true);
+            }
             this.player.setVelocityX(0);
             this.player.setVelocityY(0);
         }
@@ -202,7 +245,7 @@ class Scene2 extends Phaser.Scene {
                 setTimeout(() => {
                     eachPig.destroy();
                 }, 1000);
-            })
+            });
         });
         this.pigs = this.pigs.map((eachPig) => {
             eachPig.setInteractive();
@@ -217,7 +260,7 @@ class Scene2 extends Phaser.Scene {
     randomPigPositioning() {
         var x_val = Phaser.Math.Between(4, config.width - 4);
         var y_val = Phaser.Math.Between(4, config.height - 4);
-        this.pig = this.add.sprite(x_val, y_val, "pig-frontfacing");
+        this.pig = this.physics.add.existing(this.add.sprite(x_val, y_val, "pig-frontfacing"), true);
         this.pig.setScale(1.5);
         this.pig.play("pig-idle-front");
         this.pigs = [...this.pigs, this.pig];
