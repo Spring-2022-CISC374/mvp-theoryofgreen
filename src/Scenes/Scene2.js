@@ -71,7 +71,7 @@ class Scene2 extends Phaser.Scene {
             "d": "idle_down",
             "l": "idle_left",
             "r": "idle_right",
-            "u": "idle_up"
+            "u": "idle_back"
         };
         /** @type {Array<Phaser.GameObjects.Sprite>} */
         this.pigs = []
@@ -79,6 +79,7 @@ class Scene2 extends Phaser.Scene {
 
         //player - allison
         this.player = this.physics.add.sprite(300, 300, "player");
+        this.player.setSize(25, 20);
         this.player.setScale(2);
         this.player.play("idle_down");
         this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -93,7 +94,6 @@ class Scene2 extends Phaser.Scene {
     }
 
     collect(pointer, gameObject) {
-        console.log('gameObject = ', JSON.stringify(gameObject));
         if(gameObject.group == "wood"){
             this.wood += 1;
             this.woodText.destroy();
@@ -206,7 +206,7 @@ class Scene2 extends Phaser.Scene {
                 setTimeout(() => {
                     eachPig.destroy();
                 }, 1000);
-            })
+            });
         });
         this.pigs = this.pigs.map((eachPig) => {
             eachPig.setInteractive();
@@ -221,7 +221,7 @@ class Scene2 extends Phaser.Scene {
     randomPigPositioning() {
         var x_val = Phaser.Math.Between(4, config.width - 4);
         var y_val = Phaser.Math.Between(4, config.height - 4);
-        this.pig = this.add.sprite(x_val, y_val, "pig-frontfacing");
+        this.pig = this.physics.add.existing(this.add.sprite(x_val, y_val, "pig-frontfacing"), true);
         this.pig.setScale(1.5);
         this.pig.play("pig-idle-front");
         this.pigs = [...this.pigs, this.pig];
