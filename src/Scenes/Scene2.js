@@ -1,9 +1,12 @@
+import { config, gameSettings } from '../game.js';
+
 class Scene2 extends Phaser.Scene {
     constructor() {
         super("playGame");
     }
 
-    create() {
+    add_materials() {
+
         this.wood = 0;
         this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
         this.woodText.depth = 100;
@@ -59,23 +62,13 @@ class Scene2 extends Phaser.Scene {
             this.weedsCount++;
         }
 
-        //score label - cameron
-        this.score = 0;
-        this.scoreLabelText = this.add.text(400, 250, `Score : ${this.score}`);
-        this.scoreLabelText.setOrigin(0.5, 14);
-        this.scoreLabelText.depth = 100;
-        this.scoreLabelText.setColor('black');
+    }
 
-        const score_label = this.add.rectangle(400, 50, 30, 200, 0xffffff, 1);
-        this.physics.add.existing(score_label, true);
-        this.tweens.add({
-            targets: score_label,
-            angle: 90,
-            duration: 0
-        });
+    create() {
 
-        const display = this.add.text(400, 250, "In the future this can be wired up to user inputs, breaking blocks, etc.");
-        display.setOrigin(0.5, 0.5);
+        /** @type {Array<Phaser.GameObjects.Sprite>} */
+        this.pigs = []
+        this.add_materials();
 
         /** @type {Phaser.Types.Input.Keyboard.CursorKeys} */
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -92,6 +85,7 @@ class Scene2 extends Phaser.Scene {
         for (let i = 0; i < rand_val; i++) {
             this.randomPigPositioning();
         }
+        this.pigCollisions();
     }
 
     collect(pointer, gameObject) {
@@ -153,8 +147,6 @@ class Scene2 extends Phaser.Scene {
 
     update() {
         this.movePlayerManager();
-        this.pigCollisions();
-        this.scoreLabel();
     }
 
     movePlayerManager() {
@@ -185,28 +177,16 @@ class Scene2 extends Phaser.Scene {
         }
     }
 
-    //score label
-    scoreLabel() {
-        if (this.cursors.up.isDown) {
-            this.score++;
-            this.scoreLabelText.text = `Score : ${this.score}`;
-        } else if (this.cursors.down.isDown) {
-            this.score--;
-            this.scoreLabelText.text = `Score : ${this.score}`;
-        } else if (this.cursors.left.isDown) {
-            this.score *= 2;
-            this.scoreLabelText.text = `Score : ${this.score}`;
-        } else if (this.cursors.right.isDown) {
-            this.score = Math.round(this.score / 2);
-            this.scoreLabelText.text = `Score : ${this.score}`;
-        }
-    }
-
     //Colliding with objects/animals
 
     //pigs
     pigCollisions() {
-        this.physics.add.collider(this.player, this.pig, function(pig){pig.destroy();});
+        this.pigs.forEach((eachPig) => {
+            this.physics.add.collider(this.player, eachPig, () => {
+                console.log('you collided with a pig!');
+            })
+        });
+        this.physics.add.staticGroup(this.pigs);
     }
 
     randomPigPositioning() {
@@ -215,12 +195,9 @@ class Scene2 extends Phaser.Scene {
         this.pig = this.add.sprite(x_val, y_val, "pig-frontfacing");
         this.pig.setScale(1.5);
         this.pig.play("pig-idle-front");
-        //this.pig.play("pig-idle-back");
-        let pig = this.add.sprite("pig-frontfacing");
         this.pig.setInteractive();
-        this.pig.on('pointerdown', function(pointer){
-            console.log("click"+pig);
-        });
-
+        this.pigs = [...this.pigs, this.pig];
     }
 }
+
+export default Scene2;
