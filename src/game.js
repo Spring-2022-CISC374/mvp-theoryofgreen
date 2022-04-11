@@ -8,6 +8,7 @@ export const gameSettings = {
 export const config = {
 	width: 800,
 	height: 700,
+    type: Phaser.AUTO,
 	backgroundColor: 0x4AA04A,
 	scene: [Scene1, Scene2],
 	physics: {

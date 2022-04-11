@@ -70,9 +70,6 @@ class Scene2 extends Phaser.Scene {
         this.pigs = []
         this.add_materials();
 
-        /** @type {Phaser.Types.Input.Keyboard.CursorKeys} */
-        this.cursors = this.input.keyboard.createCursorKeys();
-
         //player - allison
         this.player = this.physics.add.sprite(300, 300, "player");
         this.player.setScale(2);
@@ -89,6 +86,7 @@ class Scene2 extends Phaser.Scene {
     }
 
     collect(pointer, gameObject) {
+        console.log('gameObject = ', JSON.stringify(gameObject));
         if(gameObject.group == "wood"){
             this.wood += 1;
             this.woodText.destroy();
@@ -154,6 +152,7 @@ class Scene2 extends Phaser.Scene {
             this.player.play("walk_left", true);
             this.player.setVelocityX(-gameSettings.playerSpeed);
             this.player.setVelocityY(0);
+            this.player = this.physics.add.sprite(this.player.x, this.player.y, "player_left");
         }
         else if(this.cursorKeys.right.isDown) {
             this.player.play("walk_right", true);
@@ -170,6 +169,11 @@ class Scene2 extends Phaser.Scene {
             this.player.setVelocityX(0);
             this.player.setVelocityY(gameSettings.playerSpeed);
         }
+        else if (this.cursorKeys.space.isDown) {
+            this.player.play("attack_right", true);
+            this.player.setVelocityX(0);
+            this.player.setVelocityY(0);
+        }
         else {
             this.player.play("idle", true);
             this.player.setVelocityX(0);
@@ -183,19 +187,27 @@ class Scene2 extends Phaser.Scene {
     pigCollisions() {
         this.pigs.forEach((eachPig) => {
             this.physics.add.collider(this.player, eachPig, () => {
-                console.log('you collided with a pig!');
+                setTimeout(() => {
+                    eachPig.destroy();
+                }, 1000);
             })
         });
+        this.pigs = this.pigs.map((eachPig) => {
+            eachPig.setInteractive();
+            eachPig.addListener("pointerdown", () => {
+                console.log(`this is a pig at coords: ${eachPig.x},${eachPig.y}`);
+            })
+            return eachPig;
+        })
         this.physics.add.staticGroup(this.pigs);
     }
 
     randomPigPositioning() {
-        var x_val = Phaser.Math.Between(0, config.width);
-        var y_val = Phaser.Math.Between(0, config.height);
+        var x_val = Phaser.Math.Between(4, config.width - 4);
+        var y_val = Phaser.Math.Between(4, config.height - 4);
         this.pig = this.add.sprite(x_val, y_val, "pig-frontfacing");
         this.pig.setScale(1.5);
         this.pig.play("pig-idle-front");
-        this.pig.setInteractive();
         this.pigs = [...this.pigs, this.pig];
     }
 }

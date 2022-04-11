@@ -6,8 +6,13 @@ import upWalk from "../../assets/sprites/player/upwalk.png";
 import downWalk from "../../assets/sprites/player/downwalk.png";
 import leftWalk from "../../assets/sprites/player/leftwalk.png";
 import rightWalk from "../../assets/sprites/player/rightwalk.png";
+import attackRight from "../../assets/sprites/player/attack.png";
+// Animal imports
 import pigFront from "../../assets/sprites/pig/pig-frontfacing.png";
 import pigBack from "../../assets/sprites/pig/pig-backfacing.png";
+import wood from "../../assets/sprites/wood.png";
+import stone from "../../assets/sprites/rock.png";
+import weeds from "../../assets/sprites/weeds.png";
 
 class Scene1 extends Phaser.Scene {
   constructor() {
@@ -57,6 +62,11 @@ class Scene1 extends Phaser.Scene {
       frameHeight: 41,
     });
 
+    this.load.spritesheet("attack-right", attackRight, {
+      frameWidth: 51,
+      frameHeight: 35,
+    });
+
     //Objects and animals
     this.load.spritesheet("pig-frontfacing", pigFront, {
       frameWidth: 32,
@@ -70,11 +80,11 @@ class Scene1 extends Phaser.Scene {
     // #endregion
 
     // #region IMAGES
-    this.load.image("wood", "assets/sprites/wood.png");
+    this.load.image("wood", wood);
 
-    this.load.image("stone", "assets/sprites/rock.png");
+    this.load.image("stone", stone);
 
-    this.load.image("weeds", "assets/sprites/weeds.png");
+    this.load.image("weeds", weeds);
     // #endregion
   }
 
@@ -136,6 +146,13 @@ class Scene1 extends Phaser.Scene {
     this.anims.create({
       key: "walk_right",
       frames: this.anims.generateFrameNumbers("rightwalk"),
+      frameRate: 13,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "attack_right",
+      frames: this.anims.generateFrameNumbers("attack-right"),
       frameRate: 13,
       repeat: -1,
     });
