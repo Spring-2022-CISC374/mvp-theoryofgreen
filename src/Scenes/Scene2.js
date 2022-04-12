@@ -18,19 +18,15 @@ class Scene2 extends Phaser.Scene {
 
 	//environmental meter
 	envi_meter() {
-		let meter_bar = this.make_meter_bar(250, 20, 0xffffff);
-		this.set_meter_value(meter_bar, 100);
+		this.meter_bar = this.make_meter_bar(400, 35, 0xffffff);
 	}
 	make_meter_bar(x, y, color) {
-		let meter = this.add.graphics();
-		meter.fillStyle(color, 1);
-		meter.fillRect(x, y, 300, 25);
-		//meter.x = x;
-		//meter.y = y;
+		this.meter_value = 100;
+		let meter = this.add.rectangle(x, y, 300, 20, color, 1);
+		this.meter_label = this.add.text(400, 15, `ENVIRONMENT METER : ${this.meter_value}`);
+		this.meter_label.setOrigin(0.5, 0.5);
+		this.meter_label.setColor('white');
 		return meter;
-	}
-	set_meter_value(meter, percent) {
-		meter.scaleX = percent/100;
 	}
 
 	add_materials() {
