@@ -14,6 +14,7 @@ class Scene3 extends Phaser.Scene {
         this.isFire = data.isFire;
         this.fireCheck = data.fireCheck;
         this.shelterCheck = data.shelterCheck;
+        this.meat = data.meat;
     }
 
     create() {
@@ -79,7 +80,8 @@ class Scene3 extends Phaser.Scene {
                 "isShelter": this.isShelter,
                 "isFire": this.isFire,
                 "fireCheck": this.fireCheck,
-                "shelterCheck": this.shelterCheck
+                "shelterCheck": this.shelterCheck,
+                "meat": this.meat
             });
         } else if (gameObject.group == "fire") {
             if(!this.isFire) {

@@ -9,6 +9,7 @@ class Scene2 extends Phaser.Scene {
 		this.wood = data.wood;
 		this.stone = data.stone;
 		this.weeds = data.weeds;
+        this.meat = data.meat;
 		this.bandages = data.bandages;
 		this.isShelter = data.isShelter;
 		this.isFire = data.isFire;
@@ -71,53 +72,11 @@ class Scene2 extends Phaser.Scene {
 			weedy.setRandomPosition(100, 100, 650, 550);
 			this.weedsCount++;
 		}
-/*
-		this.meat = 0;
-		this.meatText = this.add.text(21, 670, `Meats : ${this.meat}`);
+
+		this.meatText = this.add.text(20, 610, `Meats : ${this.meat}`);
 		this.meatText.depth = 100;
 		this.meatText.setColor("white");
-
-		this.meatCount = 0;
 		this.meats = this.add.group();
-		var maxMeats = 5;
-		for (var i = 0; i < maxMeats; i++) {
-			var meaty = this.add.sprite(16, 16, "meat");
-			meaty.group = "meat";
-			meaty.setScale(0.1);
-			meaty.setInteractive();
-			this.meats.add(meaty);
-			meaty.setRandomPosition(0, 0, config.width, config.height);
-			this.meatCount++;
-		
-		}
-		*/
-	}
-
-	addMeat(x,y){
-		console.log("in add meat");
-		
-		this.meat = 0;
-		this.meatText = this.add.text(21, 670, `Meats : ${this.meat}`);
-		this.meatText.depth = 100;
-		this.meatText.setColor("white");
-
-		this.meatCount = 0;
-		this.meats = this.add.group();
-		this.input.on("gameObjectdown", this.collect, this);
-		var maxMeat = 5;
-		for (var i = 0; i < maxMeat; i++) {
-			var meaty = this.add.sprite(16, 16, "meat");
-			meaty.group = "meat";
-			meaty.setScale(1.5);
-			meaty.setInteractive();
-			this.meats.add(meaty);
-			this.add.sprite(x,y, "meat");
-			this.meatCount++;
-		}
-
-		this.bandageText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
-		this.bandageText.depth = 100;
-		this.bandageText.setColor("white");
 	}
 
 	create() {
@@ -125,6 +84,9 @@ class Scene2 extends Phaser.Scene {
 		this.craft.group = "craftButton";
 		this.craft.setColor("white");
 		this.craft.setInteractive();
+        this.bandageText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
+		this.bandageText.depth = 100;
+		this.bandageText.setColor("white");
 
 		this.health_bars = [];
 		this.health_bar_backgrounds = [];
@@ -151,10 +113,10 @@ class Scene2 extends Phaser.Scene {
 		this.player.play("idle_down");
 		this.cursorKeys = this.input.keyboard.createCursorKeys();
 		this.player.setCollideWorldBounds(true);
+        this.num_pigs = Phaser.Math.Between(2, 7);
 
 		//Objects and animals - zoe
-		var rand_val = Phaser.Math.Between(5, 7);
-		for (let i = 0; i < rand_val; i++) {
+		for (let i = 0; i < this.num_pigs; i++) {
 			this.randomPigPositioning(i);
 		}
 
@@ -169,7 +131,7 @@ class Scene2 extends Phaser.Scene {
 		if (gameObject.group == "wood") {
 			this.wood += 1;
 			this.woodText.destroy();
-			this.woodText = this.add.text(20, 610, `Wood : ${this.wood}`);
+			this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
 			gameObject.destroy();
 			this.woodCount--;
 			if (this.woodCount < 1) {
@@ -186,7 +148,7 @@ class Scene2 extends Phaser.Scene {
 		} else if (gameObject.group == "stone") {
 			this.stone += 1;
 			this.stoneText.destroy();
-			this.stoneText = this.add.text(19, 630, `Stone : ${this.stone}`);
+			this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
 			gameObject.destroy();
 			this.stoneCount--;
 			if (this.stoneCount < 1) {
@@ -203,7 +165,7 @@ class Scene2 extends Phaser.Scene {
 		} else if (gameObject.group == "weeds") {
 			this.weeds += 1;
 			this.weedsText.destroy();
-			this.weedsText = this.add.text(20, 650, `Weeds : ${this.weeds}`);
+			this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
 			gameObject.destroy();
 			this.weedsCount--;
 			if (this.weedsCount < 1) {
@@ -218,22 +180,17 @@ class Scene2 extends Phaser.Scene {
 				}
 			}
 		} else if (gameObject.group == "meat") {
-			this.meat += 1;
+            this.meat++;
 			this.meatText.destroy();
-			this.meatText = this.add.text(21, 670, `Meats : ${this.meat}`);
+			this.meatText = this.add.text(20, 610, `Meats : ${this.meat}`);
 			gameObject.destroy();
-			this.meatCount--;
-			if (this.meatCount < 1) {
-				while (this.meatCount < 5) {
-					var meaty = this.add.sprite(16, 16, "meat");
-					meaty.group = "meat";
-					meaty.setScale(0.1);
-					meaty.setInteractive();
-					this.meats.add(meaty);
-					
-					this.meatCount++;
-				}
-			}
+            if (this.meat !== 0 && this.meat % this.num_pigs === 0) {
+                this.pigs = [];
+                for (let j = 0; j < this.num_pigs; j++) {
+                    this.randomPigPositioning(j);
+                }
+                this.pigCollisions();
+            }
 		}  else if (gameObject.group == "craftButton") {
 			this.scene.start("craftScreen", {
 				"wood": this.wood,
@@ -243,21 +200,11 @@ class Scene2 extends Phaser.Scene {
 				"isShelter": this.isShelter,
 				"isFire": this.isFire,
 				"fireCheck": this.fireCheck,
-				"shelterCheck": this.shelterCheck
+				"shelterCheck": this.shelterCheck,
+                "meat": this.meat
 			});
 		}
 		
-	}
-
-	collectMeat(pointer, gameObject) {
-		console.log("in collect");
-		if (gameObject.group == "meat") {
-			this.meat += 1;
-			this.meatText.destroy();
-			this.meatText = this.add.text(21, 670, `Meats : ${this.meat}`);
-			gameObject.destroy();
-			this.meatCount--;
-		}
 	}
 
 	update() {
@@ -415,14 +362,18 @@ class Scene2 extends Phaser.Scene {
 			healthBar.x -= 0.5;
 			obj2.hp -= 1;
 		} else {
-			console.log("in else");
 			healthBar.destroy();
 			/** @type {Phaser.GameObjects.Rectangle} */
 			const healthbarBackground = this.health_bar_backgrounds[obj2.id];
 			healthbarBackground.destroy();
 			/** @type {Phaser.GameObjects.Sprite} */
 			obj2.destroy();
-			this.addMeat(obj2.x, obj2.y);
+            const theMeat = this.add.sprite(obj2.x, obj2.y, "meat");
+            theMeat.setScale(2.5);
+            theMeat.setDepth(-1);
+            theMeat.setInteractive();
+            theMeat.group = "meat";
+            this.meats.add(theMeat);
 		}
 		this.physics.world.remove(this.weaponHitbox);
 	}

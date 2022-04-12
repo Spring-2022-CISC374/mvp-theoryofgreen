@@ -160,6 +160,7 @@ class Scene1 extends Phaser.Scene {
     this.isFire = false;
     this.fireCheck = 0;
     this.shelterCheck = 0;
+    this.meat = 0;
 
     this.add.text(20, 20, "Loading game...");
     this.scene.start("playGame", {
@@ -170,7 +171,8 @@ class Scene1 extends Phaser.Scene {
       "isShelter": this.isShelter,
       "isFire": this.isFire,
       "fireCheck": this.fireCheck,
-      "shelterCheck": this.shelterCheck
+      "shelterCheck": this.shelterCheck,
+      "meat": this.meat
     });
 
     // #region ANIMS
