@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel ./src/index.html",
-    "start-dev": "npm i && npm run start",
-    "clean": "rimraf node_modules"
+    "setup": "npm i",
+    "start-dev": "npm run clean && npm run start",
+    "clean": "rimraf node_modules && rimraf .cache && rimraf dist"
   },
   "repository": {
     "type": "git",
