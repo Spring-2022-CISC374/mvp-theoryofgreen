@@ -17,13 +17,8 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	add_materials() {
-<<<<<<< HEAD
-		this.wood = 0;
-		this.woodText = this.add.text(20, 610, `Wood : ${this.wood}`);
-=======
 		//this.wood = 0;
 		this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
->>>>>>> cb7926e8b69052e5ac1bacc355d449b3989d90ef
 		this.woodText.depth = 100;
 		this.woodText.setColor("white");
 
@@ -41,13 +36,8 @@ class Scene2 extends Phaser.Scene {
 			this.woodCount++;
 		}
 
-<<<<<<< HEAD
-		this.stone = 0;
-		this.stoneText = this.add.text(19, 630, `Stone : ${this.stone}`);
-=======
 		//this.stone = 0;
 		this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
->>>>>>> cb7926e8b69052e5ac1bacc355d449b3989d90ef
 		this.stoneText.depth = 100;
 		this.stoneText.setColor("white");
 
@@ -64,13 +54,8 @@ class Scene2 extends Phaser.Scene {
 			this.stoneCount++;
 		}
 
-<<<<<<< HEAD
-		this.weeds = 0;
-		this.weedsText = this.add.text(20, 650, `Weeds : ${this.weeds}`);
-=======
 		//this.weeds = 0;
 		this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
->>>>>>> cb7926e8b69052e5ac1bacc355d449b3989d90ef
 		this.weedsText.depth = 100;
 		this.weedsText.setColor("white");
 
@@ -86,7 +71,6 @@ class Scene2 extends Phaser.Scene {
 			weedy.setRandomPosition(100, 100, 650, 550);
 			this.weedsCount++;
 		}
-<<<<<<< HEAD
 /*
 		this.meat = 0;
 		this.meatText = this.add.text(21, 670, `Meats : ${this.meat}`);
@@ -130,12 +114,10 @@ class Scene2 extends Phaser.Scene {
 			this.add.sprite(x,y, "meat");
 			this.meatCount++;
 		}
-=======
 
 		this.bandageText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
 		this.bandageText.depth = 100;
 		this.bandageText.setColor("white");
->>>>>>> cb7926e8b69052e5ac1bacc355d449b3989d90ef
 	}
 
 	create() {
@@ -183,12 +165,7 @@ class Scene2 extends Phaser.Scene {
 		this.pigCollisions();
 	}
 
-<<<<<<< HEAD
-	collect(pointer, gameObject) {
-		console.log("in other ");
-=======
 	click(pointer, gameObject) {
->>>>>>> cb7926e8b69052e5ac1bacc355d449b3989d90ef
 		if (gameObject.group == "wood") {
 			this.wood += 1;
 			this.woodText.destroy();
@@ -240,7 +217,6 @@ class Scene2 extends Phaser.Scene {
 					this.weedsCount++;
 				}
 			}
-<<<<<<< HEAD
 		} else if (gameObject.group == "meat") {
 			this.meat += 1;
 			this.meatText.destroy();
@@ -258,6 +234,17 @@ class Scene2 extends Phaser.Scene {
 					this.meatCount++;
 				}
 			}
+		}  else if (gameObject.group == "craftButton") {
+			this.scene.start("craftScreen", {
+				"wood": this.wood,
+				"stone": this.stone,
+				"weeds": this.weeds,
+				"bandages": this.bandages,
+				"isShelter": this.isShelter,
+				"isFire": this.isFire,
+				"fireCheck": this.fireCheck,
+				"shelterCheck": this.shelterCheck
+			});
 		}
 		
 	}
@@ -270,20 +257,6 @@ class Scene2 extends Phaser.Scene {
 			this.meatText = this.add.text(21, 670, `Meats : ${this.meat}`);
 			gameObject.destroy();
 			this.meatCount--;
-			
-=======
-		} else if (gameObject.group == "craftButton") {
-			this.scene.start("craftScreen", {
-				"wood": this.wood,
-				"stone": this.stone,
-				"weeds": this.weeds,
-				"bandages": this.bandages,
-				"isShelter": this.isShelter,
-				"isFire": this.isFire,
-				"fireCheck": this.fireCheck,
-				"shelterCheck": this.shelterCheck
-			});
->>>>>>> cb7926e8b69052e5ac1bacc355d449b3989d90ef
 		}
 	}
 
