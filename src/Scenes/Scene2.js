@@ -5,15 +5,26 @@ class Scene2 extends Phaser.Scene {
 		super("playGame");
 	}
 
+	init(data) {
+		this.wood = data.wood;
+		this.stone = data.stone;
+		this.weeds = data.weeds;
+		this.bandages = data.bandages;
+		this.isShelter = data.isShelter;
+		this.isFire = data.isFire;
+		this.fireCheck = data.fireCheck;
+		this.shelterCheck = data.shelterCheck;
+	}
+
 	add_materials() {
-		this.wood = 0;
+		//this.wood = 0;
 		this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
 		this.woodText.depth = 100;
 		this.woodText.setColor("white");
 
 		this.woodCount = 0;
 		this.woods = this.add.group();
-		this.input.on("gameobjectdown", this.collect, this);
+		this.input.on("gameobjectdown", this.click, this);
 		var maxWood = 5;
 		for (var i = 0; i < maxWood; i++) {
 			var woody = this.add.sprite(16, 16, "wood");
@@ -21,11 +32,11 @@ class Scene2 extends Phaser.Scene {
 			woody.setScale(0.1);
 			woody.setInteractive();
 			this.woods.add(woody);
-			woody.setRandomPosition(0, 0, config.width, config.height);
+			woody.setRandomPosition(100, 100, 650, 550);
 			this.woodCount++;
 		}
 
-		this.stone = 0;
+		//this.stone = 0;
 		this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
 		this.stoneText.depth = 100;
 		this.stoneText.setColor("white");
@@ -39,11 +50,11 @@ class Scene2 extends Phaser.Scene {
 			stony.setScale(0.1);
 			stony.setInteractive();
 			this.stones.add(stony);
-			stony.setRandomPosition(0, 0, config.width, config.height);
+			stony.setRandomPosition(100, 100, 650, 550);
 			this.stoneCount++;
 		}
 
-		this.weeds = 0;
+		//this.weeds = 0;
 		this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
 		this.weedsText.depth = 100;
 		this.weedsText.setColor("white");
@@ -57,12 +68,21 @@ class Scene2 extends Phaser.Scene {
 			weedy.setScale(0.1);
 			weedy.setInteractive();
 			this.weedss.add(weedy);
-			weedy.setRandomPosition(0, 0, config.width, config.height);
+			weedy.setRandomPosition(100, 100, 650, 550);
 			this.weedsCount++;
 		}
+
+		this.bandageText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
+		this.bandageText.depth = 100;
+		this.bandageText.setColor("white");
 	}
 
 	create() {
+		this.craft = this.add.text(25, 25, "Click to craft!");
+		this.craft.group = "craftButton";
+		this.craft.setColor("white");
+		this.craft.setInteractive();
+
 		this.health_bars = [];
 		this.health_bar_backgrounds = [];
 		this.last_dir = "d";
@@ -89,7 +109,7 @@ class Scene2 extends Phaser.Scene {
 		this.player.setCollideWorldBounds(true);
 
 		//Objects and animals - zoe
-		var rand_val = Phaser.Math.Between(5, 10);
+		var rand_val = Phaser.Math.Between(5, 7);
 		for (let i = 0; i < rand_val; i++) {
 			this.randomPigPositioning(i);
 		}
@@ -101,7 +121,7 @@ class Scene2 extends Phaser.Scene {
 		this.pigCollisions();
 	}
 
-	collect(pointer, gameObject) {
+	click(pointer, gameObject) {
 		if (gameObject.group == "wood") {
 			this.wood += 1;
 			this.woodText.destroy();
@@ -115,7 +135,7 @@ class Scene2 extends Phaser.Scene {
 					woody.setScale(0.1);
 					woody.setInteractive();
 					this.woods.add(woody);
-					woody.setRandomPosition(0, 0, config.width, config.height);
+					woody.setRandomPosition(100, 100, 650, 550);
 					this.woodCount++;
 				}
 			}
@@ -132,7 +152,7 @@ class Scene2 extends Phaser.Scene {
 					stony.setScale(0.1);
 					stony.setInteractive();
 					this.stones.add(stony);
-					stony.setRandomPosition(0, 0, config.width, config.height);
+					stony.setRandomPosition(100, 100, 650, 550);
 					this.stoneCount++;
 				}
 			}
@@ -149,15 +169,44 @@ class Scene2 extends Phaser.Scene {
 					weedy.setScale(0.1);
 					weedy.setInteractive();
 					this.weedss.add(weedy);
-					weedy.setRandomPosition(0, 0, config.width, config.height);
+					weedy.setRandomPosition(100, 100, 650, 550);
 					this.weedsCount++;
 				}
 			}
+		} else if (gameObject.group == "craftButton") {
+			this.scene.start("craftScreen", {
+				"wood": this.wood,
+				"stone": this.stone,
+				"weeds": this.weeds,
+				"bandages": this.bandages,
+				"isShelter": this.isShelter,
+				"isFire": this.isFire,
+				"fireCheck": this.fireCheck,
+				"shelterCheck": this.shelterCheck
+			});
 		}
 	}
 
 	update() {
 		this.movePlayerManager();
+		this.spawnCampfire();
+		this.spawnShelter();
+	}
+
+	spawnCampfire() {
+		if(this.isFire && this.fireCheck == 1) {
+			this.fireSpawn = this.add.image(500, 75, "campfire");
+			this.fireSpawn.setScale(.12);
+			this.fireCheck = 2;
+		}
+	}
+
+	spawnShelter() {
+		if(this.isShelter && this.shelterCheck == 1) {
+			this.shelterSpawn = this.add.image(400, 50, "shelter");
+			this.shelterSpawn.setScale(.3);
+			this.shelterCheck = 2;
+		}
 	}
 
 	movePlayerManager() {
@@ -305,8 +354,8 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	randomPigPositioning(pig_num) {
-		var x_val = Phaser.Math.Between(15, config.width - 4);
-		var y_val = Phaser.Math.Between(15, config.height - 4);
+		var x_val = Phaser.Math.Between(150, 700);
+		var y_val = Phaser.Math.Between(100, 600);
 		this.pig = this.physics.add.existing(
 			this.add.sprite(x_val, y_val, "pig-frontfacing"),
 			true,

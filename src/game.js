@@ -1,5 +1,6 @@
 import  Scene1 from './Scenes/Scene1';
 import  Scene2 from './Scenes/Scene2';
+import  Scene3 from './Scenes/Scene3';
 
 export const gameSettings = {
 	playerSpeed: 200
@@ -10,7 +11,7 @@ export const config = {
 	height: 700,
     type: Phaser.AUTO,
 	backgroundColor: 0x4AA04A,
-	scene: [Scene1, Scene2],
+	scene: [Scene1, Scene2, Scene3],
     title: "Theory of Green",
 	physics: {
 		default: "arcade",
