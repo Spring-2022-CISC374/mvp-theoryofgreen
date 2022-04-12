@@ -16,6 +16,16 @@ class Scene2 extends Phaser.Scene {
 		this.shelterCheck = data.shelterCheck;
 	}
 
+	environment_meter_counter() {
+		this.environmentMeter = 100;
+		this.environmentMeterText = this.add.text(400, 15, `ENVIRONMENT METER : ${this.environmentMeter}`);
+		this.environmentMeterText.setOrigin(0.5, 0.5);
+		this.environmentMeterText.setColor('white');
+		const environment_meter = this.add.rectangle(400, 35, 300, 20, 0xffffff, 1);
+
+		
+	}
+
 	add_materials() {
 		//this.wood = 0;
 		this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
@@ -99,6 +109,7 @@ class Scene2 extends Phaser.Scene {
 		/** @type {Array<Phaser.GameObjects.Sprite>} */
 		this.pigs = [];
 		this.add_materials();
+		this.environment_meter_counter();
 
 		//player - allison
 		this.player = this.physics.add.sprite(300, 300, "player");
