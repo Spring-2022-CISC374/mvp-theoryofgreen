@@ -16,14 +16,25 @@ class Scene2 extends Phaser.Scene {
 		this.shelterCheck = data.shelterCheck;
 	}
 
-	environment_meter_counter() {
-		this.environmentMeter = 100;
-		this.environmentMeterText = this.add.text(400, 15, `ENVIRONMENT METER : ${this.environmentMeter}`);
-		this.environmentMeterText.setOrigin(0.5, 0.5);
-		this.environmentMeterText.setColor('white');
-		const environment_meter = this.add.rectangle(400, 35, 300, 20, 0xffffff, 1);
-
-		
+	environment_meter() {
+		this.meter_value = 100;
+        this.meter_text = this.add.text(400, 20, `ENVIRONMENT METER : ${this.meter_value}`);
+        this.meter_text.setOrigin(0.5, 0.5);
+        this.meter_text.setColor('white');
+		this.make_e_meter();
+	}
+	make_e_meter() {
+		this.meter_bar = this.add.rectangle(400, 40, 300, 20, 0xffffff, 1);
+		//meter health
+		if (this.meter_value < 50) {
+			this.meter_bar.fillColor(0xffb700);
+		} else if (this.meter_value < 30){
+			this.meter_bar.fillColor(0xff0000);
+		}
+	}
+	decrease_meter(amount) {
+		this.meter_value -= amount;
+		this.make_e_meter();
 	}
 
 	add_materials() {
@@ -44,6 +55,8 @@ class Scene2 extends Phaser.Scene {
 			this.woods.add(woody);
 			woody.setRandomPosition(100, 100, 650, 550);
 			this.woodCount++;
+			//wood environmental impact = 5
+			this.decrease_meter(5);
 		}
 
 		//this.stone = 0;
@@ -62,6 +75,8 @@ class Scene2 extends Phaser.Scene {
 			this.stones.add(stony);
 			stony.setRandomPosition(100, 100, 650, 550);
 			this.stoneCount++;
+			//stone environmental impact = 1
+			this.decrease_meter(1);	
 		}
 
 		//this.weeds = 0;
@@ -80,6 +95,8 @@ class Scene2 extends Phaser.Scene {
 			this.weedss.add(weedy);
 			weedy.setRandomPosition(100, 100, 650, 550);
 			this.weedsCount++;
+			//weed environmental impact = 5
+			this.decrease_meter(5);
 		}
 
 		this.bandageText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
@@ -109,7 +126,7 @@ class Scene2 extends Phaser.Scene {
 		/** @type {Array<Phaser.GameObjects.Sprite>} */
 		this.pigs = [];
 		this.add_materials();
-		this.environment_meter_counter();
+		this.environment_meter();
 
 		//player - allison
 		this.player = this.physics.add.sprite(300, 300, "player");
