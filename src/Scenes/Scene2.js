@@ -19,11 +19,19 @@ class Scene2 extends Phaser.Scene {
 	//environmental meter
 	environment_meter() {
 		this.meter_value = 100;
-		this.meter_label = this.add.text(400, 20, `ENVIRONMENT METER : ${this.meter_value}`);
+		this.meter_label = this.add.text(400, 5, `ENVIRONMENT METER : ${this.meter_value}`);
 		this.meter_label.setOrigin(0.5,0,5);
 		this.meter_label.setColor('white');
 
 		this.meter_bar = this.add.rectangle(400, 30, 300, 20, 0xfffffff, 1);
+	}
+
+	meter_value() {
+		if(this.click){
+			console.log("this is here");
+			this.meter_value--;
+			this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;
+		}
 	}
 
 	add_materials() {
@@ -109,6 +117,8 @@ class Scene2 extends Phaser.Scene {
 		/** @type {Array<Phaser.GameObjects.Sprite>} */
 		this.pigs = [];
 		this.add_materials();
+
+		this.environment_meter();
 
 		//player - allison
 		this.player = this.physics.add.sprite(300, 300, "player");
