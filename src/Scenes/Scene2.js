@@ -44,6 +44,11 @@ class Scene2 extends Phaser.Scene {
 		} else if (this.meter_value >= 20) {
 			this.meter_bar.setFillStyle(0xe00000);	
 		}
+
+		//game over if meter reaches 0
+		if (this.meter_value <= 0) {
+			this.gameEnd();
+		}
 	}
 
 	add_materials() {
