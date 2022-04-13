@@ -19,28 +19,28 @@ class Scene2 extends Phaser.Scene {
 	//environmental meter
 	environment_meter() {
 		this.meter_value = 100;
-		this.bar_size = 300;
+		this.bar_size = 100;
 		this.meter_label = this.add.text(400, 5, `ENVIRONMENT METER : ${this.meter_value}`);
 		this.meter_label.setOrigin(0.5,0,5);
 		this.meter_label.setColor('white');
 
-		this.meter_bar = this.add.rectangle(400, 30, 300, 20, 0xfffffff, 1);
+		this.meter_bar = this.add.rectangle(400, 30, this.bar_size, 20, 0xfffffff, 1);
+		this.meter_bar.scaleX = 3;
 	}
 
 	environment_meter_value(amount) {
 		this.meter_value -= amount;
 		this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;
+
+		//bar color and size
+		this.meter_bar.setSize(this.bar_size--, 20);
 		if (this.meter_value >= 90) {
-			this.meter_bar.setSize(250, 20);
 			this.meter_bar.setFillStyle(0x3dbf00);
 		} else if (this.meter_value >= 60) {
-			this.meter_bar.setSize(200, 20);
 			this.meter_bar.setFillStyle(0xe6c700);	
 		} else if (this.meter_value >= 50) {
-			this.meter_bar.setSize(150, 20);
 			this.meter_bar.setFillStyle(0xe03800);
 		} else if (this.meter_value >= 20) {
-			this.meter_bar.setSize(100, 20);
 			this.meter_bar.setFillStyle(0xe00000);	
 		}
 	}
@@ -129,6 +129,7 @@ class Scene2 extends Phaser.Scene {
 		this.pigs = [];
 		this.add_materials();
 
+		//create envi meter
 		this.environment_meter();
 
 		//player - allison
@@ -171,7 +172,8 @@ class Scene2 extends Phaser.Scene {
 					this.woodCount++;
 				}
 			}
-			this.environment_meter_value(2);
+			// envi impact wood = 1
+			this.environment_meter_value(1);
 		} else if (gameObject.group == "stone") {
 			this.stone += 1;
 			this.stoneText.destroy();
@@ -189,6 +191,7 @@ class Scene2 extends Phaser.Scene {
 					this.stoneCount++;
 				}
 			}
+			//envi impact stone = 1
 			this.environment_meter_value(1);
 		} else if (gameObject.group == "weeds") {
 			this.weeds += 1;
@@ -207,7 +210,8 @@ class Scene2 extends Phaser.Scene {
 					this.weedsCount++;
 				}
 			}
-			this.environment_meter_value(3);
+			//envi impact weeds = 1
+			this.environment_meter_value(1);
 		} else if (gameObject.group == "craftButton") {
 			this.scene.start("craftScreen", {
 				"wood": this.wood,
