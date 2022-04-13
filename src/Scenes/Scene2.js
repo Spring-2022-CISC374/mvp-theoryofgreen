@@ -26,12 +26,22 @@ class Scene2 extends Phaser.Scene {
 		this.meter_bar = this.add.rectangle(400, 30, 300, 20, 0xfffffff, 1);
 	}
 
-	meter_value() {
-		if(this.click){
-			console.log("this is here");
-			this.meter_value--;
-			this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;
-		}
+	environment_meter_value(amount ) {
+		this.meter_value -= amount;
+		this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;
+		// if(this.woodCount == 1) {
+		// 	console.log(this.woodCount);
+		// 	this.meter_value -= 5;
+		// 	this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;
+		// } else if (this.stoneCount == 1) {
+		// 	console.log(this.stoneCount);
+		// 	this.meter_value -= 1;
+		// 	this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;	
+		// } else if (this.weedsCount == 1) {
+		// 	console.log(this.weedsCount);
+		// 	this.meter_value -= 3;
+		// 	this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;	
+		// }
 	}
 
 	add_materials() {
@@ -160,6 +170,7 @@ class Scene2 extends Phaser.Scene {
 					this.woodCount++;
 				}
 			}
+			this.environment_meter_value(2);
 		} else if (gameObject.group == "stone") {
 			this.stone += 1;
 			this.stoneText.destroy();
@@ -177,6 +188,7 @@ class Scene2 extends Phaser.Scene {
 					this.stoneCount++;
 				}
 			}
+			this.environment_meter_value(1);
 		} else if (gameObject.group == "weeds") {
 			this.weeds += 1;
 			this.weedsText.destroy();
@@ -194,6 +206,7 @@ class Scene2 extends Phaser.Scene {
 					this.weedsCount++;
 				}
 			}
+			this.environment_meter_value(3);
 		} else if (gameObject.group == "craftButton") {
 			this.scene.start("craftScreen", {
 				"wood": this.wood,
@@ -212,6 +225,8 @@ class Scene2 extends Phaser.Scene {
 		this.movePlayerManager();
 		this.spawnCampfire();
 		this.spawnShelter();
+		//this.environment_meter_value();
+		//console.log(this.woodCount);
 	}
 
 	spawnCampfire() {
