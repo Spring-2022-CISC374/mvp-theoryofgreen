@@ -19,6 +19,7 @@ class Scene2 extends Phaser.Scene {
 	//environmental meter
 	environment_meter() {
 		this.meter_value = 100;
+		this.bar_size = 300;
 		this.meter_label = this.add.text(400, 5, `ENVIRONMENT METER : ${this.meter_value}`);
 		this.meter_label.setOrigin(0.5,0,5);
 		this.meter_label.setColor('white');
@@ -26,22 +27,22 @@ class Scene2 extends Phaser.Scene {
 		this.meter_bar = this.add.rectangle(400, 30, 300, 20, 0xfffffff, 1);
 	}
 
-	environment_meter_value(amount ) {
+	environment_meter_value(amount) {
 		this.meter_value -= amount;
 		this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;
-		// if(this.woodCount == 1) {
-		// 	console.log(this.woodCount);
-		// 	this.meter_value -= 5;
-		// 	this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;
-		// } else if (this.stoneCount == 1) {
-		// 	console.log(this.stoneCount);
-		// 	this.meter_value -= 1;
-		// 	this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;	
-		// } else if (this.weedsCount == 1) {
-		// 	console.log(this.weedsCount);
-		// 	this.meter_value -= 3;
-		// 	this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;	
-		// }
+		if (this.meter_value >= 90) {
+			this.meter_bar.setSize(250, 20);
+			this.meter_bar.setFillStyle(0x3dbf00);
+		} else if (this.meter_value >= 60) {
+			this.meter_bar.setSize(200, 20);
+			this.meter_bar.setFillStyle(0xe6c700);	
+		} else if (this.meter_value >= 50) {
+			this.meter_bar.setSize(150, 20);
+			this.meter_bar.setFillStyle(0xe03800);
+		} else if (this.meter_value >= 20) {
+			this.meter_bar.setSize(100, 20);
+			this.meter_bar.setFillStyle(0xe00000);	
+		}
 	}
 
 	add_materials() {
@@ -225,6 +226,7 @@ class Scene2 extends Phaser.Scene {
 		this.movePlayerManager();
 		this.spawnCampfire();
 		this.spawnShelter();
+		console.log(this.bar_size);
 		//this.environment_meter_value();
 		//console.log(this.woodCount);
 	}
