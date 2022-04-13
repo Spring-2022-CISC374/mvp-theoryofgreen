@@ -254,9 +254,11 @@ class Scene2 extends Phaser.Scene {
 		this.movePlayerManager();
 		this.spawnCampfire();
 		this.spawnShelter();
-		console.log(this.bar_size);
-		//this.environment_meter_value();
-		//console.log(this.woodCount);
+
+		//pig movement 
+		this.pigMovement(this.pig, Phaser.Math.Between(1, 3));
+		
+		//timer
 		if(this.timer.getRemainingSeconds() >= 100) {
 			this.x = 6;
 		}
@@ -466,6 +468,18 @@ class Scene2 extends Phaser.Scene {
 		this.pig.setScale(1.5);
 		this.pig.play("pig-idle-front");
 		this.pigs = [...this.pigs, this.pig];
+	}
+
+	pigMovement(a_pig, speed) {
+		a_pig.y += speed;
+		if (a_pig.y > config.height) {
+			this.resetPigPosition(a_pig);
+		}
+	}
+	resetPigPosition(a_pig) {
+		a_pig.y = 0
+		var rand_x = Phaser.Math.Between(0, config.width);
+		a_pig.x = rand_x;
 	}
 }
 
