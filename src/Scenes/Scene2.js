@@ -181,7 +181,6 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	click(pointer, gameObject) {
-		console.log("click");
 		if (gameObject.group == "wood") {
 			this.wood += 1;
 			this.woodText.destroy();
@@ -283,7 +282,6 @@ class Scene2 extends Phaser.Scene {
             }
             this.pigCollisions();
         }
-        console.log("# of pigs with 0 hp = ", this.pigs.filter(e => e.hp === 0).length);
 		this.timerDelay = this.timer.getRemainingSeconds() * 1000;
 		//console.log(this.timer.getRemainingSeconds());
 		this.timerText.setText('Survive for: ' + this.timer.getRemainingSeconds().toString().substring(0, this.x));
@@ -398,7 +396,6 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	pigCollisions() {
-        console.log("in pig collisions");
 		this.pigs.forEach((eachPig) => {
 			this.physics.add.collider(this.player, eachPig, () => {
 				const oinkText = this.add.text(
