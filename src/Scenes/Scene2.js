@@ -14,6 +14,7 @@ class Scene2 extends Phaser.Scene {
 		this.isFire = data.isFire;
 		this.fireCheck = data.fireCheck;
 		this.shelterCheck = data.shelterCheck;
+		this.timerDelay = data.timerDelay;
 	}
 
 	add_materials() {
@@ -119,6 +120,23 @@ class Scene2 extends Phaser.Scene {
 		this.physics.add.existing(this.weaponHitbox);
 
 		this.pigCollisions();
+
+		this.timerText = this.add.text(600, 25);
+		this.timer = this.time.addEvent({
+			delay: this.timerDelay,
+			callback: this.gameEnd,
+			args: [],
+			callbackScope: this,
+			loop: false,
+			repeat: 0,
+			startAt: 1,
+			timeScale: 1,
+			paused: false
+		});
+	}
+
+	gameEnd() {
+		this.scene.start("endGame");
 	}
 
 	click(pointer, gameObject) {
@@ -182,7 +200,8 @@ class Scene2 extends Phaser.Scene {
 				"isShelter": this.isShelter,
 				"isFire": this.isFire,
 				"fireCheck": this.fireCheck,
-				"shelterCheck": this.shelterCheck
+				"shelterCheck": this.shelterCheck,
+				"timerDelay": this.timerDelay
 			});
 		}
 	}
@@ -191,6 +210,18 @@ class Scene2 extends Phaser.Scene {
 		this.movePlayerManager();
 		this.spawnCampfire();
 		this.spawnShelter();
+		if(this.timer.getRemainingSeconds() >= 100) {
+			this.x = 6;
+		}
+		else if (this.timer.getRemainingSeconds() >= 10) {
+			this.x = 5;
+		}
+		else {
+			this.x = 4;
+		}
+		this.timerDelay = this.timer.getRemainingSeconds() * 1000;
+		//console.log(this.timer.getRemainingSeconds());
+		this.timerText.setText('Survive for: ' + this.timer.getRemainingSeconds().toString().substring(0, this.x));
 	}
 
 	spawnCampfire() {

@@ -14,6 +14,7 @@ class Scene3 extends Phaser.Scene {
         this.isFire = data.isFire;
         this.fireCheck = data.fireCheck;
         this.shelterCheck = data.shelterCheck;
+        this.timerDelay = data.timerDelay;
     }
 
     create() {
@@ -61,7 +62,38 @@ class Scene3 extends Phaser.Scene {
         this.shelterText.group = "shelter";
         this.shelter.setInteractive();
         this.shelterText.setInteractive();
+
+        this.timerText = this.add.text(600, 25);
+		this.timer = this.time.addEvent({
+			delay: this.timerDelay,
+			callback: this.gameEnd,
+			args: [],
+			callbackScope: this,
+			loop: false,
+			repeat: 0,
+			startAt: 1,
+			timeScale: 1,
+			paused: false
+		});
     }
+
+    gameEnd() {
+		this.scene.start("endGame");
+	}
+
+    update() {
+		if(this.timer.getRemainingSeconds() >= 100) {
+			this.x = 6;
+		}
+		else if (this.timer.getRemainingSeconds() >= 10) {
+			this.x = 5;
+		}
+		else {
+			this.x = 4;
+		}
+		this.timerDelay = this.timer.getRemainingSeconds() * 1000;
+		this.timerText.setText('Survive for: ' + this.timer.getRemainingSeconds().toString().substring(0, this.x));
+	}
 
     click(pointer, gameObject) {
         if(this.fireCheck == 2) {
@@ -79,7 +111,8 @@ class Scene3 extends Phaser.Scene {
                 "isShelter": this.isShelter,
                 "isFire": this.isFire,
                 "fireCheck": this.fireCheck,
-                "shelterCheck": this.shelterCheck
+                "shelterCheck": this.shelterCheck,
+                "timerDelay": this.timerDelay
             });
         } else if (gameObject.group == "fire") {
             if(!this.isFire) {
