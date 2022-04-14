@@ -436,7 +436,7 @@ class Scene2 extends Phaser.Scene {
 		if (obj2.hp > 0) {
 			healthBar.displayWidth -= 1;
 			healthBar.x -= 0.5;
-			obj2.hp -= 5;
+			obj2.hp -= 1;
 		} else {
 			console.log("in else");
 			healthBar.destroy();
