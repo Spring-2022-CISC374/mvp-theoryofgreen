@@ -256,8 +256,8 @@ class Scene2 extends Phaser.Scene {
 		this.spawnShelter();
 
 		//pig movement 
-		this.pigMovement(this.pig, Phaser.Math.Between(1, 3));
-		
+		this.pigMovement(1);
+
 		//timer
 		if(this.timer.getRemainingSeconds() >= 100) {
 			this.x = 6;
@@ -470,11 +470,14 @@ class Scene2 extends Phaser.Scene {
 		this.pigs = [...this.pigs, this.pig];
 	}
 
-	pigMovement(a_pig, speed) {
-		a_pig.y += speed;
-		if (a_pig.y > config.height) {
-			this.resetPigPosition(a_pig);
-		}
+	pigMovement(speed) {
+		this.pigs.forEach((eachPig) => {
+			eachPig.y += speed;
+			//this.randomPigPositioning();
+			if (eachPig.y > config.height) {
+				this.resetPigPosition(eachPig);
+			}
+		});
 	}
 	resetPigPosition(a_pig) {
 		a_pig.y = 0
