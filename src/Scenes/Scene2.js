@@ -117,7 +117,9 @@ class Scene2 extends Phaser.Scene {
 		this.craft.group = "craftButton";
 		this.craft.setColor("white");
 		this.craft.setInteractive();
+        this.num_pigs = 0
 
+        /** @type {Array<Phaser.GameObjects.Rectangle>} */
 		this.health_bars = [];
 		this.health_bar_backgrounds = [];
 		this.last_dir = "d";
@@ -140,6 +142,7 @@ class Scene2 extends Phaser.Scene {
 
 		//player - allison
 		this.player = this.physics.add.sprite(300, 300, "player");
+        this.physics.world.add(this.player.body);
 		this.player.setSize(25, 20);
 		this.player.setScale(2);
 		this.player.play("idle_down");
@@ -148,6 +151,7 @@ class Scene2 extends Phaser.Scene {
 
 		//Objects and animals - zoe
 		var rand_val = Phaser.Math.Between(5, 7);
+        this.num_pigs = rand_val;
 		for (let i = 0; i < rand_val; i++) {
 			this.randomPigPositioning(i);
 		}
@@ -268,6 +272,18 @@ class Scene2 extends Phaser.Scene {
 		else {
 			this.x = 4;
 		}
+
+        if (this.pigs.filter(e => e.hp === 0).length === this.num_pigs) {
+            // all pigs are dead
+            this.health_bars = [];
+            this.health_bar_backgrounds = [];
+            this.pigs = [];
+            for (let i = 0; i < this.num_pigs; i++) {
+                this.randomPigPositioning(i);
+            }
+            this.pigCollisions();
+        }
+        console.log("# of pigs with 0 hp = ", this.pigs.filter(e => e.hp === 0).length);
 		this.timerDelay = this.timer.getRemainingSeconds() * 1000;
 		//console.log(this.timer.getRemainingSeconds());
 		this.timerText.setText('Survive for: ' + this.timer.getRemainingSeconds().toString().substring(0, this.x));
@@ -382,6 +398,7 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	pigCollisions() {
+        console.log("in pig collisions");
 		this.pigs.forEach((eachPig) => {
 			this.physics.add.collider(this.player, eachPig, () => {
 				const oinkText = this.add.text(
@@ -392,7 +409,7 @@ class Scene2 extends Phaser.Scene {
 				);
 				setTimeout(() => {
 					oinkText.destroy();
-				}, 100);
+				}, 1);
 			});
 			this.physics.add.overlap(
 				this.weaponHitbox,
@@ -411,7 +428,6 @@ class Scene2 extends Phaser.Scene {
 			});
 			return eachPig;
 		});
-		this.physics.add.staticGroup(this.pigs);
 	}
 
 	handleHitboxCollide(obj1, obj2) {
@@ -420,7 +436,7 @@ class Scene2 extends Phaser.Scene {
 		if (obj2.hp > 0) {
 			healthBar.displayWidth -= 1;
 			healthBar.x -= 0.5;
-			obj2.hp -= 1;
+			obj2.hp -= 5;
 		} else {
 			console.log("in else");
 			healthBar.destroy();
@@ -471,12 +487,28 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	pigMovement(speed) {
-		this.pigs.forEach((eachPig) => {
-			eachPig.y += speed;
-			//this.randomPigPositioning();
-			if (eachPig.y > config.height) {
-				this.resetPigPosition(eachPig);
-			}
+		this.pigs = this.pigs.map((eachPig) => {
+            const ind = eachPig.id;
+            const health_bar = this.health_bars.splice(ind, 1)[0];
+            const health_bar_bg = this.health_bar_backgrounds.splice(ind, 1)[0];
+            if (eachPig.hp > 0) {
+                eachPig.y += speed;
+                if (eachPig.y > config.height) {
+                    this.resetPigPosition(eachPig);
+                }
+                eachPig.body.updateFromGameObject();
+                health_bar.y = eachPig.y - 35;
+                health_bar.x = eachPig.x;
+                health_bar_bg.y = eachPig.y - 35;
+                health_bar_bg.x = eachPig.x;
+            } else {
+                eachPig.destroy();
+                health_bar.destroy();
+                health_bar_bg.destroy();
+            }
+            this.health_bar_backgrounds.splice(ind, 0, health_bar_bg);
+            this.health_bars.splice(ind, 0, health_bar);
+            return eachPig;
 		});
 	}
 	resetPigPosition(a_pig) {
