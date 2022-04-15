@@ -4,20 +4,24 @@
   "description": "",
   "main": "phaser.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel ./src/index.html",
-    "setup": "npm i",
-    "start-dev": "npm run clean && npm run start",
-    "clean": "rimraf .cache && rimraf dist",
-    "cleanup": "rimraf node_modules && rimraf .cache && rimraf dist && npm i"
+    "start": "webpack-dev-server --config config/webpack.dev.js",
+    "build": "webpack --config config/webpack.prod.js",
+    "deploy-dev": "webpack --config config/webpack.deploy.js --env.endpoint=dev && gh-pages -d dist",
+    "deploy-alpha": "webpack --config config/webpack.deploy.js --env.endpoint=alpha && gh-pages -d dist",
+    "deploy-beta": "webpack --config config/webpack.deploy.js --env.endpoint=beta && gh-pages -d dist",
+    "deploy-final": "webpack --config config/webpack.deploy.js --env.endpoint=final && gh-pages -d dist",
+    "deploy-all": "gh-pages -d dist",
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Spring-2022-CISC374/mvp-theoryofgreen.git"
+    "url": "https://github.com/Spring-2022-CISC374/mvp-theoryofgreen.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "bugs": {
     "url": "https://github.com/Spring-2022-CISC374/mvp-theoryofgreen/issues"
   },
