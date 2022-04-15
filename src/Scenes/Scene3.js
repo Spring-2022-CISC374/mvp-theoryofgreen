@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import { config, gameSettings } from "../game.js";
 
 class Scene3 extends Phaser.Scene {

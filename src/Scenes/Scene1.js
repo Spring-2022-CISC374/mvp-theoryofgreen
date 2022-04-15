@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import frontIdle from "../../assets/sprites/player/frontidle.png";
 import backIdle from "../../assets/sprites/player/backidle.png";
 import leftIdle from "../../assets/sprites/player/leftidle.png";
