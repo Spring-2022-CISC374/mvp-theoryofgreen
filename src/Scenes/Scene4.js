@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import { check } from "prettier";
 import { config, gameSettings } from "../game.js";
 
