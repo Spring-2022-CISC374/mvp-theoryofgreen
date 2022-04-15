@@ -5,7 +5,7 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 const package = require('../package.json');
 
 module.exports = {
-  entry: ['./game.js'],
+  entry: ['./src/game.js'],
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].bundle.js',
@@ -19,7 +19,9 @@ module.exports = {
 	      { test: /\.m?js$/, include: path.join(__dirname, '..'), use: {
 		  loader: 'babel-loader',
 		  options: { presets: ['@babel/preset-env'] }
-	      }}]
+	      }},
+        { test: /\.png?$/, include: path.join(__dirname, '..'), loader: 'file-loader' }
+    ]
   },
   optimization: {
     splitChunks: {
