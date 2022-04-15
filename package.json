@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Spring-2022-CISC374/mvp-theoryofgreen/issues"
   },
-  "homepage": "https://github.com/Spring-2022-CISC374/mvp-theoryofgreen#readme",
+  "homepage": "https://github.com/Spring-2022-CISC374/mvp-theoryofgreen",
   "dependencies": {
     "assets": "^3.0.1",
     "parcel-bundler": "^1.12.5",
