@@ -25,6 +25,7 @@ import weeds from "../../assets/sprites/weeds.png";
 import campfire from "../../assets/sprites/campfire.png";
 import bandage from "../../assets/sprites/bandage.png";
 import shelter from "../../assets/sprites/shelter.png";
+import meat from "../../assets/sprites/food/meat.png";
 
 class Scene1 extends Phaser.Scene {
   constructor() {
@@ -142,6 +143,7 @@ class Scene1 extends Phaser.Scene {
     this.load.image("stone", stone);
 
     this.load.image("weeds", weeds);
+    this.load.image("meat", meat);
     // #endregion
 
     this.load.image("campfire", campfire);

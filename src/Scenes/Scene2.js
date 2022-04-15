@@ -184,7 +184,7 @@ class Scene2 extends Phaser.Scene {
 		if (gameObject.group == "wood") {
 			this.wood += 1;
 			this.woodText.destroy();
-			this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
+			this.woodText = this.add.text(20, 610, `Wood : ${this.wood}`);
 			gameObject.destroy();
 			this.woodCount--;
 			if (this.woodCount < 1) {
@@ -203,7 +203,7 @@ class Scene2 extends Phaser.Scene {
 		} else if (gameObject.group == "stone") {
 			this.stone += 1;
 			this.stoneText.destroy();
-			this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
+			this.stoneText = this.add.text(19, 630, `Stone : ${this.stone}`);
 			gameObject.destroy();
 			this.stoneCount--;
 			if (this.stoneCount < 1) {
@@ -222,7 +222,7 @@ class Scene2 extends Phaser.Scene {
 		} else if (gameObject.group == "weeds") {
 			this.weeds += 1;
 			this.weedsText.destroy();
-			this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
+			this.weedsText = this.add.text(20, 650, `Weeds : ${this.weeds}`);
 			gameObject.destroy();
 			this.weedsCount--;
 			if (this.weedsCount < 1) {
@@ -442,6 +442,7 @@ class Scene2 extends Phaser.Scene {
 			healthbarBackground.destroy();
 			/** @type {Phaser.GameObjects.Sprite} */
 			obj2.destroy();
+			this.addMeat(obj2.x, obj2.y);
 		}
 		this.physics.world.remove(this.weaponHitbox);
 	}
