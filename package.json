@@ -3,7 +3,7 @@
     "version": "0.0.2",
     "description": "This is a test of the directions for github pages games.",
     "homepage": "https://github.com/Spring-2022-CISC374/mvp-theoryofgreen",
-    "main": "./src/game.js",
+    "main": "index.js",
     "game": {
       "url": "Spring-2022-CISC374/mvp-theoryofgreen",
       "shortName": "TOG",
