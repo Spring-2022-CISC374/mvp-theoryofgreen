@@ -5,6 +5,7 @@
 # cache
 
 /.cache
+/.parcel-cache
 
 # dist
 

@@ -17,6 +17,40 @@ class Scene2 extends Phaser.Scene {
 		this.timerDelay = data.timerDelay;
 	}
 
+	//environmental meter
+	environment_meter() {
+		this.meter_value = 100;
+		this.bar_size = 100;
+		this.meter_label = this.add.text(400, 5, `ENVIRONMENT METER : ${this.meter_value}`);
+		this.meter_label.setOrigin(0.5,0,5);
+		this.meter_label.setColor('white');
+
+		this.meter_bar = this.add.rectangle(400, 30, this.bar_size, 20, 0xfffffff, 1);
+		this.meter_bar.scaleX = 3;
+	}
+
+	environment_meter_value(amount) {
+		this.meter_value -= amount;
+		this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;
+
+		//bar color and size
+		this.meter_bar.setSize(this.bar_size--, 20);
+		if (this.meter_value >= 90) {
+			this.meter_bar.setFillStyle(0x3dbf00);
+		} else if (this.meter_value >= 60) {
+			this.meter_bar.setFillStyle(0xe6c700);	
+		} else if (this.meter_value >= 50) {
+			this.meter_bar.setFillStyle(0xe03800);
+		} else if (this.meter_value >= 20) {
+			this.meter_bar.setFillStyle(0xe00000);	
+		}
+
+		//game over if meter reaches 0
+		if (this.meter_value <= 0) {
+			this.gameEnd();
+		}
+	}
+
 	add_materials() {
 		//this.wood = 0;
 		this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
@@ -52,7 +86,7 @@ class Scene2 extends Phaser.Scene {
 			stony.setInteractive();
 			this.stones.add(stony);
 			stony.setRandomPosition(100, 100, 650, 550);
-			this.stoneCount++;
+			this.stoneCount++;	
 		}
 
 		//this.weeds = 0;
@@ -83,7 +117,9 @@ class Scene2 extends Phaser.Scene {
 		this.craft.group = "craftButton";
 		this.craft.setColor("white");
 		this.craft.setInteractive();
+        this.num_pigs = 0
 
+        /** @type {Array<Phaser.GameObjects.Rectangle>} */
 		this.health_bars = [];
 		this.health_bar_backgrounds = [];
 		this.last_dir = "d";
@@ -101,9 +137,12 @@ class Scene2 extends Phaser.Scene {
 		this.pigs = [];
 		this.add_materials();
 
+		//create envi meter
+		this.environment_meter();
 
 		//player - allison
 		this.player = this.physics.add.sprite(300, 300, "player");
+        this.physics.world.add(this.player.body);
 		this.player.setSize(25, 20);
 		this.player.setScale(2);
 		this.player.play("idle_down");
@@ -112,6 +151,7 @@ class Scene2 extends Phaser.Scene {
 
 		//Objects and animals - zoe
 		var rand_val = Phaser.Math.Between(5, 7);
+        this.num_pigs = rand_val;
 		for (let i = 0; i < rand_val; i++) {
 			this.randomPigPositioning(i);
 		}
@@ -158,6 +198,8 @@ class Scene2 extends Phaser.Scene {
 					this.woodCount++;
 				}
 			}
+			// envi impact wood = 1
+			this.environment_meter_value(1);
 		} else if (gameObject.group == "stone") {
 			this.stone += 1;
 			this.stoneText.destroy();
@@ -175,6 +217,8 @@ class Scene2 extends Phaser.Scene {
 					this.stoneCount++;
 				}
 			}
+			//envi impact stone = 1
+			this.environment_meter_value(1);
 		} else if (gameObject.group == "weeds") {
 			this.weeds += 1;
 			this.weedsText.destroy();
@@ -192,6 +236,8 @@ class Scene2 extends Phaser.Scene {
 					this.weedsCount++;
 				}
 			}
+			//envi impact weeds = 1
+			this.environment_meter_value(1);
 		} else if (gameObject.group == "craftButton") {
 			this.scene.start("craftScreen", {
 				"wood": this.wood,
@@ -211,6 +257,11 @@ class Scene2 extends Phaser.Scene {
 		this.movePlayerManager();
 		this.spawnCampfire();
 		this.spawnShelter();
+
+		//pig movement 
+		this.pigMovement(1);
+
+		//timer
 		if(this.timer.getRemainingSeconds() >= 100) {
 			this.x = 6;
 		}
@@ -220,6 +271,17 @@ class Scene2 extends Phaser.Scene {
 		else {
 			this.x = 4;
 		}
+
+        if (this.pigs.filter(e => e.hp === 0).length === this.num_pigs) {
+            // all pigs are dead
+            this.health_bars = [];
+            this.health_bar_backgrounds = [];
+            this.pigs = [];
+            for (let i = 0; i < this.num_pigs; i++) {
+                this.randomPigPositioning(i);
+            }
+            this.pigCollisions();
+        }
 		this.timerDelay = this.timer.getRemainingSeconds() * 1000;
 		//console.log(this.timer.getRemainingSeconds());
 		this.timerText.setText('Survive for: ' + this.timer.getRemainingSeconds().toString().substring(0, this.x));
@@ -344,7 +406,7 @@ class Scene2 extends Phaser.Scene {
 				);
 				setTimeout(() => {
 					oinkText.destroy();
-				}, 100);
+				}, 1);
 			});
 			this.physics.add.overlap(
 				this.weaponHitbox,
@@ -363,7 +425,6 @@ class Scene2 extends Phaser.Scene {
 			});
 			return eachPig;
 		});
-		this.physics.add.staticGroup(this.pigs);
 	}
 
 	handleHitboxCollide(obj1, obj2) {
@@ -421,6 +482,37 @@ class Scene2 extends Phaser.Scene {
 		this.pig.setScale(1.5);
 		this.pig.play("pig-idle-front");
 		this.pigs = [...this.pigs, this.pig];
+	}
+
+	pigMovement(speed) {
+		this.pigs = this.pigs.map((eachPig) => {
+            const ind = eachPig.id;
+            const health_bar = this.health_bars.splice(ind, 1)[0];
+            const health_bar_bg = this.health_bar_backgrounds.splice(ind, 1)[0];
+            if (eachPig.hp > 0) {
+                eachPig.y += speed;
+                if (eachPig.y > config.height) {
+                    this.resetPigPosition(eachPig);
+                }
+                eachPig.body.updateFromGameObject();
+                health_bar.y = eachPig.y - 35;
+                health_bar.x = eachPig.x;
+                health_bar_bg.y = eachPig.y - 35;
+                health_bar_bg.x = eachPig.x;
+            } else {
+                eachPig.destroy();
+                health_bar.destroy();
+                health_bar_bg.destroy();
+            }
+            this.health_bar_backgrounds.splice(ind, 0, health_bar_bg);
+            this.health_bars.splice(ind, 0, health_bar);
+            return eachPig;
+		});
+	}
+	resetPigPosition(a_pig) {
+		a_pig.y = 0
+		var rand_x = Phaser.Math.Between(0, config.width);
+		a_pig.x = rand_x;
 	}
 }
 

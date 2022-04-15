@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel ./src/index.html",
-    "start-dev": "npm i && npm run start",
-    "clean": "rimraf node_modules"
+    "setup": "npm i",
+    "start-dev": "npm run clean && npm run start",
+    "clean": "rimraf .cache && rimraf dist",
+    "cleanup": "rimraf node_modules && rimraf .cache && rimraf dist && npm i"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
   "homepage": "https://github.com/Spring-2022-CISC374/mvp-theoryofgreen",
   "dependencies": {
     "assets": "^3.0.1",
+    "parcel": "^2.4.1",
     "parcel-bundler": "^1.12.5",
     "phaser": "^3.55.2",
     "prettier": "^2.6.2",
