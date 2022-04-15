@@ -5,7 +5,7 @@
   "main": "phaser.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel ./src/index.html",
+    "start": "parcel ./src/game.js",
     "start-dev": "npm i && npm run start",
     "clean": "rimraf node_modules"
   },
