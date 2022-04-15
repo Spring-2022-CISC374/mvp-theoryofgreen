@@ -307,13 +307,13 @@ class Scene1 extends Phaser.Scene {
     this.anims.create({
       key: "pig-idle-front",
       frames: this.anims.generateFrameNumbers("pig-frontfacing"),
-      frameRate: 13,
+      frameRate: 5,
       repeat: -1,
     });
     this.anims.create({
       key: "pig-idle-back",
       frames: this.anims.generateFrameNumbers("pig-backfacing"),
-      frameRate: 13,
+      frameRate: 5,
       repeat: -1,
     });
 
