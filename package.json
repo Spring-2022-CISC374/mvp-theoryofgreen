@@ -5,7 +5,7 @@
     "homepage": "https://github.com/ntrungold/game-pages-test#readme",
     "main": "index.js",
     "game": {
-        "url": "Spring-2022-CISC374/mvp-theoryofgreen",
+        "url": "mvp-theoryofgreen",
         "shortName": "TOG",
         "name": "Theory of Green"
     },
