@@ -1,13 +1,13 @@
 {
-    "name": "game-pages-test",
+    "name": "mvp-theoryofgreen",
     "version": "0.0.2",
     "description": "This is a test of the directions for github pages games.",
-    "homepage": "https://github.com/Spring-2022-CISC374/mvp-theoryofgreen",
+    "homepage": "https://github.com/ntrungold/game-pages-test#readme",
     "main": "index.js",
     "game": {
         "url": "Spring-2022-CISC374/mvp-theoryofgreen",
         "shortName": "TOG",
-        "name": "Github Pages TOG"
+        "name": "Theory of Green"
     },
     "author": {
         "name": "Noah Trungold",
@@ -15,17 +15,17 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Spring-2022-CISC374/mvp-theoryofgreen.git"
+        "url": "https://github.com/Spring-2022-CISC374/mvp-theoryofgreen"
     },
     "scripts": {
+        "jsmake": "webpack --config webpack.config.js",
         "start": "webpack-dev-server --config config/webpack.dev.js",
         "build": "webpack --config config/webpack.prod.js",
         "deploy-dev": "webpack --config config/webpack.deploy.js --env.endpoint=dev && gh-pages -d dist",
         "deploy-alpha": "webpack --config config/webpack.deploy.js --env.endpoint=alpha && gh-pages -d dist",
         "deploy-beta": "webpack --config config/webpack.deploy.js --env.endpoint=beta && gh-pages -d dist",
         "deploy-final": "webpack --config config/webpack.deploy.js --env.endpoint=final && gh-pages -d dist",
-        "deploy-all": "gh-pages -d dist",
-	"run-dev": "parcel ./index.html"
+        "deploy-all": "gh-pages -d dist"
     },
     "keywords": [
         "Phaser",
@@ -68,11 +68,6 @@
         "workbox-webpack-plugin": "^4.3.1"
     },
     "dependencies": {
-        "assets": "^3.0.1",
-        "parcel": "^2.4.1",
-        "parcel-bundler": "^1.12.5",
-        "phaser": "^3.55.2",
-        "prettier": "^2.6.2",
-        "rimraf": "^3.0.2"
+        "phaser": "^3.55.2"
     }
 }
