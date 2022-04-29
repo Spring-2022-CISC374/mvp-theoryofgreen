@@ -4,6 +4,7 @@
     "description": "This is a test of the directions for github pages games.",
     "homepage": "https://github.com/ntrungold/game-pages-test#readme",
     "main": "index.js",
+    "type": "module",
     "game": {
         "url": "mvp-theoryofgreen",
         "shortName": "TOG",

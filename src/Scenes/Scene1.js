@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+//import Phaser from 'phaser';
 import frontIdle from "../../assets/sprites/player/frontidle.png";
 import backIdle from "../../assets/sprites/player/backidle.png";
 import leftIdle from "../../assets/sprites/player/leftidle.png";
@@ -322,4 +322,4 @@ class Scene1 extends Phaser.Scene {
   }
 }
 
-export default Scene1;
+//export default Scene1;
