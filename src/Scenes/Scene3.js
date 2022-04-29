@@ -1,5 +1,5 @@
-import Phaser from 'phaser';
-import { config, gameSettings } from "../game.js";
+//import Phaser from 'phaser';
+//import { config, gameSettings } from "../game.js";
 
 class Scene3 extends Phaser.Scene {
 	constructor() {
@@ -167,4 +167,4 @@ class Scene3 extends Phaser.Scene {
 }
     
 
-export default Scene3;
+//export default Scene3;
