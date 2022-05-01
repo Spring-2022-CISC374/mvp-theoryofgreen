@@ -284,6 +284,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devmanifest.json"
   },
   {
+    "revision": "5c62495a52b57e3b002d8dca78ffabc9",
+    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devphaser.min.js"
+  },
+  {
     "revision": "a8029749c7edd38204cf67287cb14139",
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devsw.js"
   }
