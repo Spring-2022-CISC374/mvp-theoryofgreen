@@ -268,31 +268,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devfd1fe502cba94731dee3ae6798248a86.png"
   },
   {
-    "revision": "d2d20f311381f272b7bd",
-    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.Scene1.442edc5cff2dad19adb9.bundle.js"
+    "revision": "354926cee949c382ce5d",
+    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.main.44f00aeb44ada7f98f54.bundle.js"
   },
   {
-    "revision": "47df395bf6c5543512a2",
-    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.Scene2.b285441fc24117a814fc.bundle.js"
+    "revision": "0b0c0e19f655c6df11ec",
+    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.vendors.ebc8eab34d8639d35771.bundle.js"
   },
   {
-    "revision": "b84c6ea9522674ee2b55",
-    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.Scene3.40d2e5be2f336cb6ca1c.bundle.js"
-  },
-  {
-    "revision": "9a429b12971babbac9c0",
-    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.Scene4.96bb81b2628cdd7920d3.bundle.js"
-  },
-  {
-    "revision": "946ea4edff8cb7a9b921",
-    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.index.678ad285e697f987db28.bundle.js"
-  },
-  {
-    "revision": "b6e31d259240f3c3bdbc",
-    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.vendors.8bd8c9503f2f86ee1e13.bundle.js"
-  },
-  {
-    "revision": "0442b5b52412abd5d611abf180a9df2d",
+    "revision": "0db0f1a26a4668f4250b4fbc62b1022d",
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devindex.html"
   },
   {
@@ -302,9 +286,5 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a8029749c7edd38204cf67287cb14139",
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devsw.js"
-  },
-  {
-    "revision": "5c62495a52b57e3b002d8dca78ffabc9",
-    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devtmpfolder/phaser.min.js"
   }
 ]);
