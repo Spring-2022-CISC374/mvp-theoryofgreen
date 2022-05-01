@@ -268,8 +268,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devfd1fe502cba94731dee3ae6798248a86.png"
   },
   {
-    "revision": "354926cee949c382ce5d",
-    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.main.44f00aeb44ada7f98f54.bundle.js"
+    "revision": "fa4b2ad90b6a2971a07f",
+    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.main.2132f75a8ef66f04ab2a.bundle.js"
   },
   {
     "revision": "0b0c0e19f655c6df11ec",
@@ -282,6 +282,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "e0348f88b600d840ce69766857cc2261",
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devmanifest.json"
+  },
+  {
+    "revision": "725810e9ba22a8922c7a294e5a3f9c58",
+    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devscenes/game.js"
+  },
+  {
+    "revision": "5c62495a52b57e3b002d8dca78ffabc9",
+    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devscenes/phaser.min.js"
   },
   {
     "revision": "a8029749c7edd38204cf67287cb14139",
