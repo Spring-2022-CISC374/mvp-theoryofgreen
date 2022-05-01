@@ -268,15 +268,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devfd1fe502cba94731dee3ae6798248a86.png"
   },
   {
-    "revision": "85c21b0b94553c84f385",
-    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.main.75540d6424877ef08367.bundle.js"
+    "revision": "513dd6ba22817886345a",
+    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.main.11fe0074aed59d241e3a.bundle.js"
   },
   {
-    "revision": "0b0c0e19f655c6df11ec",
-    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.vendors.ebc8eab34d8639d35771.bundle.js"
+    "revision": "36ce2f2da664aac7489e",
+    "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.vendors.3ee220e9d9125ef5f80f.bundle.js"
   },
   {
-    "revision": "c4fdb9165d80e10e6072d0dea1b83d5d",
+    "revision": "d2828f8b428cd9e8fa733b56c42cf067",
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devindex.html"
   },
   {
