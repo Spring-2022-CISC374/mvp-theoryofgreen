@@ -276,7 +276,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devgen.vendors.ebc8eab34d8639d35771.bundle.js"
   },
   {
-    "revision": "0442b5b52412abd5d611abf180a9df2d",
+    "revision": "c4fdb9165d80e10e6072d0dea1b83d5d",
     "url": "/Spring-2022-CISC374/mvp-theoryofgreen/devindex.html"
   },
   {
