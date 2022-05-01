@@ -1,4 +1,4 @@
-importScripts("/Spring-2022-CISC374/mvp-theoryofgreen/devprecache-manifest.267fe1862ec105475646846bfe4d7ee3.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/Spring-2022-CISC374/mvp-theoryofgreen/devprecache-manifest.78ec2c7315fde27d965fae47bb7b15d0.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 /**
  * You should only modify this, if you know what you are doing.
