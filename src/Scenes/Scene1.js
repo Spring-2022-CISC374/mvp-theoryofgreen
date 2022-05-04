@@ -163,6 +163,11 @@ class Scene1 extends Phaser.Scene {
     this.shelterCheck = 0;
     this.timerDelay = 500000;
     this.enviro_meter_value = 100;
+    this.player_health = 100;
+    this.player_food = 100;
+    this.player_water = 100;
+    this.collected_water = 0;
+    this.collected_food = 0;
 
     this.add.text(20, 20, "Loading game...");
     this.scene.start("playGame", {
@@ -175,7 +180,12 @@ class Scene1 extends Phaser.Scene {
       "fireCheck": this.fireCheck,
       "shelterCheck": this.shelterCheck,
       "timerDelay": this.timerDelay,
-      "enviroMeter": this.enviro_meter_value
+      "enviroMeter": this.enviro_meter_value,
+      "player_health": this.player_health,
+      "player_food": this.player_food,
+      "player_water": this.player_water,
+      "collected_water": this.collected_water,
+      "collected_food": this.collected_food
     });
 
     // #region ANIMS

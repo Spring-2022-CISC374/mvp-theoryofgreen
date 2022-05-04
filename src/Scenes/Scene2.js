@@ -17,6 +17,11 @@ class Scene2 extends Phaser.Scene {
 		this.shelterCheck = data.shelterCheck;
 		this.timerDelay = data.timerDelay;
 		this.meter_value = data.enviroMeter;
+		this.player_health = data.player_health;
+		this.player_food = data.player_food;
+		this.player_water = data.player_water;
+		this.collected_water = data.collected_water;
+		this.collected_food = data.collected_food;
 	}
 
 	//environmental meter
@@ -26,9 +31,11 @@ class Scene2 extends Phaser.Scene {
 		this.meter_label = this.add.text(400, 5, `ENVIRONMENT METER : ${this.meter_value}`);
 		this.meter_label.setOrigin(0.5,0,5);
 		this.meter_label.setColor('white');
+		this.meter_label.setDepth(100);
 
 		this.meter_bar = this.add.rectangle(400, 30, this.bar_size, 20, 0x3dbf00, 1);
 		this.meter_bar.scaleX = 3;
+		this.meter_bar.setDepth(100);
 	}
 
 	environment_meter_value(amount) {
@@ -69,7 +76,7 @@ class Scene2 extends Phaser.Scene {
 			woody.setScale(0.1);
 			woody.setInteractive();
 			this.woods.add(woody);
-			woody.setRandomPosition(100, 100, 650, 550);
+			woody.setRandomPosition(100, 100, 650, 500);
 			this.woodCount++;
 		}
 
@@ -87,7 +94,7 @@ class Scene2 extends Phaser.Scene {
 			stony.setScale(0.1);
 			stony.setInteractive();
 			this.stones.add(stony);
-			stony.setRandomPosition(100, 100, 650, 550);
+			stony.setRandomPosition(100, 100, 650, 500);
 			this.stoneCount++;	
 		}
 
@@ -105,13 +112,21 @@ class Scene2 extends Phaser.Scene {
 			weedy.setScale(0.1);
 			weedy.setInteractive();
 			this.weedss.add(weedy);
-			weedy.setRandomPosition(100, 100, 650, 550);
+			weedy.setRandomPosition(100, 100, 650, 500);
 			this.weedsCount++;
 		}
 
 		this.bandageText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
 		this.bandageText.depth = 100;
 		this.bandageText.setColor("white");
+
+		this.waterText = this.add.text(150, 650, `Water : ${this.collected_water}`);
+		this.waterText.depth = 100;
+		this.waterText.setColor("white");
+
+		this.foodText = this.add.text(150, 630, `Food : ${this.collected_food}`);
+		this.foodText.depth = 100;
+		this.foodText.setColor("white");
 	}
 
 	water() {
@@ -122,8 +137,10 @@ class Scene2 extends Phaser.Scene {
 		this.border = this.add.rectangle(0, 700, 300, 15, 'black', 1);
 		this.border.setScale(10);
 		this.border.setDepth(99);
+		this.borderup = this.add.rectangle(0, 0, 300, 10, 'black', 1);
+		this.borderup.setScale(10);
+		this.borderup.setDepth(99);
 
-		this.player_health = 100;
 		this.size = 100;
 		this.health_label = this.add.text(470, 633, `HEALTH : `);
 		this.health_label.setColor('white');
@@ -132,10 +149,8 @@ class Scene2 extends Phaser.Scene {
 		this.health_bar = this.add.rectangle(650, 640, this.size, 13, 0x3dbf00, 1);
 		this.health_bar.scaleX = 2;
 		this.health_bar.setDepth(100);
+		this.health_bar.name = "health";
 
-
-		this.player_food = 100;
-		this.size = 100;
 		this.food_label = this.add.text(470, 653, `FOOD : `);
 		this.food_label.setColor('white');
 		this.food_label.setDepth(100);
@@ -143,10 +158,8 @@ class Scene2 extends Phaser.Scene {
 		this.food_bar = this.add.rectangle(650, 660, this.size, 13, 0x3dbf00, 1);
 		this.food_bar.scaleX = 2;
 		this.food_bar.setDepth(100);
+		this.food_bar.name = "food";
 
-
-		this.player_water = 100;
-		this.size = 100;
 		this.water_label = this.add.text(470, 673, `WATER : `);
 		this.water_label.setColor('white');
 		this.water_label.setDepth(100);
@@ -154,6 +167,140 @@ class Scene2 extends Phaser.Scene {
 		this.water_bar = this.add.rectangle(650, 680, this.size, 13, 0x3dbf00, 1);
 		this.water_bar.scaleX = 2;
 		this.water_bar.setDepth(100);
+		this.water_bar.name = "water";
+
+		this.correctPlayerBars();
+	}
+
+	updatePlayerBars(bar, amount, direction) {
+		if(bar.name == "health") {
+			if(direction == "minus") {
+				this.player_health -= amount;
+			}
+			else if(direction == "plus") {
+				this.player_health += amount;
+				if(this.player_health >= 100) {
+					this.player_health = 100;
+				}
+			}
+
+			if (this.player_health <= 0) {
+				this.player_health = 0;
+				this.gameEnd();
+			}
+
+			this.health_bar.setSize(this.player_health, 13);
+			this.health_bar.setDepth(100);
+			if (this.player_health >= 80) {
+				this.health_bar.setFillStyle(0x3dbf00);
+			} else if (this.player_health >= 60) {
+				this.health_bar.setFillStyle(0xe6c700);	
+			} else if (this.player_health >= 50) {
+				this.health_bar.setFillStyle(0xe03800);
+			} else if (this.player_health >= 20) {
+				this.health_bar.setFillStyle(0xe00000);	
+			}
+
+		} else if(bar.name == "food") {
+			if(direction == "minus") {
+				this.player_food -= amount;
+			}
+			else if(direction == "plus") {
+				this.player_food += amount;
+				if(this.player_food >= 100) {
+					this.player_food = 100;
+				}
+			}
+
+			if (this.player_food <= 0) {
+				this.player_food = 0;
+				this.drainhealth();
+			}
+
+			this.food_bar.setSize(this.player_food, 13);
+			this.food_bar.setDepth(100);
+			if (this.player_food >= 80) {
+				this.food_bar.setFillStyle(0x3dbf00);
+			} else if (this.player_food >= 60) {
+				this.food_bar.setFillStyle(0xe6c700);	
+			} else if (this.player_food >= 50) {
+				this.food_bar.setFillStyle(0xe03800);
+			} else if (this.player_food >= 20) {
+				this.food_bar.setFillStyle(0xe00000);	
+			}
+			
+		} else if(bar.name == "water") {
+			if(direction == "minus") {
+				this.player_water -= amount;
+			}
+			else if(direction == "plus") {
+				this.player_water += amount;
+				if(this.player_water >= 100) {
+					this.player_water = 100;
+				}
+			}
+
+			if (this.player_water <= 0) {
+				this.player_water = 0;
+				this.drainhealth();
+			}
+
+			this.water_bar.setSize(this.player_water, 13);
+			this.water_bar.setDepth(100);
+			if (this.player_water >= 80) {
+				this.water_bar.setFillStyle(0x3dbf00);
+			} else if (this.player_water >= 60) {
+				this.water_bar.setFillStyle(0xe6c700);	
+			} else if (this.player_water >= 50) {
+				this.water_bar.setFillStyle(0xe03800);
+			} else if (this.player_water >= 20) {
+				this.water_bar.setFillStyle(0xe00000);	
+			}
+
+		}
+
+	}
+
+	correctPlayerBars() {
+		this.health_bar.setSize(this.player_health, 13);
+		this.health_bar.setDepth(100);
+		if (this.player_health >= 80) {
+			this.health_bar.setFillStyle(0x3dbf00);
+		} else if (this.player_health >= 60) {
+			this.health_bar.setFillStyle(0xe6c700);	
+		} else if (this.player_health >= 50) {
+			this.health_bar.setFillStyle(0xe03800);
+		} else if (this.player_health >= 20) {
+			this.health_bar.setFillStyle(0xe00000);	
+		}
+
+        this.food_bar.setSize(this.player_food, 13);
+	    this.food_bar.setDepth(100);
+		if (this.player_food >= 80) {
+			this.food_bar.setFillStyle(0x3dbf00);
+		} else if (this.player_food >= 60) {
+			this.food_bar.setFillStyle(0xe6c700);	
+		} else if (this.player_food >= 50) {
+			this.food_bar.setFillStyle(0xe03800);
+		} else if (this.player_food >= 20) {
+			this.food_bar.setFillStyle(0xe00000);	
+		}
+
+        this.water_bar.setSize(this.player_water, 13);
+		this.water_bar.setDepth(100);
+		if (this.player_water >= 80) {
+			this.water_bar.setFillStyle(0x3dbf00);
+		} else if (this.player_water >= 60) {
+			this.water_bar.setFillStyle(0xe6c700);	
+		} else if (this.player_water >= 50) {
+			this.water_bar.setFillStyle(0xe03800);
+		} else if (this.player_water >= 20) {
+			this.water_bar.setFillStyle(0xe00000);	
+		}
+	}
+
+	drainhealth() {
+
 	}
 
 	create() {
@@ -161,6 +308,7 @@ class Scene2 extends Phaser.Scene {
 		this.craft.group = "craftButton";
 		this.craft.setColor("white");
 		this.craft.setInteractive();
+		this.craft.setDepth(100);
         this.num_pigs = 0
 		this.playerbars();
 
@@ -209,6 +357,7 @@ class Scene2 extends Phaser.Scene {
 		this.pigCollisions();
 
 		this.timerText = this.add.text(600, 25);
+		this.timerText.setDepth(100);
 		this.timer = this.time.addEvent({
 			delay: this.timerDelay,
 			callback: this.gameEnd,
@@ -228,6 +377,7 @@ class Scene2 extends Phaser.Scene {
 
 	click(pointer, gameObject) {
 		if (gameObject.group == "wood") {
+			this.updatePlayerBars(this.water_bar, 10, "minus");
 			this.wood += 1;
 			this.woodText.destroy();
 			this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
@@ -241,13 +391,14 @@ class Scene2 extends Phaser.Scene {
 					woody.setScale(0.1);
 					woody.setInteractive();
 					this.woods.add(woody);
-					woody.setRandomPosition(100, 100, 650, 550);
+					woody.setRandomPosition(100, 100, 650, 500);
 					this.woodCount++;
 				}
 			}
 			// envi impact wood = 1
 			this.environment_meter_value(1);
 		} else if (gameObject.group == "stone") {
+			this.updatePlayerBars(this.water_bar, 10, "plus");
 			this.stone += 1;
 			this.stoneText.destroy();
 			this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
@@ -261,7 +412,7 @@ class Scene2 extends Phaser.Scene {
 					stony.setScale(0.1);
 					stony.setInteractive();
 					this.stones.add(stony);
-					stony.setRandomPosition(100, 100, 650, 550);
+					stony.setRandomPosition(100, 100, 650, 500);
 					this.stoneCount++;
 				}
 			}
@@ -281,7 +432,7 @@ class Scene2 extends Phaser.Scene {
 					weedy.setScale(0.1);
 					weedy.setInteractive();
 					this.weedss.add(weedy);
-					weedy.setRandomPosition(100, 100, 650, 550);
+					weedy.setRandomPosition(100, 100, 650, 500);
 					this.weedsCount++;
 				}
 			}
@@ -298,7 +449,12 @@ class Scene2 extends Phaser.Scene {
 				"fireCheck": this.fireCheck,
 				"shelterCheck": this.shelterCheck,
 				"timerDelay": this.timerDelay,
-				"enviroMeter": this.meter_value
+				"enviroMeter": this.meter_value,
+				"player_health": this.player_health,
+      			"player_food": this.player_food,
+      			"player_water": this.player_water,
+				"collected_water": this.collected_water,
+				"collected_food": this.collected_food
 			});
 		}
 	}
