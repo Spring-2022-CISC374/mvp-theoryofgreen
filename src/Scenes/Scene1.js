@@ -162,6 +162,7 @@ class Scene1 extends Phaser.Scene {
     this.fireCheck = 0;
     this.shelterCheck = 0;
     this.timerDelay = 500000;
+    this.enviro_meter_value = 100;
 
     this.add.text(20, 20, "Loading game...");
     this.scene.start("playGame", {
@@ -173,7 +174,8 @@ class Scene1 extends Phaser.Scene {
       "isFire": this.isFire,
       "fireCheck": this.fireCheck,
       "shelterCheck": this.shelterCheck,
-      "timerDelay": this.timerDelay
+      "timerDelay": this.timerDelay,
+      "enviroMeter": this.enviro_meter_value
     });
 
     // #region ANIMS

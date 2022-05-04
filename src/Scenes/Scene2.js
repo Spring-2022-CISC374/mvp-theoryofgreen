@@ -16,17 +16,18 @@ class Scene2 extends Phaser.Scene {
 		this.fireCheck = data.fireCheck;
 		this.shelterCheck = data.shelterCheck;
 		this.timerDelay = data.timerDelay;
+		this.meter_value = data.enviroMeter;
 	}
 
 	//environmental meter
 	environment_meter() {
-		this.meter_value = 100;
+		//this.meter_value = 100;
 		this.bar_size = 100;
 		this.meter_label = this.add.text(400, 5, `ENVIRONMENT METER : ${this.meter_value}`);
 		this.meter_label.setOrigin(0.5,0,5);
 		this.meter_label.setColor('white');
 
-		this.meter_bar = this.add.rectangle(400, 30, this.bar_size, 20, 0xfffffff, 1);
+		this.meter_bar = this.add.rectangle(400, 30, this.bar_size, 20, 0x3dbf00, 1);
 		this.meter_bar.scaleX = 3;
 	}
 
@@ -36,7 +37,7 @@ class Scene2 extends Phaser.Scene {
 
 		//bar color and size
 		this.meter_bar.setSize(this.bar_size--, 20);
-		if (this.meter_value >= 90) {
+		if (this.meter_value >= 80) {
 			this.meter_bar.setFillStyle(0x3dbf00);
 		} else if (this.meter_value >= 60) {
 			this.meter_bar.setFillStyle(0xe6c700);	
@@ -185,7 +186,7 @@ class Scene2 extends Phaser.Scene {
 		if (gameObject.group == "wood") {
 			this.wood += 1;
 			this.woodText.destroy();
-			this.woodText = this.add.text(20, 610, `Wood : ${this.wood}`);
+			this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
 			gameObject.destroy();
 			this.woodCount--;
 			if (this.woodCount < 1) {
@@ -204,7 +205,7 @@ class Scene2 extends Phaser.Scene {
 		} else if (gameObject.group == "stone") {
 			this.stone += 1;
 			this.stoneText.destroy();
-			this.stoneText = this.add.text(19, 630, `Stone : ${this.stone}`);
+			this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
 			gameObject.destroy();
 			this.stoneCount--;
 			if (this.stoneCount < 1) {
@@ -223,7 +224,7 @@ class Scene2 extends Phaser.Scene {
 		} else if (gameObject.group == "weeds") {
 			this.weeds += 1;
 			this.weedsText.destroy();
-			this.weedsText = this.add.text(20, 650, `Weeds : ${this.weeds}`);
+			this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
 			gameObject.destroy();
 			this.weedsCount--;
 			if (this.weedsCount < 1) {
@@ -249,7 +250,8 @@ class Scene2 extends Phaser.Scene {
 				"isFire": this.isFire,
 				"fireCheck": this.fireCheck,
 				"shelterCheck": this.shelterCheck,
-				"timerDelay": this.timerDelay
+				"timerDelay": this.timerDelay,
+				"enviroMeter": this.meter_value
 			});
 		}
 	}

@@ -16,6 +16,7 @@ class Scene3 extends Phaser.Scene {
         this.fireCheck = data.fireCheck;
         this.shelterCheck = data.shelterCheck;
         this.timerDelay = data.timerDelay;
+        this.enviroMeter = data.enviroMeter
     }
 
     create() {
@@ -113,7 +114,8 @@ class Scene3 extends Phaser.Scene {
                 "isFire": this.isFire,
                 "fireCheck": this.fireCheck,
                 "shelterCheck": this.shelterCheck,
-                "timerDelay": this.timerDelay
+                "timerDelay": this.timerDelay,
+                "enviroMeter": this.enviroMeter
             });
         } else if (gameObject.group == "fire") {
             if(!this.isFire) {
