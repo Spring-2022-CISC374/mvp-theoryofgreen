@@ -114,12 +114,55 @@ class Scene2 extends Phaser.Scene {
 		this.bandageText.setColor("white");
 	}
 
+	water() {
+		var pond = this.add.circle(650, 200, 120, 0x3382FF);
+	}
+
+	playerbars() {
+		this.border = this.add.rectangle(0, 700, 300, 15, 'black', 1);
+		this.border.setScale(10);
+		this.border.setDepth(99);
+
+		this.player_health = 100;
+		this.size = 100;
+		this.health_label = this.add.text(470, 633, `HEALTH : `);
+		this.health_label.setColor('white');
+		this.health_label.setDepth(100);
+
+		this.health_bar = this.add.rectangle(650, 640, this.size, 13, 0x3dbf00, 1);
+		this.health_bar.scaleX = 2;
+		this.health_bar.setDepth(100);
+
+
+		this.player_food = 100;
+		this.size = 100;
+		this.food_label = this.add.text(470, 653, `FOOD : `);
+		this.food_label.setColor('white');
+		this.food_label.setDepth(100);
+
+		this.food_bar = this.add.rectangle(650, 660, this.size, 13, 0x3dbf00, 1);
+		this.food_bar.scaleX = 2;
+		this.food_bar.setDepth(100);
+
+
+		this.player_water = 100;
+		this.size = 100;
+		this.water_label = this.add.text(470, 673, `WATER : `);
+		this.water_label.setColor('white');
+		this.water_label.setDepth(100);
+
+		this.water_bar = this.add.rectangle(650, 680, this.size, 13, 0x3dbf00, 1);
+		this.water_bar.scaleX = 2;
+		this.water_bar.setDepth(100);
+	}
+
 	create() {
 		this.craft = this.add.text(25, 25, "Click to craft!");
 		this.craft.group = "craftButton";
 		this.craft.setColor("white");
 		this.craft.setInteractive();
         this.num_pigs = 0
+		this.playerbars();
 
         /** @type {Array<Phaser.GameObjects.Rectangle>} */
 		this.health_bars = [];
@@ -137,6 +180,7 @@ class Scene2 extends Phaser.Scene {
 		};
 		/** @type {Array<Phaser.GameObjects.Sprite>} */
 		this.pigs = [];
+		this.water();
 		this.add_materials();
 
 		//create envi meter
@@ -187,6 +231,7 @@ class Scene2 extends Phaser.Scene {
 			this.wood += 1;
 			this.woodText.destroy();
 			this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
+			this.woodText.setDepth(100);
 			gameObject.destroy();
 			this.woodCount--;
 			if (this.woodCount < 1) {
@@ -206,6 +251,7 @@ class Scene2 extends Phaser.Scene {
 			this.stone += 1;
 			this.stoneText.destroy();
 			this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
+			this.stoneText.setDepth(100);
 			gameObject.destroy();
 			this.stoneCount--;
 			if (this.stoneCount < 1) {
@@ -225,6 +271,7 @@ class Scene2 extends Phaser.Scene {
 			this.weeds += 1;
 			this.weedsText.destroy();
 			this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
+			this.weedsText.setDepth(100);
 			gameObject.destroy();
 			this.weedsCount--;
 			if (this.weedsCount < 1) {

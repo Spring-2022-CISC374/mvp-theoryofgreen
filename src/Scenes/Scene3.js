@@ -126,8 +126,10 @@ class Scene3 extends Phaser.Scene {
                     this.stone -= 10;
                     this.woodText.destroy();
 			        this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
+                    this.woodText.setDepth(100);
                     this.stoneText.destroy();
 			        this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
+                    this.stoneText.setDepth(100);
                     this.add.text(80, 260, "Campfire crafted!");
                 } else {
                     this.add.text(80, 260, "Not enough materials");
@@ -144,8 +146,10 @@ class Scene3 extends Phaser.Scene {
                     this.weeds -= 30;
                     this.woodText.destroy();
 			        this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
+                    this.woodText.setDepth(100);
                     this.weedsText.destroy();
 			        this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
+                    this.weedsText.setDepth(100);
                     this.add.text(80, 510, "Simple Shelter crafted!");
                 } else {
                     this.add.text(80, 510, "Not enough materials");
@@ -159,8 +163,10 @@ class Scene3 extends Phaser.Scene {
                 this.weeds -= 20;
                 this.weedsText.destroy();
 			    this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
+                this.weedsText.setDepth(100);
                 this.bandagesText.destroy();
 			    this.bandagesText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
+                this.bandagesText.setDepth(100);
             } else {
                 this.add.text(380, 245, "Not enough materials");
             }
