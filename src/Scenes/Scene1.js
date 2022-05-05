@@ -180,7 +180,8 @@ class Scene1 extends Phaser.Scene {
     this.shelterTimerDelay = 50000;
 
     this.add.text(20, 20, "Loading game...");
-    this.scene.start("playGame", {
+    this.add.scene("main-menu");
+    /*this.scene.start("playGame", {
       "wood": this.wood,
       "stone": this.stone,
       "weeds": this.weeds,
@@ -201,7 +202,7 @@ class Scene1 extends Phaser.Scene {
       "pondradius": this.pondradius,
       "canClickShelter": this.canClickShelter,
       "shelterTimerDelay": this.shelterTimerDelay
-    });
+    });*/
 
     // #region ANIMS
 
