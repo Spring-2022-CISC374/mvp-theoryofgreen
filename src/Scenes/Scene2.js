@@ -78,7 +78,7 @@ class Scene2 extends Phaser.Scene {
 			woody.setScale(0.1);
 			woody.setInteractive();
 			this.woods.add(woody);
-			woody.setRandomPosition(100, 200, 650, 500);
+			woody.setRandomPosition(100, 200, 650, 350);
 			this.woodCount++;
 		}
 
@@ -96,7 +96,7 @@ class Scene2 extends Phaser.Scene {
 			stony.setScale(0.1);
 			stony.setInteractive();
 			this.stones.add(stony);
-			stony.setRandomPosition(100, 200, 650, 500);
+			stony.setRandomPosition(100, 200, 650, 350);
 			this.stoneCount++;	
 		}
 
@@ -114,7 +114,7 @@ class Scene2 extends Phaser.Scene {
 			weedy.setScale(0.1);
 			weedy.setInteractive();
 			this.weedss.add(weedy);
-			weedy.setRandomPosition(100, 200, 650, 500);
+			weedy.setRandomPosition(100, 200, 650, 350);
 			this.weedsCount++;
 		}
 
@@ -216,7 +216,6 @@ class Scene2 extends Phaser.Scene {
 
 			if (this.player_food <= 0) {
 				this.player_food = 0;
-				this.drainhealth();
 			}
 
 			this.food_bar.setSize(this.player_food, 13);
@@ -242,9 +241,8 @@ class Scene2 extends Phaser.Scene {
 				}
 			}
 
-			if (this.player_water <= 0) {
-				this.player_water = 0;
-				this.drainhealth();
+			if (this.player_food <= 0) {
+				this.player_food = 0;
 			}
 
 			this.water_bar.setSize(this.player_water, 13);
@@ -302,7 +300,9 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	drainhealth() {
-
+		if(this.player_food <= 0 || this.player_water <= 0) {
+			this.updatePlayerBars(this.health_bar, .1, "minus");
+		}
 	}
 
 	day_or_night() {
@@ -433,7 +433,7 @@ class Scene2 extends Phaser.Scene {
 
 	click(pointer, gameObject) {
 		if (gameObject.group == "wood") {
-			this.updatePlayerBars(this.water_bar, 10, "minus");
+			this.updatePlayerBars(this.food_bar, 10, "minus");
 			this.wood += 1;
 			this.woodText.destroy();
 			this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
@@ -447,14 +447,14 @@ class Scene2 extends Phaser.Scene {
 					woody.setScale(0.1);
 					woody.setInteractive();
 					this.woods.add(woody);
-					woody.setRandomPosition(100, 200, 650, 500);
+					woody.setRandomPosition(100, 200, 650, 350);
 					this.woodCount++;
 				}
 			}
 			// envi impact wood = 1
 			this.environment_meter_value(1);
 		} else if (gameObject.group == "stone") {
-			this.updatePlayerBars(this.water_bar, 10, "plus");
+			this.updatePlayerBars(this.food_bar, 10, "plus");
 			this.stone += 1;
 			this.stoneText.destroy();
 			this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
@@ -468,7 +468,7 @@ class Scene2 extends Phaser.Scene {
 					stony.setScale(0.1);
 					stony.setInteractive();
 					this.stones.add(stony);
-					stony.setRandomPosition(100, 200, 650, 500);
+					stony.setRandomPosition(100, 200, 650, 350);
 					this.stoneCount++;
 				}
 			}
@@ -488,7 +488,7 @@ class Scene2 extends Phaser.Scene {
 					weedy.setScale(0.1);
 					weedy.setInteractive();
 					this.weedss.add(weedy);
-					weedy.setRandomPosition(100, 200, 650, 500);
+					weedy.setRandomPosition(100, 200, 650, 350);
 					this.weedsCount++;
 				}
 			}
@@ -522,6 +522,7 @@ class Scene2 extends Phaser.Scene {
 		this.spawnCampfire();
 		this.spawnShelter();
 		this.day_or_night();
+		this.drainhealth();
 
 		//pig movement 
 		this.pigMovement(1);
