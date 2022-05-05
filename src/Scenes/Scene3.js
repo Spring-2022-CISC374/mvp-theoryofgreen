@@ -16,15 +16,37 @@ class Scene3 extends Phaser.Scene {
         this.fireCheck = data.fireCheck;
         this.shelterCheck = data.shelterCheck;
         this.timerDelay = data.timerDelay;
-        this.enviroMeter = data.enviroMeter
+        this.enviroMeter = data.enviroMeter;
+        this.player_health = data.player_health;
+		this.player_food = data.player_food;
+		this.player_water = data.player_water;
+        this.collected_water = data.collected_water;
+		this.collected_food = data.collected_food;
+        this.isNight = data.isNight;
+		this.sunMade = data.sunMade;
     }
 
     create() {
+        this.border = this.add.rectangle(0, 700, 300, 15, 'black', 1);
+		this.border.setScale(10);
+		this.border.setDepth(99);
+		this.borderup = this.add.rectangle(0, 0, 300, 10, 'black', 1);
+		this.borderup.setScale(10);
+		this.borderup.setDepth(99);
+
+		this.playerbars();
+
         this.text = this.add.text(25, 25, "Click to return to game!");
         this.text.setColor("white");
         this.text.setInteractive();
         this.text.group = "return";
+        this.text.setDepth(100);
         this.input.on("gameobjectdown", this.click, this);
+
+        this.craftText = this.add.text(350, 17, "CRAFTING");
+        this.craftText.setColor("white");
+        this.craftText.setDepth(100);
+        this.craftText.setFontSize(25);
 
         this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
 		this.woodText.depth = 100;
@@ -41,6 +63,29 @@ class Scene3 extends Phaser.Scene {
         this.bandagesText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
 		this.bandagesText.depth = 100;
 		this.bandagesText.setColor("white");
+
+        this.waterText = this.add.text(150, 650, `Water : ${this.collected_water}`);
+		this.waterText.depth = 100;
+		this.waterText.setColor("white");
+
+		this.foodText = this.add.text(150, 630, `Food : ${this.collected_food}`);
+		this.foodText.depth = 100;
+		this.foodText.setColor("white");
+
+        if(!this.isNight) {
+			this.sun = this.add.image(775, 663, "sun");
+			this.sun.setDepth(100);
+			this.sun.setScale(.05);
+		}
+        else {
+            this.night = this.add.rectangle(0, 0, 800, 800, 'black', 1);
+			this.night.alpha = .5;
+			this.night.setScale(10);
+            this.night.setDepth(99);
+			this.moon = this.add.image(775, 663, "moon");
+			this.moon.setDepth(100);
+			this.moon.setScale(.04);
+        }
 
         this.fire = this.add.image(150, 150, "campfire");
         this.fire.setScale(.2);
@@ -66,6 +111,7 @@ class Scene3 extends Phaser.Scene {
         this.shelterText.setInteractive();
 
         this.timerText = this.add.text(600, 25);
+        this.timerText.setDepth(100);
 		this.timer = this.time.addEvent({
 			delay: this.timerDelay,
 			callback: this.gameEnd,
@@ -83,7 +129,116 @@ class Scene3 extends Phaser.Scene {
 		this.scene.start("endGame");
 	}
 
+    playerbars() {
+        this.health_label = this.add.text(470, 633, `HEALTH : `);
+		this.health_label.setColor('white');
+		this.health_label.setDepth(100);
+
+		this.health_bar = this.add.rectangle(650, 640, 100, 13, 0x3dbf00, 1);
+		this.health_bar.scaleX = 2;
+		this.health_bar.setDepth(100);
+		this.health_bar.name = "health";
+
+		this.food_label = this.add.text(470, 653, `FOOD : `);
+		this.food_label.setColor('white');
+		this.food_label.setDepth(100);
+
+		this.food_bar = this.add.rectangle(650, 660, 100, 13, 0x3dbf00, 1);
+		this.food_bar.scaleX = 2;
+		this.food_bar.setDepth(100);
+		this.food_bar.name = "food";
+
+		this.water_label = this.add.text(470, 673, `WATER : `);
+		this.water_label.setColor('white');
+		this.water_label.setDepth(100);
+
+		this.water_bar = this.add.rectangle(650, 680, 100, 13, 0x3dbf00, 1);
+		this.water_bar.scaleX = 2;
+		this.water_bar.setDepth(100);
+		this.water_bar.name = "water";
+
+        this.correctPlayerBars();
+    }
+
+    correctPlayerBars() {
+        this.health_bar.setSize(this.player_health, 13);
+		this.health_bar.setDepth(100);
+		if (this.player_health >= 80) {
+			this.health_bar.setFillStyle(0x3dbf00);
+		} else if (this.player_health >= 60) {
+			this.health_bar.setFillStyle(0xe6c700);	
+		} else if (this.player_health >= 50) {
+			this.health_bar.setFillStyle(0xe03800);
+		} else if (this.player_health >= 20) {
+			this.health_bar.setFillStyle(0xe00000);	
+		}
+
+        this.food_bar.setSize(this.player_food, 13);
+	    this.food_bar.setDepth(100);
+		if (this.player_food >= 80) {
+			this.food_bar.setFillStyle(0x3dbf00);
+		} else if (this.player_food >= 60) {
+			this.food_bar.setFillStyle(0xe6c700);	
+		} else if (this.player_food >= 50) {
+			this.food_bar.setFillStyle(0xe03800);
+		} else if (this.player_food >= 20) {
+			this.food_bar.setFillStyle(0xe00000);	
+		}
+
+        this.water_bar.setSize(this.player_water, 13);
+		this.water_bar.setDepth(100);
+		if (this.player_water >= 80) {
+			this.water_bar.setFillStyle(0x3dbf00);
+		} else if (this.player_water >= 60) {
+			this.water_bar.setFillStyle(0xe6c700);	
+		} else if (this.player_water >= 50) {
+			this.water_bar.setFillStyle(0xe03800);
+		} else if (this.player_water >= 20) {
+			this.water_bar.setFillStyle(0xe00000);	
+		}
+    }
+
+    day_or_night() {
+		if(this.timer.getRemainingSeconds() < 250 && !this.isNight) {
+			this.nighttime();
+		}
+		if(this.timer.getRemainingSeconds() < 200 && this.isNight) {
+			this.daytime();
+		}
+		if(this.timer.getRemainingSeconds() < 150 && !this.isNight) {
+			this.nighttime();
+		}
+		if(this.timer.getRemainingSeconds() < 100 && this.isNight) {
+			this.daytime();
+		}
+		if(this.timer.getRemainingSeconds() < 50 && !this.isNight) {
+			this.nighttime();
+		}
+	}
+
+	nighttime() {
+		this.night = this.add.rectangle(0, 0, 800, 800, 'black', 1);
+			this.night.alpha = .5;
+			this.night.setScale(10);
+			this.sun.destroy();
+			this.moon = this.add.image(775, 663, "moon");
+			this.moon.setDepth(100);
+			this.moon.setScale(.04);
+			this.isNight = true;
+	}
+
+	daytime() {
+		this.night.destroy();
+			this.moon.destroy();
+			this.sun = this.add.image(775, 663, "sun");
+			this.sun.setDepth(100);
+			this.sun.setScale(.05);
+			this.sunMade = true;
+			this.isNight = false;
+	}
+
     update() {
+        this.day_or_night();
 		if(this.timer.getRemainingSeconds() >= 100) {
 			this.x = 6;
 		}
@@ -115,7 +270,14 @@ class Scene3 extends Phaser.Scene {
                 "fireCheck": this.fireCheck,
                 "shelterCheck": this.shelterCheck,
                 "timerDelay": this.timerDelay,
-                "enviroMeter": this.enviroMeter
+                "enviroMeter": this.enviroMeter,
+                "player_health": this.player_health,
+                "player_food": this.player_food,
+                "player_water": this.player_water,
+                "collected_water": this.collected_water,
+                "collected_food": this.collected_food,
+                "isNight": this.isNight,
+                "sunMade": this.sunMade
             });
         } else if (gameObject.group == "fire") {
             if(!this.isFire) {
@@ -126,8 +288,10 @@ class Scene3 extends Phaser.Scene {
                     this.stone -= 10;
                     this.woodText.destroy();
 			        this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
+                    this.woodText.setDepth(100);
                     this.stoneText.destroy();
 			        this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
+                    this.stoneText.setDepth(100);
                     this.add.text(80, 260, "Campfire crafted!");
                 } else {
                     this.add.text(80, 260, "Not enough materials");
@@ -144,8 +308,10 @@ class Scene3 extends Phaser.Scene {
                     this.weeds -= 30;
                     this.woodText.destroy();
 			        this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
+                    this.woodText.setDepth(100);
                     this.weedsText.destroy();
 			        this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
+                    this.weedsText.setDepth(100);
                     this.add.text(80, 510, "Simple Shelter crafted!");
                 } else {
                     this.add.text(80, 510, "Not enough materials");
@@ -159,8 +325,10 @@ class Scene3 extends Phaser.Scene {
                 this.weeds -= 20;
                 this.weedsText.destroy();
 			    this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
+                this.weedsText.setDepth(100);
                 this.bandagesText.destroy();
 			    this.bandagesText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
+                this.bandagesText.setDepth(100);
             } else {
                 this.add.text(380, 245, "Not enough materials");
             }
