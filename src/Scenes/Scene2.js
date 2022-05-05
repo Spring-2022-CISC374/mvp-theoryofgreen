@@ -23,7 +23,10 @@ class Scene2 extends Phaser.Scene {
 		this.collected_water = data.collected_water;
 		this.collected_food = data.collected_food;
 		this.isNight = data.isNight;
-		this.sunMade = data.sunMade;
+		this.isWater = data.isWater;
+		this.pondradius = data.pondradius;
+		this.canClickShelter = data.canClickShelter;
+		this.shelterTimerDelay = data.shelterTimerDelay;
 	}
 
 	//environmental meter
@@ -40,12 +43,21 @@ class Scene2 extends Phaser.Scene {
 		this.meter_bar.setDepth(100);
 	}
 
-	environment_meter_value(amount) {
-		this.meter_value -= amount;
+	environment_meter_value(amount, direction) {
+		if(direction == "minus") {
+			this.meter_value -= amount;
+		}
+		else if(direction == "plus") {
+			this.meter_value += amount;
+			if(this.meter_value >= 100) {
+				this.meter_value = 100;
+			}
+		}
 		this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;
 
 		//bar color and size
-		this.meter_bar.setSize(this.bar_size--, 20);
+		//this.meter_bar.setSize(this.bar_size--, 20);
+		this.meter_bar.setSize(this.meter_value, 20);
 		if (this.meter_value >= 80) {
 			this.meter_bar.setFillStyle(0x3dbf00);
 		} else if (this.meter_value >= 60) {
@@ -78,7 +90,7 @@ class Scene2 extends Phaser.Scene {
 			woody.setScale(0.1);
 			woody.setInteractive();
 			this.woods.add(woody);
-			woody.setRandomPosition(100, 200, 650, 500);
+			woody.setRandomPosition(100, 200, 650, 350);
 			this.woodCount++;
 		}
 
@@ -96,7 +108,7 @@ class Scene2 extends Phaser.Scene {
 			stony.setScale(0.1);
 			stony.setInteractive();
 			this.stones.add(stony);
-			stony.setRandomPosition(100, 200, 650, 500);
+			stony.setRandomPosition(100, 200, 650, 350);
 			this.stoneCount++;	
 		}
 
@@ -114,7 +126,7 @@ class Scene2 extends Phaser.Scene {
 			weedy.setScale(0.1);
 			weedy.setInteractive();
 			this.weedss.add(weedy);
-			weedy.setRandomPosition(100, 200, 650, 500);
+			weedy.setRandomPosition(100, 200, 650, 350);
 			this.weedsCount++;
 		}
 
@@ -132,7 +144,12 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	water() {
-		var pond = this.add.circle(650, 200, 120, 0x3382FF);
+		if(this.isWater) {
+			this.pond = this.add.circle(650, 200, this.pondradius, 0x3382FF);
+			this.pond.setDepth(-1);
+			this.pond.setInteractive();
+			this.pond.group = "water";
+		}
 	}
 
 	playerbars() {
@@ -216,7 +233,6 @@ class Scene2 extends Phaser.Scene {
 
 			if (this.player_food <= 0) {
 				this.player_food = 0;
-				this.drainhealth();
 			}
 
 			this.food_bar.setSize(this.player_food, 13);
@@ -242,9 +258,8 @@ class Scene2 extends Phaser.Scene {
 				}
 			}
 
-			if (this.player_water <= 0) {
-				this.player_water = 0;
-				this.drainhealth();
+			if (this.player_food <= 0) {
+				this.player_food = 0;
 			}
 
 			this.water_bar.setSize(this.player_water, 13);
@@ -302,7 +317,21 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	drainhealth() {
+		if(this.player_food <= 0 || this.player_water <= 0) {
+			this.updatePlayerBars(this.health_bar, .1, "minus");
+		}
+	}
 
+	drainfood() {
+		if(this.player_food > 0) {
+			this.updatePlayerBars(this.food_bar, .01, "minus");
+		}
+	}
+
+	drainwater() {
+		if(this.player_water > 0) {
+			this.updatePlayerBars(this.water_bar, .02, "minus");
+		}
 	}
 
 	day_or_night() {
@@ -324,24 +353,26 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	nighttime() {
+		this.environment_meter_value(10, "plus");
 		this.night = this.add.rectangle(0, 0, 800, 800, 'black', 1);
-			this.night.alpha = .5;
-			this.night.setScale(10);
-			this.sun.destroy();
-			this.moon = this.add.image(775, 663, "moon");
-			this.moon.setDepth(100);
-			this.moon.setScale(.04);
-			this.isNight = true;
+		this.night.alpha = .5;
+		this.night.setScale(10);
+		this.sun.destroy();
+		this.moon = this.add.image(775, 663, "moon");
+		this.moon.setDepth(100);
+		this.moon.setScale(.04);
+		this.isNight = true;
 	}
 
 	daytime() {
+		this.environment_meter_value(10, "plus");
 		this.night.destroy();
-			this.moon.destroy();
-			this.sun = this.add.image(775, 663, "sun");
-			this.sun.setDepth(100);
-			this.sun.setScale(.05);
-			this.sunMade = true;
-			this.isNight = false;
+		this.moon.destroy();
+		this.sun = this.add.image(775, 663, "sun");
+		this.sun.setDepth(100);
+		this.sun.setScale(.05);
+		this.sunMade = true;
+		this.isNight = false;
 	}
 
 	create() {
@@ -352,6 +383,40 @@ class Scene2 extends Phaser.Scene {
 		this.craft.setDepth(100);
         this.num_pigs = 0
 		this.playerbars();
+
+		if(!this.canClickShelter) {
+			this.makeShelterTimer();
+		}
+
+		this.shelterTimerText = this.add.text(320, 100);
+		this.shelterTimerText.setDepth(100);
+
+		this.foodButton = this.add.text(310, 630, "Eat Food");
+		this.foodButton.setDepth(101);
+		this.foodBack = this.add.rectangle(350, 637, 120, 16, 0x2A7A16, 1);
+		this.foodBack.setDepth(100);
+		this.foodButton.setInteractive();
+		this.foodBack.setInteractive();
+		this.foodButton.group = "foodbutton";
+		this.foodBack.group = "foodbutton";
+
+		this.waterButton = this.add.text(298, 650, "Drink Water");
+		this.waterButton.setDepth(101);
+		this.waterBack = this.add.rectangle(350, 657, 120, 16, 0x2A7A16, 1);
+		this.waterBack.setDepth(100);
+		this.waterButton.setInteractive();
+		this.waterBack.setInteractive();
+		this.waterButton.group = "waterbutton";
+		this.waterBack.group = "waterbutton";
+
+		this.bandageButton = this.add.text(305, 670, "Heal Self");
+		this.bandageButton.setDepth(101);
+		this.bandageBack = this.add.rectangle(350, 677, 120, 16, 0x2A7A16, 1);
+		this.bandageBack.setDepth(100);
+		this.bandageButton.setInteractive();
+		this.bandageBack.setInteractive();
+		this.bandageButton.group = "bandagebutton";
+		this.bandageBack.group = "bandagebutton";
 
 		if(!this.isNight) {
 			this.sun = this.add.image(775, 663, "sun");
@@ -433,7 +498,6 @@ class Scene2 extends Phaser.Scene {
 
 	click(pointer, gameObject) {
 		if (gameObject.group == "wood") {
-			this.updatePlayerBars(this.water_bar, 10, "minus");
 			this.wood += 1;
 			this.woodText.destroy();
 			this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
@@ -447,14 +511,13 @@ class Scene2 extends Phaser.Scene {
 					woody.setScale(0.1);
 					woody.setInteractive();
 					this.woods.add(woody);
-					woody.setRandomPosition(100, 200, 650, 500);
+					woody.setRandomPosition(100, 200, 650, 350);
 					this.woodCount++;
 				}
 			}
 			// envi impact wood = 1
-			this.environment_meter_value(1);
+			this.environment_meter_value(1, "minus");
 		} else if (gameObject.group == "stone") {
-			this.updatePlayerBars(this.water_bar, 10, "plus");
 			this.stone += 1;
 			this.stoneText.destroy();
 			this.stoneText = this.add.text(19, 650, `Stone : ${this.stone}`);
@@ -468,12 +531,12 @@ class Scene2 extends Phaser.Scene {
 					stony.setScale(0.1);
 					stony.setInteractive();
 					this.stones.add(stony);
-					stony.setRandomPosition(100, 200, 650, 500);
+					stony.setRandomPosition(100, 200, 650, 350);
 					this.stoneCount++;
 				}
 			}
 			//envi impact stone = 1
-			this.environment_meter_value(1);
+			this.environment_meter_value(1, "minus");
 		} else if (gameObject.group == "weeds") {
 			this.weeds += 1;
 			this.weedsText.destroy();
@@ -488,12 +551,12 @@ class Scene2 extends Phaser.Scene {
 					weedy.setScale(0.1);
 					weedy.setInteractive();
 					this.weedss.add(weedy);
-					weedy.setRandomPosition(100, 200, 650, 500);
+					weedy.setRandomPosition(100, 200, 650, 350);
 					this.weedsCount++;
 				}
 			}
 			//envi impact weeds = 1
-			this.environment_meter_value(1);
+			this.environment_meter_value(1, "minus");
 		} else if (gameObject.group == "craftButton") {
 			this.scene.start("craftScreen", {
 				"wood": this.wood,
@@ -512,9 +575,80 @@ class Scene2 extends Phaser.Scene {
 				"collected_water": this.collected_water,
 				"collected_food": this.collected_food,
 				"isNight": this.isNight,
-				"sunMade": this.sunMade
+				"isWater": this.isWater,
+				"pondradius": this.pondradius,
+				"canClickShelter": this.canClickShelter,
+				"shelterTimerDelay": this.shelterTimerDelay
 			});
+		} else if (gameObject.group == "water") {
+			this.collected_water += 1;
+			this.waterText.destroy();
+			this.waterText = this.add.text(150, 650, `Water : ${this.collected_water}`);
+			this.waterText.depth = 100;
+			this.waterText.setColor("white");
+			this.pond.destroy();
+			this.pondradius -= 2;
+			this.pond = this.add.circle(650, 200, this.pondradius, 0x3382FF);
+			this.pond.setDepth(-1);
+			this.pond.setInteractive();
+			this.pond.group = "water";
+			if(this.pondradius <= 0) {
+				this.isWater = false;
+			}
+			this.environment_meter_value(1, "minus");
 		}
+		else if (gameObject.group == "foodbutton") {
+			if(this.collected_food > 0 && this.player_food < 100) {
+				this.updatePlayerBars(this.food_bar, 10, "plus");
+				this.collected_food -= 1;
+				this.foodText.destroy();
+				this.foodText = this.add.text(150, 630, `Food : ${this.collected_food}`);
+				this.foodText.depth = 100;
+				this.foodText.setColor("white");
+			}
+		}
+		else if (gameObject.group == "waterbutton") {
+			if(this.collected_water > 0 && this.player_water < 100) {
+				this.updatePlayerBars(this.water_bar, 10, "plus");
+				this.collected_water -= 1;
+				this.waterText.destroy();
+				this.waterText = this.add.text(150, 650, `Water : ${this.collected_water}`);
+				this.waterText.depth = 100;
+				this.waterText.setColor("white");
+			}
+		}
+		else if (gameObject.group == "bandagebutton") {
+			if(this.bandages > 0 && this.player_health < 100) {
+				this.updatePlayerBars(this.health_bar, 10, "plus");
+				this.bandages -= 1;
+				this.bandageText.destroy();
+				this.bandageText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
+				this.bandageText.depth = 100;
+				this.bandageText.setColor("white");
+		
+			}
+		}
+		else if (gameObject.group = "shelter") {
+			if(this.canClickShelter) {
+				this.shelterTimerText.setVisible(true);
+				this.updatePlayerBars(this.health_bar, 100, "plus");
+				this.makeShelterTimer();
+				this.canClickShelter = false;
+			}
+		}
+	}
+
+	makeShelterTimer() {
+			this.shelterTimer = this.time.addEvent({
+				delay: this.shelterTimerDelay,
+				args: [],
+				callbackScope: this,
+				loop: false,
+				repeat: 0,
+				startAt: 1,
+				timeScale: 1,
+				paused: false
+			});
 	}
 
 	update() {
@@ -522,6 +656,9 @@ class Scene2 extends Phaser.Scene {
 		this.spawnCampfire();
 		this.spawnShelter();
 		this.day_or_night();
+		this.drainhealth();
+		this.drainfood();
+		this.drainwater();
 
 		//pig movement 
 		this.pigMovement(1);
@@ -550,6 +687,16 @@ class Scene2 extends Phaser.Scene {
 		this.timerDelay = this.timer.getRemainingSeconds() * 1000;
 		//console.log(this.timer.getRemainingSeconds());
 		this.timerText.setText('Survive for: ' + this.timer.getRemainingSeconds().toString().substring(0, this.x));
+
+		if(!this.canClickShelter) {
+			this.shelterTimerDelay = this.shelterTimer.getRemainingSeconds() * 1000;
+			this.shelterTimerText.setText(this.shelterTimer.getRemainingSeconds().toString().substring(0, 4));
+			if(this.shelterTimer.getRemainingSeconds().toString().substring(0, 4) <= 0) {
+				this.shelterTimerText.setVisible(false);
+				this.canClickShelter = true;
+				this.shelterTimerDelay = 50000;
+			}
+		}
 	}
 
 	spawnCampfire() {
@@ -576,6 +723,8 @@ class Scene2 extends Phaser.Scene {
 			this.shelterSpawn.setScale(.3);
 			this.shelterCheck = 2;
 			this.shelterSpawn.setDepth(-1);
+			this.shelterSpawn.setInteractive();
+			this.shelterSpawn.group = "shelter";
 		}
 	}
 

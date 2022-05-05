@@ -161,7 +161,7 @@ class Scene1 extends Phaser.Scene {
     this.wood = 40;
     this.stone = 10;
     this.weeds = 30;
-    this.bandages = 0;
+    this.bandages = 5;
     this.isShelter = false;
     this.isFire = false;
     this.fireCheck = 0;
@@ -171,10 +171,13 @@ class Scene1 extends Phaser.Scene {
     this.player_health = 100;
     this.player_food = 100;
     this.player_water = 100;
-    this.collected_water = 0;
-    this.collected_food = 0;
+    this.collected_water = 10;
+    this.collected_food = 10;
     this.isNight = false;
-    this.sunMade = false;
+    this.isWater = true;
+    this.pondradius = 120;
+    this.canClickShelter = true;
+    this.shelterTimerDelay = 50000;
 
     this.add.text(20, 20, "Loading game...");
     this.scene.start("playGame", {
@@ -194,7 +197,10 @@ class Scene1 extends Phaser.Scene {
       "collected_water": this.collected_water,
       "collected_food": this.collected_food,
       "isNight": this.isNight,
-      "sunMade": this.sunMade
+      "isWater": this.isWater,
+      "pondradius": this.pondradius,
+      "canClickShelter": this.canClickShelter,
+      "shelterTimerDelay": this.shelterTimerDelay
     });
 
     // #region ANIMS

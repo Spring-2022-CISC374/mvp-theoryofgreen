@@ -23,10 +23,17 @@ class Scene3 extends Phaser.Scene {
         this.collected_water = data.collected_water;
 		this.collected_food = data.collected_food;
         this.isNight = data.isNight;
-		this.sunMade = data.sunMade;
+		this.isWater = data.isWater;
+        this.pondradius = data.pondradius;
+        this.canClickShelter = data.canClickShelter;
+        this.shelterTimerDelay = data.shelterTimerDelay;
     }
 
     create() {
+        if(!this.canClickShelter) {
+            this.makeShelterTimer();
+        }
+
         this.border = this.add.rectangle(0, 700, 300, 15, 'black', 1);
 		this.border.setScale(10);
 		this.border.setDepth(99);
@@ -160,6 +167,93 @@ class Scene3 extends Phaser.Scene {
         this.correctPlayerBars();
     }
 
+    updatePlayerBars(bar, amount, direction) {
+		if(bar.name == "health") {
+			if(direction == "minus") {
+				this.player_health -= amount;
+			}
+			else if(direction == "plus") {
+				this.player_health += amount;
+				if(this.player_health >= 100) {
+					this.player_health = 100;
+				}
+			}
+
+			if (this.player_health <= 0) {
+				this.player_health = 0;
+				this.gameEnd();
+			}
+
+			this.health_bar.setSize(this.player_health, 13);
+			this.health_bar.setDepth(100);
+			if (this.player_health >= 80) {
+				this.health_bar.setFillStyle(0x3dbf00);
+			} else if (this.player_health >= 60) {
+				this.health_bar.setFillStyle(0xe6c700);	
+			} else if (this.player_health >= 50) {
+				this.health_bar.setFillStyle(0xe03800);
+			} else if (this.player_health >= 20) {
+				this.health_bar.setFillStyle(0xe00000);	
+			}
+
+		} else if(bar.name == "food") {
+			if(direction == "minus") {
+				this.player_food -= amount;
+			}
+			else if(direction == "plus") {
+				this.player_food += amount;
+				if(this.player_food >= 100) {
+					this.player_food = 100;
+				}
+			}
+
+			if (this.player_food <= 0) {
+				this.player_food = 0;
+			}
+
+			this.food_bar.setSize(this.player_food, 13);
+			this.food_bar.setDepth(100);
+			if (this.player_food >= 80) {
+				this.food_bar.setFillStyle(0x3dbf00);
+			} else if (this.player_food >= 60) {
+				this.food_bar.setFillStyle(0xe6c700);	
+			} else if (this.player_food >= 50) {
+				this.food_bar.setFillStyle(0xe03800);
+			} else if (this.player_food >= 20) {
+				this.food_bar.setFillStyle(0xe00000);	
+			}
+			
+		} else if(bar.name == "water") {
+			if(direction == "minus") {
+				this.player_water -= amount;
+			}
+			else if(direction == "plus") {
+				this.player_water += amount;
+				if(this.player_water >= 100) {
+					this.player_water = 100;
+				}
+			}
+
+			if (this.player_food <= 0) {
+				this.player_food = 0;
+			}
+
+			this.water_bar.setSize(this.player_water, 13);
+			this.water_bar.setDepth(100);
+			if (this.player_water >= 80) {
+				this.water_bar.setFillStyle(0x3dbf00);
+			} else if (this.player_water >= 60) {
+				this.water_bar.setFillStyle(0xe6c700);	
+			} else if (this.player_water >= 50) {
+				this.water_bar.setFillStyle(0xe03800);
+			} else if (this.player_water >= 20) {
+				this.water_bar.setFillStyle(0xe00000);	
+			}
+
+		}
+
+	}
+
     correctPlayerBars() {
         this.health_bar.setSize(this.player_health, 13);
 		this.health_bar.setDepth(100);
@@ -197,6 +291,24 @@ class Scene3 extends Phaser.Scene {
 			this.water_bar.setFillStyle(0xe00000);	
 		}
     }
+
+    drainhealth() {
+		if(this.player_food <= 0 || this.player_water <= 0) {
+			this.updatePlayerBars(this.health_bar, .1, "minus");
+		}
+	}
+
+	drainfood() {
+		if(this.player_food > 0) {
+			this.updatePlayerBars(this.food_bar, .01, "minus");
+		}
+	}
+
+	drainwater() {
+		if(this.player_water > 0) {
+			this.updatePlayerBars(this.water_bar, .02, "minus");
+		}
+	}
 
     day_or_night() {
 		if(this.timer.getRemainingSeconds() < 250 && !this.isNight) {
@@ -238,6 +350,9 @@ class Scene3 extends Phaser.Scene {
 	}
 
     update() {
+        this.drainhealth();
+        this.drainfood();
+        this.drainwater();
         this.day_or_night();
 		if(this.timer.getRemainingSeconds() >= 100) {
 			this.x = 6;
@@ -250,7 +365,29 @@ class Scene3 extends Phaser.Scene {
 		}
 		this.timerDelay = this.timer.getRemainingSeconds() * 1000;
 		this.timerText.setText('Survive for: ' + this.timer.getRemainingSeconds().toString().substring(0, this.x));
+
+        if(!this.canClickShelter) {
+			this.shelterTimerDelay = this.shelterTimer.getRemainingSeconds() * 1000;
+			if(this.shelterTimer.getRemainingSeconds().toString().substring(0, 4) <= 0) {
+				this.shelterTimerText.setVisible(false);
+				this.canClickShelter = true;
+				this.shelterTimerDelay = 50000;
+			}
+		}
 	}
+
+    makeShelterTimer() {
+        this.shelterTimer = this.time.addEvent({
+            delay: this.shelterTimerDelay,
+            args: [],
+            callbackScope: this,
+            loop: false,
+            repeat: 0,
+            startAt: 1,
+            timeScale: 1,
+            paused: false
+        });
+}
 
     click(pointer, gameObject) {
         if(this.fireCheck == 2) {
@@ -277,7 +414,10 @@ class Scene3 extends Phaser.Scene {
                 "collected_water": this.collected_water,
                 "collected_food": this.collected_food,
                 "isNight": this.isNight,
-                "sunMade": this.sunMade
+                "isWater": this.isWater,
+                "pondradius": this.pondradius,
+                "canClickShelter": this.canClickShelter,
+                "shelterTimerDelay": this.shelterTimerDelay
             });
         } else if (gameObject.group == "fire") {
             if(!this.isFire) {
