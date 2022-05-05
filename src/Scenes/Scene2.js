@@ -23,7 +23,8 @@ class Scene2 extends Phaser.Scene {
 		this.collected_water = data.collected_water;
 		this.collected_food = data.collected_food;
 		this.isNight = data.isNight;
-		this.sunMade = data.sunMade;
+		this.isWater = data.isWater;
+		this.pondradius = data.pondradius;
 	}
 
 	//environmental meter
@@ -132,7 +133,12 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	water() {
-		var pond = this.add.circle(650, 200, 120, 0x3382FF);
+		if(this.isWater) {
+			this.pond = this.add.circle(650, 200, this.pondradius, 0x3382FF);
+			this.pond.setDepth(-1);
+			this.pond.setInteractive();
+			this.pond.group = "water";
+		}
 	}
 
 	playerbars() {
@@ -512,8 +518,24 @@ class Scene2 extends Phaser.Scene {
 				"collected_water": this.collected_water,
 				"collected_food": this.collected_food,
 				"isNight": this.isNight,
-				"sunMade": this.sunMade
+				"isWater": this.isWater,
+				"pondradius": this.pondradius
 			});
+		} else if (gameObject.group == "water") {
+			this.collected_water += 1;
+			this.waterText.destroy();
+			this.waterText = this.add.text(150, 650, `Water : ${this.collected_water}`);
+			this.waterText.depth = 100;
+			this.waterText.setColor("white");
+			this.pond.destroy();
+			this.pondradius -= 2;
+			this.pond = this.add.circle(650, 200, this.pondradius, 0x3382FF);
+			this.pond.setDepth(-1);
+			this.pond.setInteractive();
+			this.pond.group = "water";
+			if(this.pondradius <= 0) {
+				this.isWater = false;
+			}
 		}
 	}
 

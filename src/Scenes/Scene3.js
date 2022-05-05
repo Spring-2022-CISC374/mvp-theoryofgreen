@@ -23,7 +23,8 @@ class Scene3 extends Phaser.Scene {
         this.collected_water = data.collected_water;
 		this.collected_food = data.collected_food;
         this.isNight = data.isNight;
-		this.sunMade = data.sunMade;
+		this.isWater = data.isWater;
+        this.pondradius = data.pondradius;
     }
 
     create() {
@@ -277,7 +278,8 @@ class Scene3 extends Phaser.Scene {
                 "collected_water": this.collected_water,
                 "collected_food": this.collected_food,
                 "isNight": this.isNight,
-                "sunMade": this.sunMade
+                "isWater": this.isWater,
+                "pondradius": this.pondradius
             });
         } else if (gameObject.group == "fire") {
             if(!this.isFire) {

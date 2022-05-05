@@ -174,7 +174,8 @@ class Scene1 extends Phaser.Scene {
     this.collected_water = 0;
     this.collected_food = 0;
     this.isNight = false;
-    this.sunMade = false;
+    this.isWater = true;
+    this.pondradius = 120;
 
     this.add.text(20, 20, "Loading game...");
     this.scene.start("playGame", {
@@ -194,7 +195,8 @@ class Scene1 extends Phaser.Scene {
       "collected_water": this.collected_water,
       "collected_food": this.collected_food,
       "isNight": this.isNight,
-      "sunMade": this.sunMade
+      "isWater": this.isWater,
+      "pondradius": this.pondradius
     });
 
     // #region ANIMS
