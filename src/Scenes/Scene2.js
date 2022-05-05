@@ -22,6 +22,8 @@ class Scene2 extends Phaser.Scene {
 		this.player_water = data.player_water;
 		this.collected_water = data.collected_water;
 		this.collected_food = data.collected_food;
+		this.isNight = data.isNight;
+		this.sunMade = data.sunMade;
 	}
 
 	//environmental meter
@@ -76,7 +78,7 @@ class Scene2 extends Phaser.Scene {
 			woody.setScale(0.1);
 			woody.setInteractive();
 			this.woods.add(woody);
-			woody.setRandomPosition(100, 100, 650, 500);
+			woody.setRandomPosition(100, 200, 650, 500);
 			this.woodCount++;
 		}
 
@@ -94,7 +96,7 @@ class Scene2 extends Phaser.Scene {
 			stony.setScale(0.1);
 			stony.setInteractive();
 			this.stones.add(stony);
-			stony.setRandomPosition(100, 100, 650, 500);
+			stony.setRandomPosition(100, 200, 650, 500);
 			this.stoneCount++;	
 		}
 
@@ -112,7 +114,7 @@ class Scene2 extends Phaser.Scene {
 			weedy.setScale(0.1);
 			weedy.setInteractive();
 			this.weedss.add(weedy);
-			weedy.setRandomPosition(100, 100, 650, 500);
+			weedy.setRandomPosition(100, 200, 650, 500);
 			this.weedsCount++;
 		}
 
@@ -303,6 +305,45 @@ class Scene2 extends Phaser.Scene {
 
 	}
 
+	day_or_night() {
+		if(this.timer.getRemainingSeconds() < 250 && !this.isNight) {
+			this.nighttime();
+		}
+		if(this.timer.getRemainingSeconds() < 200 && this.isNight) {
+			this.daytime();
+		}
+		if(this.timer.getRemainingSeconds() < 150 && !this.isNight) {
+			this.nighttime();
+		}
+		if(this.timer.getRemainingSeconds() < 100 && this.isNight) {
+			this.daytime();
+		}
+		if(this.timer.getRemainingSeconds() < 50 && !this.isNight) {
+			this.nighttime();
+		}
+	}
+
+	nighttime() {
+		this.night = this.add.rectangle(0, 0, 800, 800, 'black', 1);
+			this.night.alpha = .5;
+			this.night.setScale(10);
+			this.sun.destroy();
+			this.moon = this.add.image(775, 663, "moon");
+			this.moon.setDepth(100);
+			this.moon.setScale(.04);
+			this.isNight = true;
+	}
+
+	daytime() {
+		this.night.destroy();
+			this.moon.destroy();
+			this.sun = this.add.image(775, 663, "sun");
+			this.sun.setDepth(100);
+			this.sun.setScale(.05);
+			this.sunMade = true;
+			this.isNight = false;
+	}
+
 	create() {
 		this.craft = this.add.text(25, 25, "Click to craft!");
 		this.craft.group = "craftButton";
@@ -311,6 +352,21 @@ class Scene2 extends Phaser.Scene {
 		this.craft.setDepth(100);
         this.num_pigs = 0
 		this.playerbars();
+
+		if(!this.isNight) {
+			this.sun = this.add.image(775, 663, "sun");
+			this.sun.setDepth(100);
+			this.sun.setScale(.05);
+		}
+		else {
+			this.night = this.add.rectangle(0, 0, 800, 800, 'black', 1);
+			this.night.alpha = .5;
+			this.night.setScale(10);
+			this.night.setDepth(99);
+			this.moon = this.add.image(775, 663, "moon");
+			this.moon.setDepth(100);
+			this.moon.setScale(.04);
+		}
 
         /** @type {Array<Phaser.GameObjects.Rectangle>} */
 		this.health_bars = [];
@@ -391,7 +447,7 @@ class Scene2 extends Phaser.Scene {
 					woody.setScale(0.1);
 					woody.setInteractive();
 					this.woods.add(woody);
-					woody.setRandomPosition(100, 100, 650, 500);
+					woody.setRandomPosition(100, 200, 650, 500);
 					this.woodCount++;
 				}
 			}
@@ -412,7 +468,7 @@ class Scene2 extends Phaser.Scene {
 					stony.setScale(0.1);
 					stony.setInteractive();
 					this.stones.add(stony);
-					stony.setRandomPosition(100, 100, 650, 500);
+					stony.setRandomPosition(100, 200, 650, 500);
 					this.stoneCount++;
 				}
 			}
@@ -432,7 +488,7 @@ class Scene2 extends Phaser.Scene {
 					weedy.setScale(0.1);
 					weedy.setInteractive();
 					this.weedss.add(weedy);
-					weedy.setRandomPosition(100, 100, 650, 500);
+					weedy.setRandomPosition(100, 200, 650, 500);
 					this.weedsCount++;
 				}
 			}
@@ -454,7 +510,9 @@ class Scene2 extends Phaser.Scene {
       			"player_food": this.player_food,
       			"player_water": this.player_water,
 				"collected_water": this.collected_water,
-				"collected_food": this.collected_food
+				"collected_food": this.collected_food,
+				"isNight": this.isNight,
+				"sunMade": this.sunMade
 			});
 		}
 	}
@@ -463,6 +521,7 @@ class Scene2 extends Phaser.Scene {
 		this.movePlayerManager();
 		this.spawnCampfire();
 		this.spawnShelter();
+		this.day_or_night();
 
 		//pig movement 
 		this.pigMovement(1);
@@ -495,17 +554,28 @@ class Scene2 extends Phaser.Scene {
 
 	spawnCampfire() {
 		if(this.isFire && this.fireCheck == 1) {
-			this.fireSpawn = this.add.image(500, 75, "campfire");
+			this.fireSpawn = this.add.image(450, 125, "campfire");
 			this.fireSpawn.setScale(.12);
 			this.fireCheck = 2;
+			this.fireSpawn.setDepth(-1);
+			this.glow1 = this.add.circle(450, 125, 15, 0xF20505, 1);
+			this.glow1.setAlpha(.2);
+			this.glow1.setDepth(103);
+			this.glow2 = this.add.circle(450, 125, 30, 0xEA9734, 1);
+			this.glow2.setAlpha(.3);
+			this.glow2.setDepth(102);
+			this.glow3 = this.add.circle(450, 125, 40, 0xFEF455, 1);
+			this.glow3.setAlpha(.2);
+			this.glow3.setDepth(101);
 		}
 	}
 
 	spawnShelter() {
 		if(this.isShelter && this.shelterCheck == 1) {
-			this.shelterSpawn = this.add.image(400, 50, "shelter");
+			this.shelterSpawn = this.add.image(350, 100, "shelter");
 			this.shelterSpawn.setScale(.3);
 			this.shelterCheck = 2;
+			this.shelterSpawn.setDepth(-1);
 		}
 	}
 

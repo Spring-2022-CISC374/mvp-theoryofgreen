@@ -22,6 +22,8 @@ class Scene3 extends Phaser.Scene {
 		this.player_water = data.player_water;
         this.collected_water = data.collected_water;
 		this.collected_food = data.collected_food;
+        this.isNight = data.isNight;
+		this.sunMade = data.sunMade;
     }
 
     create() {
@@ -69,6 +71,21 @@ class Scene3 extends Phaser.Scene {
 		this.foodText = this.add.text(150, 630, `Food : ${this.collected_food}`);
 		this.foodText.depth = 100;
 		this.foodText.setColor("white");
+
+        if(!this.isNight) {
+			this.sun = this.add.image(775, 663, "sun");
+			this.sun.setDepth(100);
+			this.sun.setScale(.05);
+		}
+        else {
+            this.night = this.add.rectangle(0, 0, 800, 800, 'black', 1);
+			this.night.alpha = .5;
+			this.night.setScale(10);
+            this.night.setDepth(99);
+			this.moon = this.add.image(775, 663, "moon");
+			this.moon.setDepth(100);
+			this.moon.setScale(.04);
+        }
 
         this.fire = this.add.image(150, 150, "campfire");
         this.fire.setScale(.2);
@@ -181,7 +198,47 @@ class Scene3 extends Phaser.Scene {
 		}
     }
 
+    day_or_night() {
+		if(this.timer.getRemainingSeconds() < 250 && !this.isNight) {
+			this.nighttime();
+		}
+		if(this.timer.getRemainingSeconds() < 200 && this.isNight) {
+			this.daytime();
+		}
+		if(this.timer.getRemainingSeconds() < 150 && !this.isNight) {
+			this.nighttime();
+		}
+		if(this.timer.getRemainingSeconds() < 100 && this.isNight) {
+			this.daytime();
+		}
+		if(this.timer.getRemainingSeconds() < 50 && !this.isNight) {
+			this.nighttime();
+		}
+	}
+
+	nighttime() {
+		this.night = this.add.rectangle(0, 0, 800, 800, 'black', 1);
+			this.night.alpha = .5;
+			this.night.setScale(10);
+			this.sun.destroy();
+			this.moon = this.add.image(775, 663, "moon");
+			this.moon.setDepth(100);
+			this.moon.setScale(.04);
+			this.isNight = true;
+	}
+
+	daytime() {
+		this.night.destroy();
+			this.moon.destroy();
+			this.sun = this.add.image(775, 663, "sun");
+			this.sun.setDepth(100);
+			this.sun.setScale(.05);
+			this.sunMade = true;
+			this.isNight = false;
+	}
+
     update() {
+        this.day_or_night();
 		if(this.timer.getRemainingSeconds() >= 100) {
 			this.x = 6;
 		}
@@ -218,7 +275,9 @@ class Scene3 extends Phaser.Scene {
                 "player_food": this.player_food,
                 "player_water": this.player_water,
                 "collected_water": this.collected_water,
-                "collected_food": this.collected_food
+                "collected_food": this.collected_food,
+                "isNight": this.isNight,
+                "sunMade": this.sunMade
             });
         } else if (gameObject.group == "fire") {
             if(!this.isFire) {

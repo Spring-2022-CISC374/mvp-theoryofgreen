@@ -27,6 +27,8 @@ import campfire from "../../assets/sprites/campfire.png";
 import bandage from "../../assets/sprites/bandage.png";
 import shelter from "../../assets/sprites/shelter.png";
 import meat from "../../assets/sprites/food/meat.png";
+import sun from "../../assets/sprites/sun.png";
+import moon from "../../assets/sprites/moon.png";
 
 class Scene1 extends Phaser.Scene {
   constructor() {
@@ -150,24 +152,29 @@ class Scene1 extends Phaser.Scene {
     this.load.image("campfire", campfire);
     this.load.image("bandage", bandage);
     this.load.image("shelter", shelter);
+
+    this.load.image("sun", sun);
+    this.load.image("moon", moon);
   }
 
   create() {
-    this.wood = 0;
-    this.stone = 0;
-    this.weeds = 0;
+    this.wood = 40;
+    this.stone = 10;
+    this.weeds = 30;
     this.bandages = 0;
     this.isShelter = false;
     this.isFire = false;
     this.fireCheck = 0;
     this.shelterCheck = 0;
-    this.timerDelay = 500000;
+    this.timerDelay = 300000;
     this.enviro_meter_value = 100;
     this.player_health = 100;
     this.player_food = 100;
     this.player_water = 100;
     this.collected_water = 0;
     this.collected_food = 0;
+    this.isNight = false;
+    this.sunMade = false;
 
     this.add.text(20, 20, "Loading game...");
     this.scene.start("playGame", {
@@ -185,7 +192,9 @@ class Scene1 extends Phaser.Scene {
       "player_food": this.player_food,
       "player_water": this.player_water,
       "collected_water": this.collected_water,
-      "collected_food": this.collected_food
+      "collected_food": this.collected_food,
+      "isNight": this.isNight,
+      "sunMade": this.sunMade
     });
 
     // #region ANIMS
