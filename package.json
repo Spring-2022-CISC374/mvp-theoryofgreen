@@ -27,9 +27,9 @@
         "deploy-all": "gh-pages -d dist",
 	    "run-dev": "parcel ./index.html",
         "clean-mac": "rm -rf dist; rm -rf .parcel-cache",
-        "clean-win": "rmdir /s dist; rmdir /s .parcel-cache",
+        "clean-win": "rmdir /s dist .parcel-cache",
         "fullclean-mac": "npm run clean-mac; rm -rf node_modules",
-        "fullclean-win": "npm run clean-win; rmdir /s node_modules"
+        "fullclean-win": "npm run clean-win && rmdir /s node_modules"
     },
     "keywords": [
         "Phaser",
