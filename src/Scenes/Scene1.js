@@ -20,6 +20,7 @@ import diagDownRightIdle from "../../assets/sprites/player/diag_down_right_idle.
 // Animal imports
 import pigFront from "../../assets/sprites/pig/pig-frontfacing.png";
 import pigBack from "../../assets/sprites/pig/pig-backfacing.png";
+//material imports
 import wood from "../../assets/sprites/wood.png";
 import stone from "../../assets/sprites/rock.png";
 import weeds from "../../assets/sprites/weeds.png";
@@ -27,6 +28,11 @@ import campfire from "../../assets/sprites/campfire.png";
 import bandage from "../../assets/sprites/bandage.png";
 import shelter from "../../assets/sprites/shelter.png";
 import meat from "../../assets/sprites/food/meat.png";
+//edu content
+import berryBush from "../../assets/plants/berry_bush.png";
+import berryBushText from "../../assets/plants/berry-bush-text.png";
+import poisonMushroom from "../../assets/plants/poison_mushroom.png";
+import poisonMushroomText from "../../assets/plants/poisonous-mushroom-text.png";
 import sun from "../../assets/sprites/sun.png";
 import moon from "../../assets/sprites/moon.png";
 
@@ -142,9 +148,7 @@ class Scene1 extends Phaser.Scene {
 
     // #region IMAGES
     this.load.image("wood", wood);
-
     this.load.image("stone", stone);
-
     this.load.image("weeds", weeds);
     this.load.image("meat", meat);
     // #endregion
@@ -153,6 +157,20 @@ class Scene1 extends Phaser.Scene {
     this.load.image("bandage", bandage);
     this.load.image("shelter", shelter);
 
+    //edu elements
+    this.load.image("berry-bush", berryBush);
+    this.load.image("poisonous-mushroom", poisonMushroom);
+    this.load.image("berry-bush-text", berryBushText);
+    this.load.image("poisonous-mushroom-text", poisonMushroomText);
+  }
+
+  create() {
+    //materials
+    this.wood = 0;
+    this.stone = 0;
+    this.weeds = 0;
+    //objects
+    this.bandages = 0;
     this.load.image("sun", sun);
     this.load.image("moon", moon);
   }
@@ -191,6 +209,10 @@ class Scene1 extends Phaser.Scene {
       "shelterCheck": this.shelterCheck,
       "timerDelay": this.timerDelay,
       "enviroMeter": this.enviro_meter_value,
+      "berry-bush": this.berryBush,
+      //"berry-bush-text": this.berryBushText,
+      "poisonous-mushroom": this.poisonMushroom,
+      //"poisonous-mushroom-text": this.poisonMushroomText
       "player_health": this.player_health,
       "player_food": this.player_food,
       "player_water": this.player_water,
