@@ -210,9 +210,9 @@ class Scene1 extends Phaser.Scene {
       "timerDelay": this.timerDelay,
       "enviroMeter": this.enviro_meter_value,
       "berry-bush": this.berryBush,
-      //"berry-bush-text": this.berryBushText,
+      "berry-bush-text": this.berryBushText,
       "poisonous-mushroom": this.poisonMushroom,
-      //"poisonous-mushroom-text": this.poisonMushroomText
+      "poisonous-mushroom-text": this.poisonMushroomText,
       "player_health": this.player_health,
       "player_food": this.player_food,
       "player_water": this.player_water,
