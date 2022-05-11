@@ -142,9 +142,7 @@ class Scene1 extends Phaser.Scene {
 
     // #region IMAGES
     this.load.image("wood", "assets/sprites/wood.png");
-
     this.load.image("stone", "assets/sprites/rock.png");
-
     this.load.image("weeds", "assets/sprites/weeds.png");
     this.load.image("meat", "assets/sprites/food/meat.png");
     // #endregion
@@ -155,6 +153,12 @@ class Scene1 extends Phaser.Scene {
 
     this.load.image("sun", "assets/sprites/sun.png");
     this.load.image("moon", "assets/sprites/moon.png");
+
+    //edu elements
+    this.load.image("berry-bush", "assets/plants/berry_bush.png");
+    this.load.image("poisonous-mushroom", "assets/plants/poison_mushroom.png");
+    this.load.image("berry-bush-text", "assets/plants/berry-bush-text.png");
+    this.load.image("poisonous-mushroom-text", "assets/plants/poisonous-mushroom-text.png");
   }
 
   create() {
@@ -191,6 +195,10 @@ class Scene1 extends Phaser.Scene {
       "shelterCheck": this.shelterCheck,
       "timerDelay": this.timerDelay,
       "enviroMeter": this.enviro_meter_value,
+      "berry-bush": this.berryBush,
+      "berry-bush-text": this.berryBushText,
+      "poisonous-mushroom": this.poisonMushroom,
+      "poisonous-mushroom-text": this.poisonMushroomText,
       "player_health": this.player_health,
       "player_food": this.player_food,
       "player_water": this.player_water,
