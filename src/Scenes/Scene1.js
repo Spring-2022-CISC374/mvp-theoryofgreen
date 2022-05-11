@@ -93,7 +93,7 @@ class Scene1 extends Phaser.Scene {
       frameHeight: 40,
     });
 
-    this.load.spritesheet("player_right", "assets/sprites/player/rightIdle.png", {
+    this.load.spritesheet("player_right", "assets/sprites/player/rightidle.png", {
       frameWidth: 33,
       frameHeight: 40,
     });
