@@ -38,123 +38,123 @@ class Scene1 extends Phaser.Scene {
   preload() {
     // #region SPRITESHEETS
 
-    this.load.spritesheet("player", "../../assets/sprites/player/frontidle.png", {
+    this.load.spritesheet("player", "assets/sprites/player/frontidle.png", {
       frameWidth: 41,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("player_up_left", "../../assets/sprites/player/diag_up_left.png", {
+    this.load.spritesheet("player_up_left", "assets/sprites/player/diag_up_left.png", {
       frameWidth: 26.1,
       frameHeight: 33,
     });
 
-    this.load.spritesheet("player_up_right", "../../assets/sprites/player/diag_up_right.png", {
+    this.load.spritesheet("player_up_right", "assets/sprites/player/diag_up_right.png", {
       frameWidth: 26.1,
       frameHeight: 33,
     });
 
-    this.load.spritesheet("player_down_left", "../../assets/sprites/player/diag_down_left.png", {
+    this.load.spritesheet("player_down_left", "assets/sprites/player/diag_down_left.png", {
       frameWidth: 26.1,
       frameHeight: 33,
     });
 
-    this.load.spritesheet("player_down_right", "../../assets/sprites/player/diag_down_right.png", {
+    this.load.spritesheet("player_down_right", "assets/sprites/player/diag_down_right.png", {
       frameWidth: 26.1,
       frameHeight: 33,
     });
 
-    this.load.spritesheet("player_up_left_idle", "../../assets/sprites/player/diag_up_left_idle.png", {
+    this.load.spritesheet("player_up_left_idle", "assets/sprites/player/diag_up_left_idle.png", {
       frameWidth: 30.9,
       frameHeight: 38,
     });
 
-    this.load.spritesheet("player_up_right_idle", "../../assets/sprites/player/diag_up_right_idle.png", {
+    this.load.spritesheet("player_up_right_idle", "assets/sprites/player/diag_up_right_idle.png", {
       frameWidth: 30.1,
       frameHeight: 38,
     });
 
-    this.load.spritesheet("player_down_right_idle", "../../assets/sprites/player/diag_down_right_idle.png", {
+    this.load.spritesheet("player_down_right_idle", "assets/sprites/player/diag_down_right_idle.png", {
       frameWidth: 28.2,
       frameHeight: 35,
     });
 
-    this.load.spritesheet("player_down_left_idle", "../../assets/sprites/player/diag_down_left_idle.png", {
+    this.load.spritesheet("player_down_left_idle", "assets/sprites/player/diag_down_left_idle.png", {
       frameWidth: 28.2,
       frameHeight: 35,
     });
 
-    this.load.spritesheet("player_back", "../../assets/sprites/player/backidle.png", {
+    this.load.spritesheet("player_back", "assets/sprites/player/backidle.png", {
       frameWidth: 41,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("player_left", "../../assets/sprites/player/leftidle.png", {
+    this.load.spritesheet("player_left", "assets/sprites/player/leftidle.png", {
       frameWidth: 33,
       frameHeight: 40,
     });
 
-    this.load.spritesheet("player_right", "../../assets/sprites/player/rightIdle.png", {
+    this.load.spritesheet("player_right", "assets/sprites/player/rightIdle.png", {
       frameWidth: 33,
       frameHeight: 40,
     });
 
-    this.load.spritesheet("upwalk", "../../assets/sprites/player/upwalk.png", {
+    this.load.spritesheet("upwalk", "assets/sprites/player/upwalk.png", {
       frameWidth: 41.12,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("downwalk", "../../assets/sprites/player/downwalk.png", {
+    this.load.spritesheet("downwalk", "assets/sprites/player/downwalk.png", {
       frameWidth: 41.12,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("leftwalk", "../../assets/sprites/player/leftwalk.png", {
+    this.load.spritesheet("leftwalk", "assets/sprites/player/leftwalk.png", {
       frameWidth: 41.12,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("rightwalk", "../../assets/sprites/player/rightwalk.png", {
+    this.load.spritesheet("rightwalk", "assets/sprites/player/rightwalk.png", {
       frameWidth: 41.12,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("attack-right", "../../assets/sprites/player/attack.png", {
+    this.load.spritesheet("attack-right", "assets/sprites/player/attack.png", {
       frameWidth: 51,
       frameHeight: 35,
     });
 
-    this.load.spritesheet("attack-left", "../../assets/sprites/player/attack_left.png", {
+    this.load.spritesheet("attack-left", "assets/sprites/player/attack_left.png", {
       frameWidth: 50,
       frameHeight: 35,
     });
 
     //Objects and animals
-    this.load.spritesheet("pig-frontfacing", "../../assets/sprites/pig/pig-frontfacing.png", {
+    this.load.spritesheet("pig-frontfacing", "assets/sprites/pig/pig-frontfacing.png", {
       frameWidth: 32,
       frameHeight: 36,
     });
 
-    this.load.spritesheet("pig-backfacing", "../../assets/sprites/pig/pig-backfacing.png", {
+    this.load.spritesheet("pig-backfacing", "assets/sprites/pig/pig-backfacing.png", {
       frameWidth: 31,
       frameHeight: 36,
     });
     // #endregion
 
     // #region IMAGES
-    this.load.image("wood", "../../assets/sprites/wood.png");
+    this.load.image("wood", "assets/sprites/wood.png");
 
-    this.load.image("stone", "../../assets/sprites/rock.png");
+    this.load.image("stone", "assets/sprites/rock.png");
 
-    this.load.image("weeds", "../../assets/sprites/weeds.png");
-    this.load.image("meat", "../../assets/sprites/food/meat.png");
+    this.load.image("weeds", "assets/sprites/weeds.png");
+    this.load.image("meat", "assets/sprites/food/meat.png");
     // #endregion
 
-    this.load.image("campfire", "../../assets/sprites/campfire.png");
-    this.load.image("bandage", "../../assets/sprites/bandage.png");
-    this.load.image("shelter", "../../assets/sprites/shelter.png");
+    this.load.image("campfire", "assets/sprites/campfire.png");
+    this.load.image("bandage", "assets/sprites/bandage.png");
+    this.load.image("shelter", "assets/sprites/shelter.png");
 
-    this.load.image("sun", "../../assets/sprites/sun.png");
-    this.load.image("moon", "../../assets/sprites/moon.png");
+    this.load.image("sun", "assets/sprites/sun.png");
+    this.load.image("moon", "assets/sprites/moon.png");
   }
 
   create() {
