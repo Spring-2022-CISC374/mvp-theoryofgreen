@@ -1,13 +1,1 @@
-# modules
-
-/node_modules
-
-# cache
-
-/.cache
-/.parcel-cache
-/.parcel-cache/*
-
-# dist
-
-/dist
+node_modules

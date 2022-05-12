@@ -1,5 +1,5 @@
-import Phaser from 'phaser';
-import { config, gameSettings } from "../game.js";
+// import Phaser from 'phaser';
+// import { config, gameSettings } from "../game.js";
 
 class Scene2 extends Phaser.Scene {
 	constructor() {
@@ -73,7 +73,73 @@ class Scene2 extends Phaser.Scene {
 			this.gameEnd();
 		}
 	}
+	//educational content
+	add_edu() {
+		this.input.keyboard.on('keydown-E', this.type, this);
+		// Berry Bushes
+		this.berryBushCount = 0;
+		this.berryBush = this.add.group();
+		var maxBerryBush = 5;
+		var x = 75 ;
+		var y = 250;
+		for (var i = 0; i < maxBerryBush; i++) {
+			var berries = this.add.sprite(16, 16, "berry-bush");
+			berries.group = "berry-bush";
+			berries.setScale(1);
+			berries.setInteractive();
+			this.berryBush.add(berries);
+			berries.setPosition(x, y);
+			y += 40
+		}
 
+		// Poison Mushrooms
+		this.poisonMushroomCount = 0;
+		this.poisonMushroom = this.add.group();
+		var maxPoisonMushroom = 3;
+		var x = 600 ;
+		var y = 500;
+		for (var i = 0; i < maxPoisonMushroom; i++) {
+			for (var j = 0; j < maxPoisonMushroom; j++) {
+				var mushrooms = this.add.sprite(16, 16, "poisonous-mushroom");
+				mushrooms.group = "poisonous-mushroom";
+				mushrooms.setScale(1);
+				mushrooms.setInteractive();
+				this.poisonMushroom.add(mushrooms);
+				mushrooms.setPosition(x, y);
+				x += 20	
+			}
+			y += 20;
+			x = 600;
+		}
+	}
+	type() {
+		const foodText = this.add.text(
+			config.width / 2,
+			config.height / 2,
+			"CLICK WHAT YOU WOULD LIKE TO EAT",
+			0xfffff,
+		);
+		setTimeout(() => {
+			foodText.destroy();
+		}, 1500);
+	}
+	//makes the text message box for the edu content
+	create_window(group) {
+		if (group == "berry-bush") {
+			this.showMessageBox("berry-bush", config.width / 2, config.height / 2);
+		} else if (group == "poisonous-mushroom") {
+			this.showMessageBox("poisonous-mushroom", config.width / 2, config.height / 2);
+		}
+	}
+	showMessageBox(text, width, height) {
+		if (text == "berry-bush") {
+			this.berryBushText = this.add.image(width, height, "berry-bush-text");
+		} else if (text == "poisonous-mushroom") {
+			this.poisonMushroomText = this.add.image(width, height, "poisonous-mushroom-text");
+		}
+	}
+
+	//materials
 	add_materials() {
 		//this.wood = 0;
 		this.woodText = this.add.text(20, 630, `Wood : ${this.wood}`);
@@ -451,6 +517,7 @@ class Scene2 extends Phaser.Scene {
 		this.pigs = [];
 		this.water();
 		this.add_materials();
+		this.add_edu();
 
 		//create envi meter
 		this.environment_meter();
@@ -557,6 +624,22 @@ class Scene2 extends Phaser.Scene {
 			}
 			//envi impact weeds = 1
 			this.environment_meter_value(1, "minus");
+		} else if (gameObject.group == "berry-bush") {
+			if (this.visible) {
+				this.berryBushText.destroy();
+				this.visible = false;
+			} else {
+				this.visible = true;
+				this.create_window("berry-bush");
+			}
+		} else if (gameObject.group == "poisonous-mushroom") {
+			if (this.visible) {
+				this.poisonMushroomText.destroy();
+				this.visible = false;
+			} else {
+				this.visible = true;
+				this.create_window("poisonous-mushroom");
+			}
 		} else if (gameObject.group == "craftButton") {
 			this.scene.start("craftScreen", {
 				"wood": this.wood,
@@ -941,4 +1024,4 @@ class Scene2 extends Phaser.Scene {
 	}
 }
 
-export default Scene2;
+//export default Scene2;

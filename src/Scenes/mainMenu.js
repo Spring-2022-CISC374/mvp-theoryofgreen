@@ -9,26 +9,24 @@ class mainMenu extends Phaser.Scene {
 
     create(){
 
-        this.add.text(config.width / 3.2, config.height / 3.5, "TEST TITLE", {
+        this.add.text(config.width / 2, config.height / 2, "TEST TITLE", {
             font: "Bold 65px Arial",
             fontFamily: "PressStart2P-Regular",
-            fill: "#ff0044",
+            fill: "#fff",
             align: "center"
         });
 
-        let playButton = this.add.text(config.width / 3.2, config.height / 3.5, "play_button", {
+        var playButton = this.add.text(100, 600, "play_button", {
             font: "Bold 65px Arial",
-            fontFamily: "PressStart2P-Regular",
-            fill: "#ff0044",
+            color: "#fff",
             align: "center"
-        }).setDepth(1);
+        });
 
-        let tutorialButton = this.add.text(config.width / 3.2, config.height / 3.5, "tutorial_button", {
+        var tutorialButton = this.add.text(100, 500, "tutorial_button", {
             font: "Bold 65px Arial",
-            fontFamily: "PressStart2P-Regular",
-            fill: "#ff0044",
+            color: '#fff',
             align: "center"
-        }).setDepth(1);
+        });
 
         playButton.setInteractive();
         playButton.on('pointerover', () => { console.log('pointerover'); });

@@ -1,6 +1,6 @@
-import Phaser from 'phaser';
-import { check } from "prettier";
-import { config, gameSettings } from "../game.js";
+// import Phaser from 'phaser';
+// import { check } from "prettier";
+// import { config, gameSettings } from "../game.js";
 
 class Scene4 extends Phaser.Scene {
 	constructor() {
@@ -19,4 +19,4 @@ class Scene4 extends Phaser.Scene {
     }
 }
 
-export default Scene4;
+// export default Scene4;
