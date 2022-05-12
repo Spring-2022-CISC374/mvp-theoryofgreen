@@ -722,7 +722,7 @@ class Scene2 extends Phaser.Scene {
 		
 			}
 		}
-		else if (gameObject.group = "shelter") {
+		else if (gameObject.group == "shelter") {
 			if(this.canClickShelter) {
 				this.shelterTimerText.setVisible(true);
 				this.updatePlayerBars(this.health_bar, 100, "plus");
