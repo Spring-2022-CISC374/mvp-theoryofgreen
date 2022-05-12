@@ -159,6 +159,9 @@ class Scene1 extends Phaser.Scene {
     this.load.image("poisonous-mushroom", "assets/plants/poison_mushroom.png");
     this.load.image("berry-bush-text", "assets/plants/berry-bush-text.png");
     this.load.image("poisonous-mushroom-text", "assets/plants/poisonous-mushroom-text.png");
+
+    this.load.image("envirobar-image", "assets/sprites/envirobar.png");
+    this.load.image("playerbars-image", "assets/sprites/playerbars.png");
   }
 
   create() {
