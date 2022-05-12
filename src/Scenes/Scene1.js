@@ -184,7 +184,7 @@ class Scene1 extends Phaser.Scene {
     this.shelterTimerDelay = 50000;
 
     this.add.text(20, 20, "Loading game...");
-    this.scene.start("playGame", {
+    this.scene.start("infoScreen", {
       "wood": this.wood,
       "stone": this.stone,
       "weeds": this.weeds,
