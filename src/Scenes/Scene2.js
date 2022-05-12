@@ -440,13 +440,27 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	create() {
-		this.craft = this.add.text(25, 25, "Click to craft!");
+		this.craft = this.add.text(19, 20, "Crafting");
+		this.craftBack = this.add.rectangle(57, 27, 90, 20, 0x2A7A16, 1);
+		this.craftBack.setDepth(100);
+		this.craftBack.setInteractive();
+		this.craftBack.group = "craftButton";
 		this.craft.group = "craftButton";
 		this.craft.setColor("white");
 		this.craft.setInteractive();
-		this.craft.setDepth(100);
+		this.craft.setDepth(101);
         this.num_pigs = 0
 		this.playerbars();
+
+		this.info = this.add.text(117, 20, "Instructions");
+		this.infoBack = this.add.rectangle(175, 27, 120, 20, 0x2A7A16, 1);
+		this.infoBack.setDepth(100);
+		this.infoBack.setInteractive();
+		this.infoBack.group = "instructions";
+		this.info.group = "instructions";
+		this.info.setColor("white");
+		this.info.setInteractive();
+		this.info.setDepth(101);
 
 		if(!this.canClickShelter) {
 			this.makeShelterTimer();
@@ -729,6 +743,30 @@ class Scene2 extends Phaser.Scene {
 				this.makeShelterTimer();
 				this.canClickShelter = false;
 			}
+		}
+		else if (gameObject.group == "instructions") {
+			this.scene.start("infoScreen", {
+				"wood": this.wood,
+				"stone": this.stone,
+				"weeds": this.weeds,
+				"bandages": this.bandages,
+				"isShelter": this.isShelter,
+				"isFire": this.isFire,
+				"fireCheck": this.fireCheck,
+				"shelterCheck": this.shelterCheck,
+				"timerDelay": this.timerDelay,
+				"enviroMeter": this.meter_value,
+				"player_health": this.player_health,
+      			"player_food": this.player_food,
+      			"player_water": this.player_water,
+				"collected_water": this.collected_water,
+				"collected_food": this.collected_food,
+				"isNight": this.isNight,
+				"isWater": this.isWater,
+				"pondradius": this.pondradius,
+				"canClickShelter": this.canClickShelter,
+				"shelterTimerDelay": this.shelterTimerDelay
+			});
 		}
 	}
 

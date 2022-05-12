@@ -79,6 +79,33 @@ class Scene3 extends Phaser.Scene {
 		this.foodText.depth = 100;
 		this.foodText.setColor("white");
 
+		this.foodButton = this.add.text(310, 630, "Eat Food");
+		this.foodButton.setDepth(101);
+		this.foodBack = this.add.rectangle(350, 637, 120, 16, 0x2A7A16, 1);
+		this.foodBack.setDepth(100);
+		this.foodButton.setInteractive();
+		this.foodBack.setInteractive();
+		this.foodButton.group = "foodbutton";
+		this.foodBack.group = "foodbutton";
+
+		this.waterButton = this.add.text(298, 650, "Drink Water");
+		this.waterButton.setDepth(101);
+		this.waterBack = this.add.rectangle(350, 657, 120, 16, 0x2A7A16, 1);
+		this.waterBack.setDepth(100);
+		this.waterButton.setInteractive();
+		this.waterBack.setInteractive();
+		this.waterButton.group = "waterbutton";
+		this.waterBack.group = "waterbutton";
+
+		this.bandageButton = this.add.text(305, 670, "Heal Self");
+		this.bandageButton.setDepth(101);
+		this.bandageBack = this.add.rectangle(350, 677, 120, 16, 0x2A7A16, 1);
+		this.bandageBack.setDepth(100);
+		this.bandageButton.setInteractive();
+		this.bandageBack.setInteractive();
+		this.bandageButton.group = "bandagebutton";
+		this.bandageBack.group = "bandagebutton";
+
         if(!this.isNight) {
 			this.sun = this.add.image(775, 663, "sun");
 			this.sun.setDepth(100);
@@ -473,6 +500,37 @@ class Scene3 extends Phaser.Scene {
                 this.add.text(380, 245, "Not enough materials");
             }
         }
+		else if (gameObject.group == "foodbutton") {
+			if(this.collected_food > 0 && this.player_food < 100) {
+				this.updatePlayerBars(this.food_bar, 10, "plus");
+				this.collected_food -= 1;
+				this.foodText.destroy();
+				this.foodText = this.add.text(150, 630, `Food : ${this.collected_food}`);
+				this.foodText.depth = 100;
+				this.foodText.setColor("white");
+			}
+		}
+		else if (gameObject.group == "waterbutton") {
+			if(this.collected_water > 0 && this.player_water < 100) {
+				this.updatePlayerBars(this.water_bar, 10, "plus");
+				this.collected_water -= 1;
+				this.waterText.destroy();
+				this.waterText = this.add.text(150, 650, `Water : ${this.collected_water}`);
+				this.waterText.depth = 100;
+				this.waterText.setColor("white");
+			}
+		}
+		else if (gameObject.group == "bandagebutton") {
+			if(this.bandages > 0 && this.player_health < 100) {
+				this.updatePlayerBars(this.health_bar, 10, "plus");
+				this.bandages -= 1;
+				this.bandageText.destroy();
+				this.bandageText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
+				this.bandageText.depth = 100;
+				this.bandageText.setColor("white");
+		
+			}
+		}
     }
 }
     
