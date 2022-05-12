@@ -55,6 +55,10 @@ class Scene2 extends Phaser.Scene {
 		}
 		this.meter_label.text = `ENVIRONMENT METER : ${this.meter_value}`;
 
+		this.updateEnvirobar();
+	}
+
+	updateEnvirobar() {
 		//bar color and size
 		//this.meter_bar.setSize(this.bar_size--, 20);
 		this.meter_bar.setSize(this.meter_value, 20);
@@ -73,6 +77,7 @@ class Scene2 extends Phaser.Scene {
 			this.gameEnd();
 		}
 	}
+
 	//educational content
 	add_edu() {
 		this.input.keyboard.on('keydown-E', this.type, this);
@@ -401,19 +406,24 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	day_or_night() {
-		if(this.timer.getRemainingSeconds() < 250 && !this.isNight) {
+		if(this.timer.getRemainingSeconds() < 250 && 
+		this.timer.getRemainingSeconds() > 249 && !this.isNight) {
 			this.nighttime();
 		}
-		if(this.timer.getRemainingSeconds() < 200 && this.isNight) {
+		if(this.timer.getRemainingSeconds() < 200 && 
+		this.timer.getRemainingSeconds() > 199 && this.isNight) {
 			this.daytime();
 		}
-		if(this.timer.getRemainingSeconds() < 150 && !this.isNight) {
+		if(this.timer.getRemainingSeconds() < 150 && 
+		this.timer.getRemainingSeconds() > 149 && !this.isNight) {
 			this.nighttime();
 		}
-		if(this.timer.getRemainingSeconds() < 100 && this.isNight) {
+		if(this.timer.getRemainingSeconds() < 100 &&
+		this.timer.getRemainingSeconds() > 99 && this.isNight) {
 			this.daytime();
 		}
-		if(this.timer.getRemainingSeconds() < 50 && !this.isNight) {
+		if(this.timer.getRemainingSeconds() < 50 && 
+		this.timer.getRemainingSeconds() > 49 && !this.isNight) {
 			this.nighttime();
 		}
 	}
@@ -742,6 +752,7 @@ class Scene2 extends Phaser.Scene {
 		this.drainhealth();
 		this.drainfood();
 		this.drainwater();
+		this.updateEnvirobar();
 
 		//pig movement 
 		this.pigMovement(1);
