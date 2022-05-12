@@ -80,7 +80,6 @@ class Scene2 extends Phaser.Scene {
 
 	//educational content
 	add_edu() {
-		this.input.keyboard.on('keydown-E', this.type, this);
 		// Berry Bushes
 		this.berryBushCount = 0;
 		this.berryBush = this.add.group();
@@ -116,17 +115,6 @@ class Scene2 extends Phaser.Scene {
 			y += 20;
 			x = 600;
 		}
-	}
-	type() {
-		const foodText = this.add.text(
-			config.width / 2,
-			config.height / 2,
-			"CLICK WHAT YOU WOULD LIKE TO EAT",
-			0xfffff,
-		);
-		setTimeout(() => {
-			foodText.destroy();
-		}, 1500);
 	}
 	//makes the text message box for the edu content
 	create_window(group) {
@@ -638,6 +626,14 @@ class Scene2 extends Phaser.Scene {
 			if (this.visible) {
 				this.berryBushText.destroy();
 				this.visible = false;
+				//eating
+				gameObject.destroy();
+				//updating text
+				this.collected_food += 1;
+				this.foodText.destroy();
+				this.foodText = this.add.text(150, 630, `Food : ${this.collected_food}`);
+				this.foodText.setDepth(100);
+				this.environment_meter_value(1, "minus");
 			} else {
 				this.visible = true;
 				this.create_window("berry-bush");
@@ -646,6 +642,11 @@ class Scene2 extends Phaser.Scene {
 			if (this.visible) {
 				this.poisonMushroomText.destroy();
 				this.visible = false;
+				//eating
+				gameObject.destroy();
+				this.environment_meter_value(1, "minus");
+				//health
+				this.updatePlayerBars(this.health_bar, 15, "minus");	
 			} else {
 				this.visible = true;
 				this.create_window("poisonous-mushroom");
