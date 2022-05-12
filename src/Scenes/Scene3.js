@@ -10,6 +10,7 @@ class Scene3 extends Phaser.Scene {
         this.wood = data.wood;
         this.stone = data.stone;
         this.weeds = data.weeds;
+		this.meat = data.meat; 
         this.bandages = data.bandages;
         this.isShelter = data.isShelter;
         this.isFire = data.isFire;
@@ -66,6 +67,10 @@ class Scene3 extends Phaser.Scene {
         this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
 		this.weedsText.depth = 100;
 		this.weedsText.setColor("white");
+
+		this.meatText = this.add.text(20, 610, `Meats : ${this.meat}`);
+		this.meatText.depth = 100;
+		this.meatText.setColor("white");
 
         this.bandagesText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
 		this.bandagesText.depth = 100;
@@ -401,6 +406,7 @@ class Scene3 extends Phaser.Scene {
                 "wood": this.wood,
                 "stone": this.stone,
                 "weeds": this.weeds,
+				"meat": this.meat,
                 "bandages": this.bandages,
                 "isShelter": this.isShelter,
                 "isFire": this.isFire,

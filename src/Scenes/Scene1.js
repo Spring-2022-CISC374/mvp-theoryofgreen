@@ -166,6 +166,7 @@ class Scene1 extends Phaser.Scene {
     this.stone = 10;
     this.weeds = 30;
     this.bandages = 5;
+    this.meat = 0;
     this.isShelter = false;
     this.isFire = false;
     this.fireCheck = 0;
@@ -188,6 +189,7 @@ class Scene1 extends Phaser.Scene {
       "wood": this.wood,
       "stone": this.stone,
       "weeds": this.weeds,
+      "meat": this.meat,
       "bandages": this.bandages,
       "isShelter": this.isShelter,
       "isFire": this.isFire,

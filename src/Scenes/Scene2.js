@@ -10,6 +10,7 @@ class Scene2 extends Phaser.Scene {
 		this.wood = data.wood;
 		this.stone = data.stone;
 		this.weeds = data.weeds;
+		this.meat = data.meat;
 		this.bandages = data.bandages;
 		this.isShelter = data.isShelter;
 		this.isFire = data.isFire;
@@ -200,6 +201,11 @@ class Scene2 extends Phaser.Scene {
 		this.foodText = this.add.text(150, 630, `Food : ${this.collected_food}`);
 		this.foodText.depth = 100;
 		this.foodText.setColor("white");
+
+		this.meatText = this.add.text(20, 610, `Meats : ${this.meat}`);
+		this.meatText.depth = 100;
+		this.meatText.setColor("white");
+		//this.meats = this.add.group();
 	}
 
 	water() {
@@ -619,9 +625,22 @@ class Scene2 extends Phaser.Scene {
 					weedy.setRandomPosition(100, 200, 650, 350);
 					this.weedsCount++;
 				}
-			}
+			} 
 			//envi impact weeds = 1
 			this.environment_meter_value(1, "minus");
+		} else if (gameObject.group == "meat") {
+            this.meat+=1;
+			this.meatText.destroy();
+			this.meatText = this.add.text(20, 610, `Meats : ${this.meat}`);
+			gameObject.destroy();
+            if (this.meat !== 0 && this.meat % this.num_pigs === 0) {
+                this.pigs = [];
+                for (let j = 0; j < this.num_pigs; j++) {
+                    this.randomPigPositioning(j);
+                }
+                this.pigCollisions();
+            }
+			//this.environment_meter_value(1, "minus");
 		} else if (gameObject.group == "berry-bush") {
 			if (this.visible) {
 				this.berryBushText.destroy();
@@ -656,6 +675,7 @@ class Scene2 extends Phaser.Scene {
 				"wood": this.wood,
 				"stone": this.stone,
 				"weeds": this.weeds,
+				"meat": this.meat,
 				"bandages": this.bandages,
 				"isShelter": this.isShelter,
 				"isFire": this.isFire,
@@ -962,7 +982,12 @@ class Scene2 extends Phaser.Scene {
 			healthbarBackground.destroy();
 			/** @type {Phaser.GameObjects.Sprite} */
 			obj2.destroy();
-			this.addMeat(obj2.x, obj2.y);
+			const theMeat = this.add.sprite(obj2.x, obj2.y, "meat");
+            theMeat.setScale(2.5);
+            theMeat.setDepth(-1);
+            theMeat.setInteractive();
+            theMeat.group = "meat";
+            this.meats.add(theMeat);
 		}
 		this.physics.world.remove(this.weaponHitbox);
 	}
