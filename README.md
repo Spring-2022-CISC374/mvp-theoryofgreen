@@ -12,16 +12,16 @@
 
 ### Game View
 **Instructions**
-![instruction screen]()
+![instruction screen](gameIMG_readme/intro.png)
 
 **Starting Screen**
-![starting screen]()
+![starting screen](gameIMG_readme/game.png)
 
 **Crafting Screen**
-![crafting screen]()
+![crafting screen](gameIMG_readme/craft.png)
 
 **Game Over Screen**
-![game over screen]()
+![game over screen](gameIMG_readme/go.png)
 
 ---
 ### Code
