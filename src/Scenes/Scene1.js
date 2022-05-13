@@ -4,6 +4,9 @@ class Scene1 extends Phaser.Scene {
   }
 
   preload() {
+    //audio loading
+    this.load.audio("background_music", ["assets/audio/music.mp3"]);
+
     // #region SPRITESHEETS
 
     this.load.spritesheet("player", "assets/sprites/player/frontidle.png", {
@@ -143,6 +146,10 @@ class Scene1 extends Phaser.Scene {
   }
 
   create() {
+    //audio
+    this.music = this.sound.add("background_music", {loop: true});
+    this.music.play();
+    
     this.wood = 40;
     this.stone = 10;
     this.weeds = 30;
