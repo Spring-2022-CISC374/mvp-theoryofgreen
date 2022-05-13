@@ -11,16 +11,16 @@
 > Imagine popular games such as Minecraft and Fortnite, except tasks, getting materials, and surviving is just as important as being environmentally conscious and sustainable –– teaching children about being eco-friendly while having fun. 
 
 ### Game View
-** Instructions **
+**Instructions**
 ![instruction screen]()
 
-** Starting Screen **
+**Starting Screen**
 ![starting screen]()
 
-** Crafting Screen **
+**Crafting Screen**
 ![crafting screen]()
 
-** Game Over Screen **
+**Game Over Screen**
 ![game over screen]()
 
 ---
