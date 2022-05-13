@@ -82,6 +82,9 @@ class Instructions extends Phaser.Scene {
         this.pigImage.setScale(1.5);
         this.pigImage.play("pig-idle-front");
 
+        this.meatImage = this.add.image(235, 250, "meat");
+        this.meatImage.setScale(2.5);
+
         this.woodImage = this.add.image(50, 350, "wood");
         this.woodImage.setScale(.1);
 
@@ -108,7 +111,7 @@ class Instructions extends Phaser.Scene {
         this.bandageImage = this.add.image(300, 450, "bandage");
         this.bandageImage.setScale(.65);
 
-        this.craftText = this.add.text(435, 400, "On the Crafting Screen, click the images\nof craftable objects to\nuse your materials and build them!\nFire provides light, a shelter\nwill fully heal you every 50 seconds,\nand bandages will heal you\na little bit instantly!");
+        this.craftText = this.add.text(435, 400, "On the Crafting Screen, click the images\nof craftable objects to\nuse your materials and build them!\nFire provides light, a shelter\nwill fully heal you every 50 seconds\n if you click on it, and bandages\nwill heal you a little bit instantly!");
         this.craftText.setFontSize(14);
         this.craftText.setAlign("center");
 

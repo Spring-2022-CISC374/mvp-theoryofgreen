@@ -597,7 +597,10 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	gameEnd() {
-		this.scene.start("endGame");
+		this.scene.start("endGame", {
+			"enviroMeter": this.meter_value,
+			"player_health": this.player_health
+		});
 	}
 
 	click(pointer, gameObject) {
