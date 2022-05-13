@@ -4,9 +4,11 @@ class Instructions extends Phaser.Scene {
 	}
 
     init(data){
+        console.log("data = ", data);
         this.wood = data.wood;
         this.stone = data.stone;
         this.weeds = data.weeds;
+        this.meat = data.meat;
         this.bandages = data.bandages;
         this.isShelter = data.isShelter;
         this.isFire = data.isFire;
@@ -130,6 +132,7 @@ class Instructions extends Phaser.Scene {
             "wood": this.wood,
             "stone": this.stone,
             "weeds": this.weeds,
+            "meat": this.meat,
             "bandages": this.bandages,
             "isShelter": this.isShelter,
             "isFire": this.isFire,

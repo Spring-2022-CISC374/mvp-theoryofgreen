@@ -121,6 +121,7 @@ class Scene2 extends Phaser.Scene {
 			x = 600;
 		}
 	}
+
 	type() {
 		const foodText = this.add.text(
 			config.width / 2,
@@ -140,6 +141,7 @@ class Scene2 extends Phaser.Scene {
 			this.showMessageBox("poisonous-mushroom", config.width / 2, config.height / 2);
 		}
 	}
+
 	showMessageBox(text, width, height) {
 		if (text == "berry-bush") {
 			this.berryBushText = this.add.image(width, height, "berry-bush-text");
@@ -220,7 +222,7 @@ class Scene2 extends Phaser.Scene {
 		this.meatText = this.add.text(20, 610, `Meats : ${this.meat}`);
 		this.meatText.depth = 100;
 		this.meatText.setColor("white");
-		//this.meats = this.add.group();
+		this.meats = this.add.group();
 	}
 
 	water() {
@@ -853,7 +855,6 @@ class Scene2 extends Phaser.Scene {
             this.pigCollisions();
         }
 		this.timerDelay = this.timer.getRemainingSeconds() * 1000;
-		//console.log(this.timer.getRemainingSeconds());
 		this.timerText.setText('Survive for: ' + this.timer.getRemainingSeconds().toString().substring(0, this.x));
 
 		if(!this.canClickShelter) {
@@ -1028,7 +1029,7 @@ class Scene2 extends Phaser.Scene {
 			healthBar.x -= 0.5;
 			obj2.hp -= 1;
 		} else {
-			console.log("in else");
+			// here's where the pig dies
 			healthBar.destroy();
 			/** @type {Phaser.GameObjects.Rectangle} */
 			const healthbarBackground = this.health_bar_backgrounds[obj2.id];
@@ -1037,9 +1038,9 @@ class Scene2 extends Phaser.Scene {
 			obj2.destroy();
 			const theMeat = this.add.sprite(obj2.x, obj2.y, "meat");
             theMeat.setScale(2.5);
-            theMeat.setDepth(-1);
+			theMeat.setDepth(-1);
             theMeat.setInteractive();
-            theMeat.group = "meat";
+			theMeat.group = "meat";
             this.meats.add(theMeat);
 		}
 		this.physics.world.remove(this.weaponHitbox);
@@ -1097,10 +1098,6 @@ class Scene2 extends Phaser.Scene {
                 health_bar.x = eachPig.x;
                 health_bar_bg.y = eachPig.y - 35;
                 health_bar_bg.x = eachPig.x;
-            } else {
-                eachPig.destroy();
-                health_bar.destroy();
-                health_bar_bg.destroy();
             }
             this.health_bar_backgrounds.splice(ind, 0, health_bar_bg);
             this.health_bars.splice(ind, 0, health_bar);

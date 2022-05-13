@@ -110,7 +110,7 @@ class Scene1 extends Phaser.Scene {
 
     // #region IMAGES
     this.load.image("wood", "assets/sprites/wood.png");
-    this.load.image("stone", "assets/sprites/stone.png");
+    this.load.image("stone", "assets/sprites/rock.png");
     this.load.image("weeds", "assets/sprites/weeds.png");
     this.load.image("meat", "assets/sprites/meat.png");
     // #endregion
