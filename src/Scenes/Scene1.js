@@ -124,6 +124,12 @@ class Scene1 extends Phaser.Scene {
     this.load.image("poisonous-mushroom", "assets/plants/poison_mushroom.png");
     this.load.image("berry-bush-text", "assets/plants/berry-bush-text.png");
     this.load.image("poisonous-mushroom-text", "assets/plants/poisonous-mushroom-text.png");
+
+    this.load.image("sun", "assets/sprites/sun.png");
+    this.load.image("moon", "assets/sprites/sun.png");
+
+    this.load.image("envirobar-image", "assets/sprites/envirobar.png");
+    this.load.image("playerbars-image", "assets/sprites/playerbars.png");
   }
 
   create() {
@@ -133,11 +139,7 @@ class Scene1 extends Phaser.Scene {
     this.weeds = 0;
     //objects
     this.bandages = 0;
-    this.load.image("sun", "assets/sprites/sun.png");
-    this.load.image("moon", "assets/sprites/sun.png");
-
-    this.load.image("envirobar-image", "assets/sprites/envirobar.png");
-    this.load.image("playerbars-image", "assets/sprites/playerbars.png");
+    
   }
 
   create() {
