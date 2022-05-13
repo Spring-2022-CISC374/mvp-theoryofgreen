@@ -786,6 +786,7 @@ class Scene2 extends Phaser.Scene {
 				"wood": this.wood,
 				"stone": this.stone,
 				"weeds": this.weeds,
+				"meat": this.meat,
 				"bandages": this.bandages,
 				"isShelter": this.isShelter,
 				"isFire": this.isFire,
