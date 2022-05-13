@@ -1,8 +1,32 @@
 # Theory of Green MVP
-Contributions:
-- Allison: Basic framework of scenes, character movement with arrow keys, idle animation, walking animation
-- Zoe: Sprites, pig animation, pig random placement and number, collision code started
-- Cameron: Score Label, score label being controlled by input (will future be user actions)
-- Trea: can click on pigs
+##### Spring 2022 CISC374: Edu Game Dev, Prof. Pollock
 
-http://localhost:1234/ 
+### Team Members:
+- [Trea Holley](https://github.com/TreaHolley)
+- [Cameron Thacker](https://github.com/cthacker-udel)
+- [Zoe Valladares](https://github.com/Pink-Hat-Hacker)
+- [Allison Ziegler](https://github.com/allisonz316)
+
+### Game Description
+> Imagine popular games such as Minecraft and Fortnite, except tasks, getting materials, and surviving is just as important as being environmentally conscious and sustainable –– teaching children about being eco-friendly while having fun. 
+
+### Game View
+** Instructions **
+![instruction screen]()
+
+** Starting Screen **
+![starting screen]()
+
+** Crafting Screen **
+![crafting screen]()
+
+** Game Over Screen **
+![game over screen]()
+
+---
+### Code
+
+| Dependencies | Language | Image Resources | Sounds |
+| -------------|----------|-----------------|--------|
+| [Phaser Library](https://phaser.io/) | ☕️ JavaScript | [Spriters Resource](https://www.spriters-resource.com/) | [Video Game Music](https://downloads.khinsider.com/game-soundtracks/nintendo-ds)|
+
