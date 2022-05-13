@@ -1,6 +1,3 @@
-// import Phaser from 'phaser';
-// import { config, gameSettings } from "../game.js";
-
 class Scene2 extends Phaser.Scene {
 	constructor() {
 		super("playGame");
