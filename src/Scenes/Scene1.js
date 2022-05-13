@@ -1,41 +1,3 @@
-import Phaser from 'phaser';
-import frontIdle from "../../assets/sprites/player/frontidle.png";
-import backIdle from "../../assets/sprites/player/backidle.png";
-import leftIdle from "../../assets/sprites/player/leftidle.png";
-import rightIdle from "../../assets/sprites/player/rightIdle.png";
-import upWalk from "../../assets/sprites/player/upwalk.png";
-import downWalk from "../../assets/sprites/player/downwalk.png";
-import leftWalk from "../../assets/sprites/player/leftwalk.png";
-import rightWalk from "../../assets/sprites/player/rightwalk.png";
-import attackRight from "../../assets/sprites/player/attack.png";
-import attackLeft from "../../assets/sprites/player/attack_left.png";
-import diagUpLeft from "../../assets/sprites/player/diag_up_left.png";
-import diagUpLeftIdle from "../../assets/sprites/player/diag_up_left_idle.png";
-import diagUpRight from "../../assets/sprites/player/diag_up_right.png";
-import diagUpRightIdle from "../../assets/sprites/player/diag_up_right_idle.png";
-import diagDownLeft from "../../assets/sprites/player/diag_down_left.png";
-import diagDownLeftIdle from "../../assets/sprites/player/diag_down_left_idle.png";
-import diagDownRight from "../../assets/sprites/player/diag_down_right.png";
-import diagDownRightIdle from "../../assets/sprites/player/diag_down_right_idle.png";
-// Animal imports
-import pigFront from "../../assets/sprites/pig/pig-frontfacing.png";
-import pigBack from "../../assets/sprites/pig/pig-backfacing.png";
-//material imports
-import wood from "../../assets/sprites/wood.png";
-import stone from "../../assets/sprites/rock.png";
-import weeds from "../../assets/sprites/weeds.png";
-import campfire from "../../assets/sprites/campfire.png";
-import bandage from "../../assets/sprites/bandage.png";
-import shelter from "../../assets/sprites/shelter.png";
-import meat from "../../assets/sprites/food/meat.png";
-//edu content
-import berryBush from "../../assets/plants/berry_bush.png";
-import berryBushText from "../../assets/plants/berry-bush-text.png";
-import poisonMushroom from "../../assets/plants/poison_mushroom.png";
-import poisonMushroomText from "../../assets/plants/poisonous-mushroom-text.png";
-import sun from "../../assets/sprites/sun.png";
-import moon from "../../assets/sprites/moon.png";
-
 class Scene1 extends Phaser.Scene {
   constructor() {
     super("bootGame");
@@ -44,124 +6,124 @@ class Scene1 extends Phaser.Scene {
   preload() {
     // #region SPRITESHEETS
 
-    this.load.spritesheet("player", frontIdle, {
+    this.load.spritesheet("player", "assets/sprites/player/frontidle.png", {
       frameWidth: 41,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("player_up_left", diagUpLeft, {
+    this.load.spritesheet("player_up_left", "assets/sprites/player/diag_up_left.png", {
       frameWidth: 26.1,
       frameHeight: 33,
     });
 
-    this.load.spritesheet("player_up_right", diagUpRight, {
+    this.load.spritesheet("player_up_right", "assets/sprites/player/diag_up_right.png", {
       frameWidth: 26.1,
       frameHeight: 33,
     });
 
-    this.load.spritesheet("player_down_left", diagDownLeft, {
+    this.load.spritesheet("player_down_left", "assets/sprites/player/diag_down_left.png", {
       frameWidth: 26.1,
       frameHeight: 33,
     });
 
-    this.load.spritesheet("player_down_right", diagDownRight, {
+    this.load.spritesheet("player_down_right", "assets/sprites/player/diag_down_right.png", {
       frameWidth: 26.1,
       frameHeight: 33,
     });
 
-    this.load.spritesheet("player_up_left_idle", diagUpLeftIdle, {
+    this.load.spritesheet("player_up_left_idle", "assets/sprites/player/diag_up_left_idle.png", {
       frameWidth: 30.9,
       frameHeight: 38,
     });
 
-    this.load.spritesheet("player_up_right_idle", diagUpRightIdle, {
+    this.load.spritesheet("player_up_right_idle", "assets/sprites/player/diag_up_right_idle.png", {
       frameWidth: 30.1,
       frameHeight: 38,
     });
 
-    this.load.spritesheet("player_down_right_idle", diagDownRightIdle, {
+    this.load.spritesheet("player_down_right_idle", "assets/sprites/player/diag_down_right_idle.png", {
       frameWidth: 28.2,
       frameHeight: 35,
     });
 
-    this.load.spritesheet("player_down_left_idle", diagDownLeftIdle, {
+    this.load.spritesheet("player_down_left_idle", "assets/sprites/player/diag_down_left_idle.png", {
       frameWidth: 28.2,
       frameHeight: 35,
     });
 
-    this.load.spritesheet("player_back", backIdle, {
+    this.load.spritesheet("player_back", "assets/sprites/player/backidle.png", {
       frameWidth: 41,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("player_left", leftIdle, {
+    this.load.spritesheet("player_left", "assets/sprites/player/leftidle.png", {
       frameWidth: 33,
       frameHeight: 40,
     });
 
-    this.load.spritesheet("player_right", rightIdle, {
+    this.load.spritesheet("player_right", "assets/sprites/player/rightidle.png", {
       frameWidth: 33,
       frameHeight: 40,
     });
 
-    this.load.spritesheet("upwalk", upWalk, {
+    this.load.spritesheet("upwalk", "assets/sprites/player/upwalk.png", {
       frameWidth: 41.12,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("downwalk", downWalk, {
+    this.load.spritesheet("downwalk", "assets/sprites/player/downwalk.png", {
       frameWidth: 41.12,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("leftwalk", leftWalk, {
+    this.load.spritesheet("leftwalk", "assets/sprites/player/leftwalk.png", {
       frameWidth: 41.12,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("rightwalk", rightWalk, {
+    this.load.spritesheet("rightwalk", "assets/sprites/player/rightwalk.png", {
       frameWidth: 41.12,
       frameHeight: 41,
     });
 
-    this.load.spritesheet("attack-right", attackRight, {
+    this.load.spritesheet("attack-right", "assets/sprites/player/attack.png", {
       frameWidth: 51,
       frameHeight: 35,
     });
 
-    this.load.spritesheet("attack-left", attackLeft, {
+    this.load.spritesheet("attack-left", "assets/sprites/player/attack_left.png", {
       frameWidth: 50,
       frameHeight: 35,
     });
 
     //Objects and animals
-    this.load.spritesheet("pig-frontfacing", pigFront, {
+    this.load.spritesheet("pig-frontfacing", "assets/sprites/pig/pig-frontfacing.png", {
       frameWidth: 32,
       frameHeight: 36,
     });
 
-    this.load.spritesheet("pig-backfacing", pigBack, {
+    this.load.spritesheet("pig-backfacing", "assets/sprites/pig/pig-backfacing.png", {
       frameWidth: 31,
       frameHeight: 36,
     });
     // #endregion
 
     // #region IMAGES
-    this.load.image("wood", wood);
-    this.load.image("stone", stone);
-    this.load.image("weeds", weeds);
-    this.load.image("meat", meat);
+    this.load.image("wood", "assets/sprites/wood.png");
+    this.load.image("stone", "assets/sprites/rock.png");
+    this.load.image("weeds", "assets/sprites/weeds.png");
+    this.load.image("meat", "assets/sprites/meat.png");
     // #endregion
 
-    this.load.image("campfire", campfire);
-    this.load.image("bandage", bandage);
-    this.load.image("shelter", shelter);
+    this.load.image("campfire", "assets/sprites/campfire.png");
+    this.load.image("bandage", "assets/sprites/bandage.png");
+    this.load.image("shelter", "assets/sprites/shelter.png");
 
     //edu elements
-    this.load.image("berry-bush", berryBush);
-    this.load.image("poisonous-mushroom", poisonMushroom);
-    this.load.image("berry-bush-text", berryBushText);
-    this.load.image("poisonous-mushroom-text", poisonMushroomText);
+    this.load.image("berry-bush", "assets/plants/berry_bush.png");
+    this.load.image("poisonous-mushroom", "assets/plants/poison_mushroom.png");
+    this.load.image("berry-bush-text", "assets/plants/berry-bush-text.png");
+    this.load.image("poisonous-mushroom-text", "assets/plants/poisonous-mushroom-text.png");
   }
 
   create() {
@@ -171,8 +133,11 @@ class Scene1 extends Phaser.Scene {
     this.weeds = 0;
     //objects
     this.bandages = 0;
-    this.load.image("sun", sun);
-    this.load.image("moon", moon);
+    this.load.image("sun", "assets/sprites/sun.png");
+    this.load.image("moon", "assets/sprites/sun.png");
+
+    this.load.image("envirobar-image", "assets/sprites/envirobar.png");
+    this.load.image("playerbars-image", "assets/sprites/playerbars.png");
   }
 
   create() {
@@ -180,6 +145,7 @@ class Scene1 extends Phaser.Scene {
     this.stone = 10;
     this.weeds = 30;
     this.bandages = 5;
+    this.meat = 0;
     this.isShelter = false;
     this.isFire = false;
     this.fireCheck = 0;
@@ -198,10 +164,11 @@ class Scene1 extends Phaser.Scene {
     this.shelterTimerDelay = 50000;
 
     this.add.text(20, 20, "Loading game...");
-    this.scene.start("playGame", {
+    this.scene.start("infoScreen", {
       "wood": this.wood,
       "stone": this.stone,
       "weeds": this.weeds,
+      "meat": this.meat,
       "bandages": this.bandages,
       "isShelter": this.isShelter,
       "isFire": this.isFire,
@@ -371,4 +338,4 @@ class Scene1 extends Phaser.Scene {
   }
 }
 
-export default Scene1;
+//export default Scene1;
