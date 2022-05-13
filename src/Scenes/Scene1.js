@@ -150,10 +150,10 @@ class Scene1 extends Phaser.Scene {
     this.music = this.sound.add("background_music", {loop: true});
     this.music.play();
     
-    this.wood = 40;
+    this.wood = 10;
     this.stone = 10;
-    this.weeds = 30;
-    this.bandages = 5;
+    this.weeds = 10;
+    this.bandages = 1;
     this.meat = 0;
     this.isShelter = false;
     this.isFire = false;
@@ -164,8 +164,8 @@ class Scene1 extends Phaser.Scene {
     this.player_health = 100;
     this.player_food = 100;
     this.player_water = 100;
-    this.collected_water = 10;
-    this.collected_food = 10;
+    this.collected_water = 3;
+    this.collected_food = 3;
     this.isNight = false;
     this.isWater = true;
     this.pondradius = 120;
