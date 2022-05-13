@@ -1,7 +1,3 @@
-// import Phaser from 'phaser';
-// import { check } from "prettier";
-// import { config, gameSettings } from "../game.js";
-
 class Scene4 extends Phaser.Scene {
 	constructor() {
 		super("endGame");

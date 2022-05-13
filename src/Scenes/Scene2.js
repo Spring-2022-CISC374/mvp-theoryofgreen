@@ -1,20 +1,26 @@
-// import Phaser from 'phaser';
-// import { config, gameSettings } from "../game.js";
-
 class Scene2 extends Phaser.Scene {
 	constructor() {
 		super("playGame");
 	}
 
 	init(data) {
+		//materials
 		this.wood = data.wood;
 		this.stone = data.stone;
 		this.weeds = data.weeds;
+		this.meat = data.meat;
 		this.bandages = data.bandages;
 		this.isShelter = data.isShelter;
 		this.isFire = data.isFire;
 		this.fireCheck = data.fireCheck;
 		this.shelterCheck = data.shelterCheck;
+		//education
+		this.berryBush = data.berryBush;
+		this.poisonMushroom = data.poisonMushroom;
+		this.berryBushText = data.berryBushText;
+		this.poisonMushroomText = data.poisonMushroomText;
+		this.visible = false;
+		//data
 		this.timerDelay = data.timerDelay;
 		this.meter_value = data.enviroMeter;
 		this.player_health = data.player_health;
@@ -77,9 +83,9 @@ class Scene2 extends Phaser.Scene {
 			this.gameEnd();
 		}
 	}
-
 	//educational content
 	add_edu() {
+		this.input.keyboard.on('keydown-E', this.type, this);
 		// Berry Bushes
 		this.berryBushCount = 0;
 		this.berryBush = this.add.group();
@@ -95,7 +101,6 @@ class Scene2 extends Phaser.Scene {
 			berries.setPosition(x, y);
 			y += 40
 		}
-
 		// Poison Mushrooms
 		this.poisonMushroomCount = 0;
 		this.poisonMushroom = this.add.group();
@@ -116,6 +121,18 @@ class Scene2 extends Phaser.Scene {
 			x = 600;
 		}
 	}
+
+	type() {
+		const foodText = this.add.text(
+			config.width / 2,
+			config.height / 2,
+			"CLICK WHAT YOU WOULD LIKE TO EAT",
+			0xfffff,
+		);
+		setTimeout(() => {
+			foodText.destroy();
+		}, 1500);
+	}
 	//makes the text message box for the edu content
 	create_window(group) {
 		if (group == "berry-bush") {
@@ -124,6 +141,7 @@ class Scene2 extends Phaser.Scene {
 			this.showMessageBox("poisonous-mushroom", config.width / 2, config.height / 2);
 		}
 	}
+
 	showMessageBox(text, width, height) {
 		if (text == "berry-bush") {
 			this.berryBushText = this.add.image(width, height, "berry-bush-text");
@@ -200,6 +218,11 @@ class Scene2 extends Phaser.Scene {
 		this.foodText = this.add.text(150, 630, `Food : ${this.collected_food}`);
 		this.foodText.depth = 100;
 		this.foodText.setColor("white");
+
+		this.meatText = this.add.text(20, 610, `Meats : ${this.meat}`);
+		this.meatText.depth = 100;
+		this.meatText.setColor("white");
+		this.meats = this.add.group();
 	}
 
 	water() {
@@ -438,7 +461,7 @@ class Scene2 extends Phaser.Scene {
 		this.sunMade = true;
 		this.isNight = false;
 	}
-
+	
 	create() {
 		this.craft = this.add.text(19, 20, "Crafting");
 		this.craftBack = this.add.rectangle(57, 27, 90, 20, 0x2A7A16, 1);
@@ -633,9 +656,22 @@ class Scene2 extends Phaser.Scene {
 					weedy.setRandomPosition(100, 200, 650, 350);
 					this.weedsCount++;
 				}
-			}
+			} 
 			//envi impact weeds = 1
 			this.environment_meter_value(1, "minus");
+		} else if (gameObject.group == "meat") {
+            this.meat+=1;
+			this.meatText.destroy();
+			this.meatText = this.add.text(20, 610, `Meats : ${this.meat}`);
+			gameObject.destroy();
+            if (this.meat !== 0 && this.meat % this.num_pigs === 0) {
+                this.pigs = [];
+                for (let j = 0; j < this.num_pigs; j++) {
+                    this.randomPigPositioning(j);
+                }
+                this.pigCollisions();
+            }
+			//this.environment_meter_value(1, "minus");
 		} else if (gameObject.group == "berry-bush") {
 			if (this.visible) {
 				this.berryBushText.destroy();
@@ -670,6 +706,7 @@ class Scene2 extends Phaser.Scene {
 				"wood": this.wood,
 				"stone": this.stone,
 				"weeds": this.weeds,
+				"meat": this.meat,
 				"bandages": this.bandages,
 				"isShelter": this.isShelter,
 				"isFire": this.isFire,
@@ -749,6 +786,7 @@ class Scene2 extends Phaser.Scene {
 				"wood": this.wood,
 				"stone": this.stone,
 				"weeds": this.weeds,
+				"meat": this.meat,
 				"bandages": this.bandages,
 				"isShelter": this.isShelter,
 				"isFire": this.isFire,
@@ -818,7 +856,6 @@ class Scene2 extends Phaser.Scene {
             this.pigCollisions();
         }
 		this.timerDelay = this.timer.getRemainingSeconds() * 1000;
-		//console.log(this.timer.getRemainingSeconds());
 		this.timerText.setText('Survive for: ' + this.timer.getRemainingSeconds().toString().substring(0, this.x));
 
 		if(!this.canClickShelter) {
@@ -993,14 +1030,19 @@ class Scene2 extends Phaser.Scene {
 			healthBar.x -= 0.5;
 			obj2.hp -= 1;
 		} else {
-			console.log("in else");
+			// here's where the pig dies
 			healthBar.destroy();
 			/** @type {Phaser.GameObjects.Rectangle} */
 			const healthbarBackground = this.health_bar_backgrounds[obj2.id];
 			healthbarBackground.destroy();
 			/** @type {Phaser.GameObjects.Sprite} */
 			obj2.destroy();
-			this.addMeat(obj2.x, obj2.y);
+			const theMeat = this.add.sprite(obj2.x, obj2.y, "meat");
+            theMeat.setScale(2.5);
+			theMeat.setDepth(-1);
+            theMeat.setInteractive();
+			theMeat.group = "meat";
+            this.meats.add(theMeat);
 		}
 		this.physics.world.remove(this.weaponHitbox);
 	}
@@ -1057,10 +1099,6 @@ class Scene2 extends Phaser.Scene {
                 health_bar.x = eachPig.x;
                 health_bar_bg.y = eachPig.y - 35;
                 health_bar_bg.x = eachPig.x;
-            } else {
-                eachPig.destroy();
-                health_bar.destroy();
-                health_bar_bg.destroy();
             }
             this.health_bar_backgrounds.splice(ind, 0, health_bar_bg);
             this.health_bars.splice(ind, 0, health_bar);
