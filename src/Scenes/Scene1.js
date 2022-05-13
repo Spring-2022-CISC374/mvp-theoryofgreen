@@ -1,34 +1,40 @@
-// import Phaser from 'phaser';
-// import frontIdle from "../../assets/sprites/player/frontidle.png";
-// import backIdle from "../../assets/sprites/player/backidle.png";
-// import leftIdle from "../../assets/sprites/player/leftidle.png";
-// import rightIdle from "../../assets/sprites/player/rightIdle.png";
-// import upWalk from "../../assets/sprites/player/upwalk.png";
-// import downWalk from "../../assets/sprites/player/downwalk.png";
-// import leftWalk from "../../assets/sprites/player/leftwalk.png";
-// import rightWalk from "../../assets/sprites/player/rightwalk.png";
-// import attackRight from "../../assets/sprites/player/attack.png";
-// import attackLeft from "../../assets/sprites/player/attack_left.png";
-// import diagUpLeft from "../../assets/sprites/player/diag_up_left.png";
-// import diagUpLeftIdle from "../../assets/sprites/player/diag_up_left_idle.png";
-// import diagUpRight from "../../assets/sprites/player/diag_up_right.png";
-// import diagUpRightIdle from "../../assets/sprites/player/diag_up_right_idle.png";
-// import diagDownLeft from "../../assets/sprites/player/diag_down_left.png";
-// import diagDownLeftIdle from "../../assets/sprites/player/diag_down_left_idle.png";
-// import diagDownRight from "../../assets/sprites/player/diag_down_right.png";
-// import diagDownRightIdle from "../../assets/sprites/player/diag_down_right_idle.png";
-// // Animal imports
-// import pigFront from "../../assets/sprites/pig/pig-frontfacing.png";
-// import pigBack from "../../assets/sprites/pig/pig-backfacing.png";
-// import wood from "../../assets/sprites/wood.png";
-// import stone from "../../assets/sprites/rock.png";
-// import weeds from "../../assets/sprites/weeds.png";
-// import campfire from "../../assets/sprites/campfire.png";
-// import bandage from "../../assets/sprites/bandage.png";
-// import shelter from "../../assets/sprites/shelter.png";
-// import meat from "../../assets/sprites/food/meat.png";
-// import sun from "../../assets/sprites/sun.png";
-// import moon from "../../assets/sprites/moon.png";
+import Phaser from 'phaser';
+import frontIdle from "../../assets/sprites/player/frontidle.png";
+import backIdle from "../../assets/sprites/player/backidle.png";
+import leftIdle from "../../assets/sprites/player/leftidle.png";
+import rightIdle from "../../assets/sprites/player/rightIdle.png";
+import upWalk from "../../assets/sprites/player/upwalk.png";
+import downWalk from "../../assets/sprites/player/downwalk.png";
+import leftWalk from "../../assets/sprites/player/leftwalk.png";
+import rightWalk from "../../assets/sprites/player/rightwalk.png";
+import attackRight from "../../assets/sprites/player/attack.png";
+import attackLeft from "../../assets/sprites/player/attack_left.png";
+import diagUpLeft from "../../assets/sprites/player/diag_up_left.png";
+import diagUpLeftIdle from "../../assets/sprites/player/diag_up_left_idle.png";
+import diagUpRight from "../../assets/sprites/player/diag_up_right.png";
+import diagUpRightIdle from "../../assets/sprites/player/diag_up_right_idle.png";
+import diagDownLeft from "../../assets/sprites/player/diag_down_left.png";
+import diagDownLeftIdle from "../../assets/sprites/player/diag_down_left_idle.png";
+import diagDownRight from "../../assets/sprites/player/diag_down_right.png";
+import diagDownRightIdle from "../../assets/sprites/player/diag_down_right_idle.png";
+// Animal imports
+import pigFront from "../../assets/sprites/pig/pig-frontfacing.png";
+import pigBack from "../../assets/sprites/pig/pig-backfacing.png";
+//material imports
+import wood from "../../assets/sprites/wood.png";
+import stone from "../../assets/sprites/rock.png";
+import weeds from "../../assets/sprites/weeds.png";
+import campfire from "../../assets/sprites/campfire.png";
+import bandage from "../../assets/sprites/bandage.png";
+import shelter from "../../assets/sprites/shelter.png";
+import meat from "../../assets/sprites/food/meat.png";
+//edu content
+import berryBush from "../../assets/plants/berry_bush.png";
+import berryBushText from "../../assets/plants/berry-bush-text.png";
+import poisonMushroom from "../../assets/plants/poison_mushroom.png";
+import poisonMushroomText from "../../assets/plants/poisonous-mushroom-text.png";
+import sun from "../../assets/sprites/sun.png";
+import moon from "../../assets/sprites/moon.png";
 
 class Scene1 extends Phaser.Scene {
   constructor() {
@@ -141,24 +147,32 @@ class Scene1 extends Phaser.Scene {
     // #endregion
 
     // #region IMAGES
-    this.load.image("wood", "assets/sprites/wood.png");
-    this.load.image("stone", "assets/sprites/rock.png");
-    this.load.image("weeds", "assets/sprites/weeds.png");
-    this.load.image("meat", "assets/sprites/food/meat.png");
+    this.load.image("wood", wood);
+    this.load.image("stone", stone);
+    this.load.image("weeds", weeds);
+    this.load.image("meat", meat);
     // #endregion
 
     this.load.image("campfire", "assets/sprites/campfire.png");
     this.load.image("bandage", "assets/sprites/bandage.png");
     this.load.image("shelter", "assets/sprites/shelter.png");
 
-    this.load.image("sun", "assets/sprites/sun.png");
-    this.load.image("moon", "assets/sprites/moon.png");
-
     //edu elements
-    this.load.image("berry-bush", "assets/plants/berry_bush.png");
-    this.load.image("poisonous-mushroom", "assets/plants/poison_mushroom.png");
-    this.load.image("berry-bush-text", "assets/plants/berry-bush-text.png");
-    this.load.image("poisonous-mushroom-text", "assets/plants/poisonous-mushroom-text.png");
+    this.load.image("berry-bush", berryBush);
+    this.load.image("poisonous-mushroom", poisonMushroom);
+    this.load.image("berry-bush-text", berryBushText);
+    this.load.image("poisonous-mushroom-text", poisonMushroomText);
+  }
+
+  create() {
+    //materials
+    this.wood = 0;
+    this.stone = 0;
+    this.weeds = 0;
+    //objects
+    this.bandages = 0;
+    this.load.image("sun", sun);
+    this.load.image("moon", moon);
   }
 
   create() {

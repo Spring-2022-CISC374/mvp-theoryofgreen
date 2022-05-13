@@ -7,6 +7,7 @@ class Scene2 extends Phaser.Scene {
 	}
 
 	init(data) {
+		//materials
 		this.wood = data.wood;
 		this.stone = data.stone;
 		this.weeds = data.weeds;
@@ -16,6 +17,13 @@ class Scene2 extends Phaser.Scene {
 		this.isFire = data.isFire;
 		this.fireCheck = data.fireCheck;
 		this.shelterCheck = data.shelterCheck;
+		//education
+		this.berryBush = data.berryBush;
+		this.poisonMushroom = data.poisonMushroom;
+		this.berryBushText = data.berryBushText;
+		this.poisonMushroomText = data.poisonMushroomText;
+		this.visible = false;
+		//data
 		this.timerDelay = data.timerDelay;
 		this.meter_value = data.enviroMeter;
 		this.player_health = data.player_health;
@@ -78,9 +86,9 @@ class Scene2 extends Phaser.Scene {
 			this.gameEnd();
 		}
 	}
-
 	//educational content
 	add_edu() {
+		this.input.keyboard.on('keydown-E', this.type, this);
 		// Berry Bushes
 		this.berryBushCount = 0;
 		this.berryBush = this.add.group();
@@ -96,7 +104,6 @@ class Scene2 extends Phaser.Scene {
 			berries.setPosition(x, y);
 			y += 40
 		}
-
 		// Poison Mushrooms
 		this.poisonMushroomCount = 0;
 		this.poisonMushroom = this.add.group();
@@ -116,6 +123,17 @@ class Scene2 extends Phaser.Scene {
 			y += 20;
 			x = 600;
 		}
+	}
+	type() {
+		const foodText = this.add.text(
+			config.width / 2,
+			config.height / 2,
+			"CLICK WHAT YOU WOULD LIKE TO EAT",
+			0xfffff,
+		);
+		setTimeout(() => {
+			foodText.destroy();
+		}, 1500);
 	}
 	//makes the text message box for the edu content
 	create_window(group) {
@@ -444,7 +462,7 @@ class Scene2 extends Phaser.Scene {
 		this.sunMade = true;
 		this.isNight = false;
 	}
-
+	
 	create() {
 		this.craft = this.add.text(25, 25, "Click to craft!");
 		this.craft.group = "craftButton";
