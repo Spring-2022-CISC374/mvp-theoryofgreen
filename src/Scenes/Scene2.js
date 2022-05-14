@@ -843,7 +843,7 @@ class Scene2 extends Phaser.Scene {
 		this.updateEnvirobar();
 
 		//pig movement 
-		this.pigMovement(1);
+		this.pigMovement(.7);
 
 		//timer
 		if(this.timer.getRemainingSeconds() >= 100) {
@@ -981,12 +981,12 @@ class Scene2 extends Phaser.Scene {
 			this.player.setVelocityY(0);
 			this.last_dir = "r";
 		} else if (this.cursorKeys.space.isDown) {
-			if (this.last_dir == "r") {
+			if (this.last_dir == "r" || this.last_dir == "u" || this.last_dir == "ur" || this.last_dir == "dr") {
 				this.physics.world.add(this.weaponHitbox.body);
 				this.player.play("attack_right", true);
 				this.weaponHitbox.x = this.player.x + this.player.width * 0.5;
 				this.weaponHitbox.y = this.player.y;
-			} else if (this.last_dir == "l") {
+			} else if (this.last_dir == "l" || this.last_dir == "d" || this.last_dir == "ul" || this.last_dir == "dl") {
 				this.physics.world.add(this.weaponHitbox.body);
 				this.player.play("attack_left", true);
 				this.weaponHitbox.x = this.player.x - this.player.width * 0.5;
