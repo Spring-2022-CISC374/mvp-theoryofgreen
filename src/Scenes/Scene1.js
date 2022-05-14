@@ -5,7 +5,7 @@ class Scene1 extends Phaser.Scene {
 
   preload() {
     //audio loading
-    // this.load.audio("background_music", ["assets/audio/music.mp3"]);
+    //this.load.audio("background_music", ["assets/audio/music.mp3"]);
 
     // #region SPRITESHEETS
 
@@ -147,8 +147,16 @@ class Scene1 extends Phaser.Scene {
 
   create() {
     //audio
-    // this.music = this.sound.add("background_music", {loop: true});
-    // this.music.play();
+    // this.music = this.sound.add("background_music");
+    // var musicConfig = {
+    //   mute: false,
+    //   volume: .01,
+    //   detune: 0,
+    //   seek: 0,
+    //   loop: true,
+    //   delay: 0
+    // }
+    // this.music.play(musicConfig);
     
     this.wood = 10;
     this.stone = 10;
