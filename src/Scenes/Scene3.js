@@ -64,11 +64,11 @@ class Scene3 extends Phaser.Scene {
         this.weedsText = this.add.text(20, 670, `Weeds : ${this.weeds}`);
 		this.weedsText.depth = 100;
 		this.weedsText.setColor("white");
-
+		/*
 		this.meatText = this.add.text(20, 610, `Meats : ${this.meat}`);
 		this.meatText.depth = 100;
 		this.meatText.setColor("white");
-
+		*/
         this.bandagesText = this.add.text(150, 670, `Bandages : ${this.bandages}`);
 		this.bandagesText.depth = 100;
 		this.bandagesText.setColor("white");
